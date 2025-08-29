@@ -1,0 +1,66 @@
+{
+  "DEVICE_MAX_RUNTIME": {
+    "curtain": 498,
+    "shade": 498,
+    "left_window_open": 162,
+    "left_window_close": 160,
+    "right_window_open": 158,
+    "right_window_close": 160
+  },
+  "SENSOR_LIMITS": {
+    "wind_speed": {"min": 0.5, "max": 89},
+    "wind_direction": {"min": 0, "max": 360},
+    "light": {"min": 0, "max": 1800},
+    "rain": {"binary": true},
+    "out_temp": {"min": -40, "max": 60},
+    "out_humidity": {"min": 0, "max": 100},
+    "temperature": {"min": -20, "max": 80},
+    "humidity": {"min": 0, "max": 100},
+    "co2": {"min": 0, "max": 2000},
+    "soil_temp": {"min": -40, "max": 60},
+    "soil_moisture": {"min": 0, "max": 50},
+    "soil_ec": {"min": 0, "max": 10}
+  },
+  "FOG_CONTROL": {
+    "1": {"threshold": 28, "run_time": 60000, "delay_time": 1800000},
+    "2": {"threshold": 26, "run_time": 60000, "delay_time": 600000},
+    "3": {"threshold": 26, "run_time": 120000, "delay_time": 600000},
+    "4": {"threshold": 28, "run_time": 60000, "delay_time": 1800000},
+    "5": {"threshold": 0, "run_time": 0, "delay_time": 0},
+    "6": {"threshold": 0, "run_time": 0, "delay_time": 0},
+    "7": {"threshold": 0, "run_time": 0, "delay_time": 0},
+    "8": {"threshold": 0, "run_time": 0, "delay_time": 0}
+  },
+  "FCU_CONTROL": {
+    "2": {"on_threshold": 30, "off_threshold": 27},
+    "3": {"on_threshold": 28, "off_threshold": 25}
+  },
+  "CO2_CONTROL": {
+    "1": {"trigger": 350, "target": 650},
+    "2": {"trigger": 300, "target": 550},
+    "3": {"trigger": 200, "target": 500},
+    "4": {"trigger": 200, "target": 400},
+    "5": {"trigger": 200, "target": 300},
+    "6": {"trigger": 200, "target": 300},
+    "7": {"trigger": 200, "target": 300},
+    "8": {"trigger": 200, "target": 450}
+  },
+  "WINDOW_CONTROL": {
+    "sections": {
+      "1": {"temp_threshold": 20, "open_time_sec": 30, "close_time_sec": 0},
+      "2": {"temp_threshold": 20, "open_time_sec": 20, "close_time_sec": 0},
+      "3": {"temp_threshold": 20, "open_time_sec": 20, "close_time_sec": 0},
+      "4": {"temp_threshold": 25, "open_time_sec": 0, "close_time_sec": 20},
+      "5": {"temp_threshold": 20, "open_time_sec": 0, "close_time_sec": 20},
+      "6": {"temp_threshold": 15, "open_time_sec": 0, "close_time_sec": 20},
+      "7": {"temp_threshold": 15, "open_time_sec": 0, "close_time_sec": 20},
+      "8": {"temp_threshold": 20, "open_time_sec": 10, "close_time_sec": 0}
+    },
+    "wait_time_ms": 300000
+  },
+  "CURTAIN_CONTROL": {
+    "1": {"base_threshold": 15, "out_temp_adjustments": {"above_0": 12, "minus_10_to_0": 13}},
+    "5": {"threshold": 15}
+  },
+  "IRRIGATION_AMOUNTS": [0, 50, 30, 20, 15, 0, 0, 0, 0]
+}

@@ -1,0 +1,121 @@
+{
+  "DEVICE_MAX_RUNTIME": {
+    "curtain": 498,
+    "shade": 498,
+    "left_window_open": 162,
+    "left_window_close": 160,
+    "right_window_open": 158,
+    "right_window_close": 160
+  },
+  "SENSOR_LIMITS": {
+    "wind_speed": {"min": 0.5, "max": 89},
+    "wind_direction": {"min": 0, "max": 360},
+    "light": {"min": 0, "max": 1800},
+    "rain": {"binary": true},
+    "out_temp": {"min": -40, "max": 60},
+    "out_humidity": {"min": 0, "max": 100},
+    "temperature": {"min": -20, "max": 80},
+    "humidity": {"min": 0, "max": 100},
+    "co2": {"min": 0, "max": 2000},
+    "soil_temp": {"min": -40, "max": 60},
+    "soil_moisture": {"min": 0, "max": 50},
+    "soil_ec": {"min": 0, "max": 10}
+  },
+  "FOG_CONTROL": {
+    "1": {"threshold": 28, "run_time": 60000, "delay_time": 1800000},
+    "2": {"threshold": 26, "run_time": 60000, "delay_time": 600000},
+    "3": {"threshold": 26, "run_time": 120000, "delay_time": 600000},
+    "4": {"threshold": 28, "run_time": 60000, "delay_time": 1800000},
+    "5": {"threshold": 0, "run_time": 0, "delay_time": 0},
+    "6": {"threshold": 0, "run_time": 0, "delay_time": 0},
+    "7": {"threshold": 0, "run_time": 0, "delay_time": 0},
+    "8": {"threshold": 0, "run_time": 0, "delay_time": 0}
+  },
+  "FCU_CONTROL": {
+    "2": {"on_threshold": 30, "off_threshold": 27},
+    "3": {"on_threshold": 28, "off_threshold": 25}
+  },
+  "CO2_CONTROL": {
+    "1": {"trigger": 350, "target": 650},
+    "2": {"trigger": 300, "target": 550},
+    "3": {"trigger": 200, "target": 500},
+    "4": {"trigger": 200, "target": 400},
+    "5": {"trigger": 200, "target": 300},
+    "6": {"trigger": 200, "target": 300},
+    "7": {"trigger": 200, "target": 300},
+    "8": {"trigger": 200, "target": 450}
+  },
+  "CURTAIN_CONTROL": {
+    "1": {
+      "base_threshold": 15,
+      "out_temp_adjustments": {
+        "above_0": 12,
+        "minus_10_to_0": 13
+      },
+      "action_time": 498000
+    },
+    "2_to_4": "100%열림",
+    "5": {
+      "threshold": 15,
+      "action_time": 498000
+    },
+    "others": "보온100%"
+  },
+  "SHADE_CONTROL": {
+    "rain_response": {
+      "wait_time": 60000,
+      "action_time": 150000
+    },
+    "section_3_4": {
+      "base_duration": 150000,
+      "dat_8_light_50_multiplier": 0.5,
+      "section_3": {
+        "light_threshold": 400,
+        "action": "close",
+        "position": "30%차광"
+      },
+      "section_4": {
+        "light_threshold": 400,
+        "action": "open",
+        "position": "30%열림"
+      },
+      "wait_after_action": 1800000
+    },
+    "other_sections": "100%열림"
+  },
+  "IRRIGATION_AMOUNTS": [0, 50, 30, 20, 15, 0, 0, 0, 0],
+  "IRRIGATION_CONTROL": {
+    "soil_moisture_threshold": 12.5,
+    "section_1_special": {
+      "dat_threshold": 7,
+      "sunrise_offset_hours": 1
+    }
+  },
+  "FAN_CONTROL": {
+    "section": 8,
+    "temp_diff_threshold": 2,
+    "max_cycles": 3,
+    "run_time": 60000,
+    "wait_time": 300000
+  },
+  "WINDOW_CONTROL": {
+    "sections": {
+      "1": {"temp_threshold": 20, "open_time_sec": 30, "close_time_sec": 0},
+      "2": {"temp_threshold": 20, "open_time_sec": 20, "close_time_sec": 0},
+      "3": {"temp_threshold": 20, "open_time_sec": 20, "close_time_sec": 0},
+      "4": {"temp_threshold": 25, "open_time_sec": 0, "close_time_sec": 20},
+      "5": {"temp_threshold": 20, "open_time_sec": 0, "close_time_sec": 20},
+      "6": {"temp_threshold": 15, "open_time_sec": 0, "close_time_sec": 20},
+      "7": {"temp_threshold": 15, "open_time_sec": 0, "close_time_sec": 20},
+      "8": {"temp_threshold": 20, "open_time_sec": 10, "close_time_sec": 0}
+    },
+    "wait_time_ms": 300000
+  },
+  "CO2_MODIFIERS": {
+    "light_threshold": 50,
+    "light_multiplier": 0.8,
+    "rain_multiplier": 0.6,
+    "humidity_threshold": 85,
+    "humidity_multiplier": 0.7
+  }
+}
