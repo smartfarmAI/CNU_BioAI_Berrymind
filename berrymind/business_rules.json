@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "title": "Greenhouse Business Rules",
+    "version": "0.1",
+    "generated_at": "2025-08-30T10:25:07.835569"
+  },
+  "rules": [
+    {
+      "rule_id": "CO2_001",
+      "rule_name": "CO2 ≤ 350ppm → 동작, 650ppm 만족 시 정지",
+      "priority": 100,
+      "applies": {
+        "time_class": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "devices": [
+          "CO2"
+        ]
+      },
+      "premises": [
+        {
+          "sensor": "rain_sensor",
+          "operator": "equal_to",
+          "value": 0,
+          "description": "비 금지일 때만 동작"
+        }
+      ],
+      "conditions": {
+        "all": [
+          {
+            "sensor": "co2",
+            "operator": "less_than_or_equal_to",
+            "value": 350
+          }
+        ]
+      },
+      "temporal": {
+        "recheck_min": 5,
+        "require_cont_min": 0,
+        "cooldown_min": 30
+      },
+      "actions": [
+        {
+          "device": "CO2",
+          "type": "binary",
+          "do": "ON"
+        },
+        {
+          "device": "CO2",
+          "type": "binary",
+          "do": "OFF",
+          "until": {
+            "sensor": "co2",
+            "operator": "greater_than_or_equal_to",
+            "value": 650
+          }
+        }
+      ]
+    },
+    {
+      "rule_id": "FOG_001",
+      "rule_name": "습도 ≥ 85% → FOG ON, ≤ 80% → FOG OFF (5분 재확인)",
+      "priority": 90,
+      "applies": {
+        "time_class": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "devices": [
+          "FOG"
+        ]
+      },
+      "conditions": {
+        "all": [
+          {
+            "sensor": "humidity",
+            "operator": "greater_than_or_equal_to",
+            "value": 85
+          }
+        ]
+      },
+      "temporal": {
+        "recheck_min": 5,
+        "require_cont_min": 0,
+        "cooldown_min": 10
+      },
+      "actions": [
+        {
+          "device": "FOG",
+          "type": "binary",
+          "do": "ON"
+        },
+        {
+          "device": "FOG",
+          "type": "binary",
+          "do": "OFF",
+          "until": {
+            "sensor": "humidity",
+            "operator": "less_than_or_equal_to",
+            "value": 80
+          }
+        }
+      ]
+    },
+    {
+      "rule_id": "VENT_001",
+      "rule_name": "실내온도 ≥ 28℃ & 무강우 → 좌우천창 열림모터 30초 펄스",
+      "priority": 80,
+      "applies": {
+        "time_class": [
+          3,
+          4,
+          5
+        ],
+        "devices": [
+          "좌우천창"
+        ]
+      },
+      "premises": [
+        {
+          "sensor": "rain_sensor",
+          "operator": "equal_to",
+          "value": 0
+        }
+      ],
+      "conditions": {
+        "all": [
+          {
+            "sensor": "indoor_temp",
+            "operator": "greater_than_or_equal_to",
+            "value": 28
+          }
+        ]
+      },
+      "temporal": {
+        "recheck_min": 2,
+        "require_cont_min": 0,
+        "cooldown_min": 10
+      },
+      "actions": [
+        {
+          "device": "좌우천창",
+          "type": "opening",
+          "pulse_seconds": 30,
+          "direction": "open"
+        }
+      ]
+    }
+  ]
+}
