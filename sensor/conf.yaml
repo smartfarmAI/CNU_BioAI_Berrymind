@@ -1,0 +1,6 @@
+#conf.yaml
+bounds:                       
+  avg_indoor_temp:            {min: -10, max: 50}
+  avg_indoor_humidity:        {min: 0,   max: 100}
+  rain_sensor:                {choices: [0, 1]}
+  time_band:                  {choices: [1, 2, 3, 4, 5, 6, 7, 8]}
