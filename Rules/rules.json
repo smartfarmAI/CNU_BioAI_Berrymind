@@ -1,0 +1,1416 @@
+[
+  {
+    "name": "time_band 2 : FCU : ON : >= 30",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "greater_than_or_equal_to",
+          "value": 30
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 2
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fcu_on"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 2 : FCU : OFF : <= 27",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "less_than_or_equal_to",
+          "value": 27
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 2
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fcu_off"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : FCU : ON : >= 28",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "greater_than_or_equal_to",
+          "value": 28
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fcu_on"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : FCU : OFF : <= 25",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "less_than_or_equal_to",
+          "value": 25
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fcu_off"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 1 : FOG : ON : >= 28",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "greater_than_or_equal_to",
+          "value": 28
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 1
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_on"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 1 : FOG : OFF : < 28",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "less_than",
+          "value": 28
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 1
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_off"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 2 : FOG : ON : >= 26",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "greater_than_or_equal_to",
+          "value": 26
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 2
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_on"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 2 : FOG : OFF : < 26",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "less_than",
+          "value": 26
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 2
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_off"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : FOG : ON : >= 26",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "greater_than_or_equal_to",
+          "value": 26
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_on"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : FOG : OFF : < 26",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "less_than",
+          "value": 26
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_off"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 4 : FOG : ON : >= 28",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "greater_than_or_equal_to",
+          "value": 28
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_on"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 4 : FOG : OFF : < 28",
+    "conditions": {
+      "all": [
+        {
+          "name": "avg_indoor_temp",
+          "operator": "less_than",
+          "value": 28
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      {"name": "fog_off"}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "Fundamental permise : FOG : Shutdown : RH >= 85",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_humidity",
+          "operator": "greater_than_or_equal_to",
+          "value": 85
+        }
+      ]
+    },
+    "actions": [
+      {"name": "shutdown_operation"}
+    ],
+    "priority": 100
+  },  
+  {
+    "name": "time_band 1 : CO2 : ON : <= 350ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 350
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 1
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 650}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 2 : CO2 : ON : <= 300ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 300
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 2
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 550}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : CO2 : ON : <= 200ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 200
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 500}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 4 : CO2 : ON : <= 200ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 200
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 400}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 5 : CO2 : ON : <= 200ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 200
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 5
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 300}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 6 : CO2 : ON : <= 200ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 200
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 6
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 300}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 7 : CO2 : ON : <= 200ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 200
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 7
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 300}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 8 : CO2 : ON : <= 200ppm",
+    "conditions": {
+      "all": [
+        {
+          "name": "indoor_CO2_ppm",
+          "operator": "less_than_or_equal_to",
+          "value": 200
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 8
+        }
+      ]
+    },
+    "actions": [
+      {"name": "CO2_on_until", "target_value": 450}
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 1 : CO2 : ON : <= 350ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 350 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 520 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 2 : CO2 : ON : <= 300ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 2 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 300 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 440 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 3 : CO2 : ON : <= 200ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 3 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 400 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 4 : CO2 : ON : <= 200ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 4 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 320 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 5 : CO2 : ON : <= 200ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 5 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 240 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 6 : CO2 : ON : <= 200ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 6 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 240 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 7 : CO2 : ON : <= 200ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 7 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 240 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 8 : CO2 : ON : <= 200ppm : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 8 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 360 }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 1 : CO2 : ON : <= 350ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 350 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 390 }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 2 : CO2 : ON : <= 300ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 2 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 300 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 330 }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : CO2 : ON : <= 200ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 3 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 300 }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : CO2 : ON : <= 200ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 4 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 240 }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 5 : CO2 : ON : <= 200ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 5 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 180 }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 6 : CO2 : ON : <= 200ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 6 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 180 }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 7 : CO2 : ON : <= 200ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 7 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 180 }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 8 : CO2 : ON : <= 200ppm : rain",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 8 },
+        { "name": "indoor_CO2_ppm", "operator": "less_than_or_equal_to", "value": 200 },
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "CO2_on_until", "target_value": 270 }
+    ],
+    "priority": 100
+  }, 
+  {
+    "name": "time_band 8 : FAN : ON : diff >= 2°C",
+    "conditions": {
+      "all": [
+        {
+          "name": "temp_diff",
+          "operator": "greater_than_or_equal_to",
+          "value": 2
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 8
+        }
+      ]
+    },
+    "actions": [
+      {
+        "name": "fan_on"
+      }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : shading screen : close : solar_radiation >= 400",
+    "conditions": {
+      "all": [
+        {
+          "name": "solar_radiation",
+          "operator": "greater_than_or_equal_to",
+          "value": 400
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+        ]
+    },
+      "actions": [
+        {"name": "shading_screen_close"}
+      ],
+      "priority": 90
+  },
+  {
+    "name": "time_band 3 : shading screen : open : solar_radiation < 400",
+    "conditions": {
+      "all": [
+        {
+          "name": "solar_radiation",
+          "operator": "less_than",
+          "value": 400
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+      },
+      "actions": [
+        {"name": "shading_screen_open"}
+      ],
+      "priority": 90
+  },
+  {
+    "name": "time_band 4 : shading screen : open : solar_radiation <= 400",
+    "conditions": {
+      "all": [
+        {
+          "name": "solar_radiation",
+          "operator": "less_than_or_equal_to",
+          "value": 400
+        },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+        ]
+    },
+      "actions": [
+        {"name": "shading_screen_open"}
+      ],
+      "priority": 90
+  },
+  {
+    "name": "time_band 3 : DAT 0 : shading : 100%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 0 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_100" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : DAT 0 : shading : 100%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 0 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_100" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : DAT 1 : shading : 90%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 1 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_90" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : DAT 1 : shading : 90%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 1 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_90" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3: DAT 2 : shading : 80%",
+    "conditions": {
+      "all": [
+      { "name": "DAT", "operator": "equal_to", "value": 2 },
+      {
+        "name": "time_band",
+        "operator": "equal_to",
+        "value": 3
+      }
+      ]
+    },
+    "actions": [
+      { "name": "shading_80" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4: DAT 2 : shading : 80%",
+    "conditions": {
+      "all": [
+      { "name": "DAT", "operator": "equal_to", "value": 2 },
+      {
+        "name": "time_band",
+        "operator": "equal_to",
+        "value": 4
+      }
+      ]
+    },
+    "actions": [
+      { "name": "shading_80" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : DAT 3 : shading : 70%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 3 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_70" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : DAT 3 : shading : 70%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 3 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_70" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : DAT 4 : shading : 60%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 4 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_60" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : DAT 4 : shading : 60%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 4 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_60" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : DAT 5 : shading : 50%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 5 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_50" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : DAT 5 : shading : 50%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 5 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_50" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : DAT 6 : shading : 40%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 6 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_40" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : DAT 6 : shading : 40%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 6 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_40" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : DAT 7 : shading : 30%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 7 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 3
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_30" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 4 : DAT 7 : shading : 30%",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "equal_to", "value": 7 },
+        {
+          "name": "time_band",
+          "operator": "equal_to",
+          "value": 4
+        }
+      ]
+    },
+    "actions": [
+      { "name": "shading_30" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 3 : shading screen : close : DAT >= 8 : solar_radiation <= 50",
+    "conditions": {
+      "all": [
+        { "name": "DAT", "operator": "greater_than_or_equal_to", "value": 8 },
+        { "name": "time_band", "operator": "equal_to", "value": 3 },
+        { "name": "solar_radiation", "operator": "less_than_or_equal_to", "value": 50 }
+      ]
+    },
+    "actions": [
+      { "name": "shading_close_half_time" }
+    ],
+    "priority": 98
+  },
+  {
+    "name": "rain : shading open",
+    "conditions": {
+      "all": [
+        {
+          "name": "rain",
+          "operator": "equal_to",
+          "value": true
+        }
+      ]
+    },
+    "actions": [
+      {
+        "name": "shading_open"
+      }
+    ],
+    "priority": 99
+  },
+  {
+    "name": "time_band 1 : heat_curtain : ON : outdoor_temp >= 0 : indoor_temp >= 12",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "outdoor_temp", "operator": "greater_than_or_equal_to", "value": 0 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 12 }
+      ]
+    },
+    "actions": [
+      { "name": "heat_curtain_on" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 1 : heat_curtain : ON :outdoor_temp >= -10 < 0 : indoor_temp >= 13",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "outdoor_temp", "operator": "greater_than_or_equal_to", "value": -10 },
+        { "name": "outdoor_temp", "operator": "less_than", "value": 0 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 13 }
+      ]
+    },
+    "actions": [
+      { "name": "heat_curtain_on" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 1 : heat_curtain : ON : indoor_temp >= 15",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 15 }
+      ]
+    },
+    "actions": [
+      { "name": "heat_curtain_on" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 5 : heat_curtain : OFF : indoor_temp <= 15",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 5 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+      ]
+    },
+    "actions": [
+      { "name": "heat_curtain_off" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 1 : left window : open : indoor_temp >= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 1 : right window : open : indoor_temp >= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 2 : left window : open : indoor_temp >= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 2 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 2 : right window : open : indoor_temp >= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 2 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : left window : open : indoor_temp >= 24",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 3 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 24 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : right window : open : indoor_temp >= 24",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 3 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 24 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 4 : left window : open : indoor_temp <= 25",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 4 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 25 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 4 : right window : open : indoor_temp <= 25",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 4 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 25 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 5 : left window : open : indoor_temp <= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 5 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 5 : right window : open : indoor_temp <= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 5 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 6 : left window : open : indoor_temp <= 15",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 6 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 6 : right window : open : indoor_temp <= 15",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 6 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 7 : left window : open : indoor_temp <= 15",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 7 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 7 : right window : open : indoor_temp <= 15",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 7 },
+        { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 8 : left window : open : indoor_temp >= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 8 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 8 : right window : open : indoor_temp >= 20",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 8 },
+        { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 20 }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_open" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "rain : left window : close",
+    "conditions": {
+      "all": [
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "left_window_close" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "rain : right window : close",
+    "conditions": {
+      "all": [
+        { "name": "rain", "operator": "equal_to", "value": true }
+      ]
+    },
+    "actions": [
+      { "name": "right_window_close" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "wind speed : all windows : close : >= 14m/sec",
+    "conditions": {
+      "all": [
+        { "name": "wind_speed", "operator": "greater_than_or_equal_to", "value": 14 }
+      ]
+    },
+    "actions": [
+      { "name": "all_windows_close" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 1 : nutrient pump : on : DAT >= 8",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "DAT", "operator": "greater_than_or_equal_to", "value": 8 }
+      ]
+    },
+    "actions": [
+      { "name": "dispense_50ml" }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "time_band 1 : nutrient pump : nutrient_amount <= 12.5 : dispense 50ml",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "nutrient_amount", "operator": "less_than_or_equal_to", "value": 12.5 }
+      ]
+    },
+    "actions": [
+      { "name": "dispense_50ml" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 2 : nutrient pump : nutrient_amount <= 12.5 : dispense 30ml",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 2 },
+        { "name": "nutrient_amount", "operator": "less_than_or_equal_to", "value": 12.5 }
+      ]
+    },
+    "actions": [
+      { "name": "dispense_30ml" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 3 : nutrient pump : nutrient_amount <= 12.5 : dispense 20ml",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 3 },
+        { "name": "nutrient_amount", "operator": "less_than_or_equal_to", "value": 12.5 }
+      ]
+    },
+    "actions": [
+      { "name": "dispense_20ml" }
+    ],
+    "priority": 90
+  },
+  {
+    "name": "time_band 4 : nutrient pump : nutrient_amount <= 12.5 : dispense 15ml",
+    "conditions": {
+      "all": [
+        { "name": "time_band", "operator": "equal_to", "value": 1 },
+        { "name": "nutrient_amount", "operator": "less_than_or_equal_to", "value": 12.5 }
+      ]
+    },
+    "actions": [
+      { "name": "dispense_15ml" }
+    ],
+    "priority": 90
+  }
+]
