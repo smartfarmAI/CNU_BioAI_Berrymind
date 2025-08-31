@@ -1,80 +1,45 @@
 [
     {
-        "name": "time_band 2 : FCU : ON : >= 30",
         "conditions": {
             "all": [
                 {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
-        "actions": [
-            {"name":"fcu_on"}
-        ],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"ON"}}],
         "priority": 90
     },
     {
-        "name": "time_band 2 : FCU : OFF : <= 27",
         "conditions": {
             "all": [
                 {"name":"indoor_temp","operator":"less_than_or_equal_to","value":27},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
-        "actions": [
-            {
-                "name": "fcu_off"
-            }
-        ],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"OFF"}}],
         "priority": 90
     },
     {
-        "name": "time_band 3 : FCU : ON : >= 28",
         "conditions": {
             "all": [
-                {
-                    "name": "indoor_temp",
-                    "operator": "greater_than_or_equal_to",
-                    "value": 28
-                },
-                {
-                    "name": "time_band",
-                    "operator": "equal_to",
-                    "value": 3
-                }
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":28},
+                {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
-        "actions": [
-            {
-                "name": "fcu_on"
-            }
-        ],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"ON"}}],
         "priority": 90
     },
     {
-        "name": "time_band 3 : FCU : OFF : <= 25",
         "conditions": {
             "all": [
-                {
-                    "name": "indoor_temp",
-                    "operator": "less_than_or_equal_to",
-                    "value": 25
-                },
-                {
-                    "name": "time_band",
-                    "operator": "equal_to",
-                    "value": 3
-                }
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":25},
+                {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
-        "actions": [
-            {
-                "name": "fcu_off"
-            }
-        ],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"OFF"}}],
         "priority": 90
     },
     {
-        "name": "time_band 1 : FOG : ON : >= 28",
         "conditions": {
             "all": [
                 {

@@ -20,7 +20,7 @@ if __name__ == "__main__":
     sensor = SensorMock("sensor/conf.yaml")
     sensor.load()
 
-    rules_path = "rule_engine/rules.json"
+    rules_path = "rule_engine/rules_conf"
 
     # 최초 1회 실행
     main_loop(sensor, rules_path)

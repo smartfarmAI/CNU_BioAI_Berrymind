@@ -1,0 +1,104 @@
+[
+    {
+        "conditions": {
+            "all": [
+                {"name":"solar_radiation","operator":"greater_than_or_equal_to","value":400},
+                {"name":"time_band","operator":"equal_to","value":3}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":150,"pause_sec":1800}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"solar_radiation","operator":"less_than","value":400},
+                {"name":"time_band","operator":"equal_to","value":3}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"OPEN","duration_sec":50}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"solar_radiation","operator":"less_than_or_equal_to","value":400},
+                {"name":"time_band","operator":"equal_to","value":4}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"OPEN","duration_sec":150,"pause_sec":1800}}],
+        "priority": 90
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 0 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":0}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":498}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 1 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":1}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":450}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 2 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":2}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":400}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 3 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":3}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":350}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 4 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":4}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":300}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 5 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":5}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":250}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 6 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":6}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":200}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : DAT 7 : SHADING SCREEN 100%",
+        "conditions": {
+            "all": [{"name":"DAT","operator":"equal_to","value":7}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":150}}],
+        "priority": 100
+    },
+    {
+        "name": "time_band all : Fundamental permise : SHADING SCREEN OPEN",
+        "conditions": {
+            "all": [{"name":"rain","operator":"equal_to","value":true}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"OPEN","duration_sec":150,"pause_sec":3600}}],
+        "priority": 99
+    }
+]
