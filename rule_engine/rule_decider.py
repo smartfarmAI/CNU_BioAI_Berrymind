@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any, List, Tuple, DefaultDict
 from collections import defaultdict
-from business_rules.variables import BaseVariables, numeric_rule_variable
+from business_rules.variables import BaseVariables, numeric_rule_variable, select_rule_variable
 from business_rules.actions   import BaseActions, rule_action
 from business_rules.fields    import FIELD_TEXT
 from business_rules.engine    import run_all
@@ -9,10 +9,48 @@ from business_rules.engine    import run_all
 # 1) Variables
 class EnvVars(BaseVariables):
     def __init__(self, vals: Dict[str, Any]): self.vals = vals
-    @numeric_rule_variable(label="Average Indoor Temp")
-    def avg_indoor_temp(self) -> float: return float(self.vals.get("avg_indoor_temp", 0.0))
+    
+    @numeric_rule_variable(label="Indoor Temp")
+    def indoor_temp(self) -> float: return float(self.vals.get("indoor_temp", 0.0))
+    
     @numeric_rule_variable(label="Time Band")
     def time_band(self) -> float: return float(self.vals.get("time_band", 0))
+
+    @numeric_rule_variable(label="Indoor Humidity")
+    def indoor_humidity(self) -> float:
+        return float(self.vals.get("indoor_humidity", 0.0))
+
+    @select_rule_variable(label="Rain", options=[0, 1])
+    def rain(self) -> int:
+        return int(self.vals.get("rain", 0))
+
+    @numeric_rule_variable(label="Wind Speed")
+    def wind_speed(self) -> float:
+        return float(self.vals.get("wind_speed", 0.0))
+
+    @numeric_rule_variable(label="Temp Diff")
+    def temp_diff(self) -> float:
+        return float(self.vals.get("temp_diff", 0.0))
+
+    @numeric_rule_variable(label="Outdoor Temp")
+    def outdoor_temp(self) -> float:
+        return float(self.vals.get("outdoor_temp", 0.0))
+
+    @numeric_rule_variable(label="Solar Radiation")
+    def solar_radiation(self) -> float:
+        return float(self.vals.get("solar_radiation", 0.0))
+
+    @numeric_rule_variable(label="DAT")
+    def DAT(self) -> int:
+        return int(self.vals.get("DAT", 0))
+
+    @numeric_rule_variable(label="Indoor CO2")
+    def indoor_CO2(self) -> float:
+        return float(self.vals.get("indoor_CO2", 0.0))
+
+    @numeric_rule_variable(label="Water Content")
+    def water_content(self) -> float:
+        return float(self.vals.get("water_content", 0.0))
 
 # 2) ProbeActions: 이름형(fcu_on/off) + 파라미터형(set_state) 모두 지원
 class ProbeActions(BaseActions):
