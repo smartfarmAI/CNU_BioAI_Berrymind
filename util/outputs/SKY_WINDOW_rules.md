@@ -1,12 +1,12 @@
-|   time_band | actuator   | rule_name                                                                      |   priority | conditions                         | action                                 |
-|------------:|:-----------|:-------------------------------------------------------------------------------|-----------:|:-----------------------------------|:---------------------------------------|
-|           1 | SKY_WINDOW |                                                                                |         90 | time_band = 1 AND indoor_temp ≥ 20 | SKY_WINDOW:OPEN (dur=30s, pause=300s)  |
-|           2 | SKY_WINDOW |                                                                                |         90 | time_band = 2 AND indoor_temp ≥ 20 | SKY_WINDOW:OPEN (dur=20s, pause=300s)  |
-|           3 | SKY_WINDOW |                                                                                |         90 | time_band = 3 AND indoor_temp ≥ 24 | SKY_WINDOW:OPEN (dur=20s, pause=300s)  |
-|           4 | SKY_WINDOW |                                                                                |         90 | time_band = 4 AND indoor_temp ≤ 25 | SKY_WINDOW:CLOSE (dur=20s, pause=300s) |
-|           5 | SKY_WINDOW |                                                                                |         90 | time_band = 5 AND indoor_temp ≤ 20 | SKY_WINDOW:CLOSE (dur=20s, pause=300s) |
-|           6 | SKY_WINDOW |                                                                                |         90 | time_band = 6 AND indoor_temp ≤ 15 | SKY_WINDOW:CLOSE (dur=20s, pause=300s) |
-|           7 | SKY_WINDOW |                                                                                |         90 | time_band = 7 AND indoor_temp ≤ 15 | SKY_WINDOW:CLOSE (dur=20s, pause=300s) |
-|           8 | SKY_WINDOW |                                                                                |         90 | time_band = 8 AND indoor_temp ≥ 20 | SKY_WINDOW:CLOSE (dur=10s, pause=300s) |
-|         nan | SKY_WINDOW | time_band all : Fundamental permise : rain : SKY_WINDOW CLOSE                  |        100 | rain = 1                           | SKY_WINDOW:CLOSE (pause=300s)          |
-|         nan | SKY_WINDOW | time_band all : Fundamental permise : wind speed >= 14m/sec : SKY_WINDOW CLOSE |        100 | wind_speed ≥ 14                    | SKY_WINDOW:CLOSE (pause=300s)          |
+|   time_band | actuator   |   priority | conditions                         | action                                                                                            |
+|------------:|:-----------|-----------:|:-----------------------------------|:--------------------------------------------------------------------------------------------------|
+|           1 | SKY_WINDOW |         90 | time_band = 1 AND indoor_temp ≥ 20 | {'actuator': 'SKY_WINDOW', 'state': 'OPEN', 'duration_sec': 30, 'pause_sec': 300, 'temp_diff': 2} |
+|           2 | SKY_WINDOW |         90 | time_band = 2 AND indoor_temp ≥ 20 | {'actuator': 'SKY_WINDOW', 'state': 'OPEN', 'duration_sec': 20, 'pause_sec': 300, 'temp_diff': 2} |
+|           3 | SKY_WINDOW |         90 | time_band = 3 AND indoor_temp ≥ 24 | {'actuator': 'SKY_WINDOW', 'state': 'OPEN', 'duration_sec': 20, 'pause_sec': 300, 'temp_diff': 2} |
+|           4 | SKY_WINDOW |         90 | time_band = 4 AND indoor_temp ≤ 25 | {'actuator': 'SKY_WINDOW', 'state': 'CLOSE', 'duration_sec': 20, 'pause_sec': 300}                |
+|           5 | SKY_WINDOW |         90 | time_band = 5 AND indoor_temp ≤ 20 | {'actuator': 'SKY_WINDOW', 'state': 'CLOSE', 'duration_sec': 20, 'pause_sec': 300}                |
+|           6 | SKY_WINDOW |         90 | time_band = 6 AND indoor_temp ≤ 15 | {'actuator': 'SKY_WINDOW', 'state': 'CLOSE', 'duration_sec': 20, 'pause_sec': 300}                |
+|           7 | SKY_WINDOW |         90 | time_band = 7 AND indoor_temp ≤ 15 | {'actuator': 'SKY_WINDOW', 'state': 'CLOSE', 'duration_sec': 20, 'pause_sec': 300}                |
+|           8 | SKY_WINDOW |         90 | time_band = 8 AND indoor_temp ≥ 20 | {'actuator': 'SKY_WINDOW', 'state': 'CLOSE', 'duration_sec': 10, 'pause_sec': 300}                |
+|         nan | SKY_WINDOW |        100 | rain = 1                           | {'actuator': 'SKY_WINDOW', 'state': 'CLOSE', 'pause_sec': 300}                                    |
+|         nan | SKY_WINDOW |        100 | wind_speed ≥ 14                    | {'actuator': 'SKY_WINDOW', 'state': 'CLOSE', 'pause_sec': 300}                                    |

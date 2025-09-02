@@ -147,32 +147,36 @@ def decide_rules(sensor_vals: Dict[str, Any], rules: List[Dict[str, Any]]) -> Di
     """
     vars_ = EnvVars(sensor_vals)
     grouped: DefaultDict[str, List[Tuple[int, int, Dict[str, Any], Dict[str, Any], str]]] = defaultdict(list)
-    # (priority, order_idx, conditions, action_intent, rule_name)
-
+    
     for idx, rule in enumerate(rules):
         probe = ProbeActions()
         run_all(rule_list=[rule], defined_variables=vars_, defined_actions=probe, stop_on_first_trigger=True)
         if not probe.intents:
             continue
+        # 액션 이름 가져오기 (actions[0]["name"])
+        action_name = rule.get("actions", [{}])[0].get("name", "")
+        
         for actuator, intent in probe.intents:  # 다액션 룰도 팬아웃
             grouped[actuator].append((
                 int(rule.get("priority", 0)),
                 idx,
                 rule.get("conditions", {}),
                 intent,                              # {"actuator","state","duration_sec","pause_sec"}
-                rule.get("name", "")
+                rule.get("name", ""),
+                action_name
             ))
 
     decisions: Dict[str, Any] = {}
     for actuator, cands in grouped.items():
         # priority 내림차순, 동일 priority면 먼저 등장한(rule order) 우선
         cands.sort(key=lambda x: (-x[0], x[1]))
-        prio, _, conds, intent, name = cands[0]
+        prio, _, conds, intent, name, action_name = cands[0]
         decisions[actuator] = {
             "rule_name": name,
             "priority": prio,
             "conditions": conds,
-            "action": intent
+            "action_name": action_name,
+            "action_param": intent
         }
     return decisions
 

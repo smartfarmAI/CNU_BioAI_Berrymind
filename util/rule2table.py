@@ -84,20 +84,18 @@ def rules_to_table(rules: List[Dict[str, Any]]) -> pd.DataFrame:
 
             rows.append({
                 "time_band": tb_val,
-                "rule_name": r.get("name",""),
+                # "rule_name": r.get("name",""),  # 원하면 이 컬럼 지워도 됨
                 "priority":  r.get("priority", 0),
                 "conditions": _conditions_expr(conds),
-                "action": _action_expr(params),
+                # 액션을 원본 그대로 저장
+                "action": params,
             })
     df = pd.DataFrame(rows)
-    # 보기 좋게 정렬: time_band, actuator(action 앞부분), priority desc
-    def _actuator(x: str) -> str:
-        return (x.split(":")[0] if isinstance(x, str) and ":" in x else x) or ""
+    # actuator 컬럼은 params에서 가져오기
     if not df.empty:
-        df["actuator"] = df["action"].map(_actuator)
+        df["actuator"] = df["action"].map(lambda x: x.get("actuator") if isinstance(x, dict) else "")
         df = df.sort_values(by=["time_band","actuator","priority"], ascending=[True, True, False])
-        # 컬럼 순서 재배치
-        df = df[["time_band","actuator","rule_name","priority","conditions","action"]]
+        df = df[["time_band","actuator","priority","conditions","action"]]
     return df
 
 
@@ -152,6 +150,8 @@ if __name__ == "__main__":
         csv_path = out_dir / f"{stem}_rules.csv"
 
         # 표 저장
+        if "rule_name" in df.columns:
+            df = df.drop(columns=["rule_name"])
         df.to_csv(csv_path, index=False)
         try:
             df.to_markdown(md_path, index=False)   # tabulate 필요
