@@ -58,7 +58,7 @@ class PlanScheduler:
         
         for act, item in plan.items.items():
             sig = self._sig(item)
-            # pause_sec 기반 디듀프
+            # TODO pause_sec 기반 디듀프인데 작동 시간까지 추가해야함. 작동시간 + 퍼즈
             pause = int(item.action_param.get("pause_sec", 0))
             if self.last_sig.get(act) == sig and self.debounce.get(act, now) > now:
                 print(f"{item.action_param.get('actuator', '')} pause_sec로 인한 디듀프")
