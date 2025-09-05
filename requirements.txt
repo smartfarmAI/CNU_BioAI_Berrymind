@@ -4,3 +4,8 @@ loguru
 business-rules
 apscheduler
 transitions
+ephem
+fastapi
+pydantic
+uvicorn[standard]
+requests
