@@ -1,0 +1,75 @@
+devices:
+  2:
+    out_temp: {addr: [203, 204], dtype: float32, status_addr: 205}
+    out_humi: {addr: [212, 213], dtype: float32, status_addr: 214}
+    rain: {addr: [218, 219], dtype: float32, status_addr: 220}
+    out_solar: {addr: [227, 228], dtype: float32, status_addr: 229}
+    out_wind_speed: {addr: [230, 231], dtype: float32, status_addr: 232}
+    out_wind_direction: {addr: [233, 234], dtype: float32, status_addr: 235}
+    out_temp_status: {addr: 205}
+    out_humi_status: {addr: 214}
+    rain_status: {addr: 220}
+    out_solar_status: {addr: 229}
+    out_wind_speed_status: {addr: 232}
+    out_wind_direction_status: {addr: 235}
+  3:
+    in_temp: {addr: [203, 204], dtype: float32, status_addr: 205}
+    in_humi: {addr: [212, 213], dtype: float32, status_addr: 214}
+    in_wind_speed: {addr: [230, 231], dtype: float32, status_addr: 232}
+    in_co2: {addr: [239, 240], dtype: float32, status_addr: 241}
+    in_ec: {addr: [242, 243], dtype: float32, status_addr: 244}
+    in_soil_w: {addr: [248, 249], dtype: float32, status_addr: 250}
+    in_soil_t: {addr: [257, 258], dtype: float32, status_addr: 259}
+    in_temp_status: {addr: 205}
+    in_humi_status: {addr: 214}
+    in_wind_speed_status: {addr: 232}
+    in_co2_status: {addr: 241}
+    in_ec_status: {addr: 244}
+    in_soil_w_status: {addr: 250}
+    in_soil_t_status: {addr: 259}
+  4:
+    fcu_opid: {addr: 203, dtype: u16}
+    fcu_status: {addr: 204, dtype: u16}
+    fcu_remaining_time: {addr: [205, 206], dtype: int32}
+    fcu_circulation_opid: {addr: 207, dtype: u16}
+    fcu_circulation_status: {addr: 208, dtype: u16}
+    fcu_circulation_remaining_time: {addr: [209, 210], dtype: int32}
+    co2_opid: {addr: 211, dtype: u16}
+    co2_status: {addr: 212, dtype: u16}
+    co2_remaining_time: {addr: [213, 214], dtype: int32}
+    fan_opid: {addr: 215, dtype: u16}
+    fan_status: {addr: 216, dtype: u16}
+    fan_remaining_time: {addr: [217, 218], dtype: int32}
+    fog_opid: {addr: 219, dtype: u16}
+    fog_status: {addr: 220, dtype: u16}
+    fog_remain: {addr: [221, 222], dtype: int32}
+    sky_left_opid_status: {addr: 267, dtype: u16}
+    sky_left_status: {addr: 268, dtype: u16}
+    sky_left_remaining_time: {addr: [269, 270], dtype: int32}
+    sky_left_open_pct: {addr: 271, dtype: u16}
+    sky_right_opid_status: {addr: 272, dtype: u16}
+    sky_right_status: {addr: 273, dtype: u16}
+    sky_right_remaining_time: {addr: [274, 275], dtype: int32}
+    sky_right_open_pct: {addr: 276, dtype: u16}
+    shade_opid_status: {addr: 277, dtype: u16}
+    shade_status: {addr: 278, dtype: u16}
+    shade_remaining_time: {addr: [279, 280], dtype: int32}
+    shade_open_pct: {addr: 281, dtype: u16}
+    heat_opid_status: {addr: 282, dtype: u16}
+    heat_status: {addr: 283, dtype: u16}
+    heat_remaining_time: {addr: [284, 285], dtype: int32}
+    heat_open_pct: {addr: 286, dtype: u16}
+  5:
+    ec1_value: {addr: [204, 205], dtype: float32, status_addr: 206}
+    ph1_value: {addr: [213, 214], dtype: float32, status_addr: 215}
+    total_flow_value: {addr: [222, 223], dtype: float32, status_addr: 224}
+    flow1_value: {addr: [225, 226], dtype: float32, status_addr: 227}
+    fert_status: {addr: 401, dtype: u16}
+    fert_area: {addr: 402, dtype: u16}
+    fert_alarm: {addr: 403, dtype: u16}
+    fert_opid_status: {addr: 404, dtype: u16}
+    fert_remain_time: {addr: [405, 406], dtype: int32}
+    ec1_value_status: {addr: 206}
+    ph1_value_status: {addr: 215}
+    total_flow_value_status: {addr: 224}
+    flow1_value_status: {addr: 227}

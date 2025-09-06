@@ -1,3 +1,4 @@
+# 실행: uvicorn mock_action_io:app --reload --port 8000
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -46,4 +47,3 @@ def set_state(name: str, req: SetReq):
         st["state_code"] = req.state_code
     return {"ok": True, "opid": st["opid"], "state_code": st["state_code"]}
 
-# 실행: uvicorn mock_action_io:app --reload --port 8000

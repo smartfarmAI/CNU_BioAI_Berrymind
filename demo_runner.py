@@ -1,6 +1,6 @@
 # demo_runner.py (핵심만)
 import time, schedule
-from sensor.sensor_mocking import SensorMock
+from mock_sensor.sensor_mocking import SensorMock
 from rule_engine.rule_decider import load_rules, decide_rules
 from scheduler_component.scheduler_component import PlanScheduler, compile_plan, PlanItem, Plan
 

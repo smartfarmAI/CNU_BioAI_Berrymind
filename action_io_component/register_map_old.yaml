@@ -1,0 +1,69 @@
+devices:
+  2:  # 기상 노드 (unit id = 2)
+    # ── 상태/관측치 (203부터 3칸 단위 반복: 값2 + 상태1)
+    out_temp:           {area: HR, addr: 203, dtype: float32, status_addr: 205, endian: little}
+    out_humi:           {area: HR, addr: 212, dtype: float32, status_addr: 214, endian: little}
+    rain:               {area: HR, addr: 218, dtype: float32, status_addr: 220, endian: little}
+    out_solar:          {area: HR, addr: 227, dtype: float32, status_addr: 229, endian: little}
+    out_wind_speed:     {area: HR, addr: 230, dtype: float32, status_addr: 232, endian: little}
+    out_wind_direction: {area: HR, addr: 233, dtype: float32, status_addr: 235, endian: little}
+
+  3:  # 내부 환경 센서 노드 (unit id = 3)
+    # ── 상태/관측치 (203부터 3칸 단위 반복)
+    in_temp:        {area: HR, addr: 203, dtype: float32, status_addr: 205, endian: little}
+    in_humi:        {area: HR, addr: 212, dtype: float32, status_addr: 214, endian: little}
+    in_wind_speed:  {area: HR, addr: 230, dtype: float32, status_addr: 232, endian: little}
+    in_co2:         {area: HR, addr: 239, dtype: float32, status_addr: 241, endian: little}  
+    in_ec:          {area: HR, addr: 242, dtype: float32, status_addr: 244, endian: little}
+    in_soil_w:      {area: HR, addr: 248, dtype: float32, status_addr: 250, endian: little}
+    in_soil_t:      {area: HR, addr: 257, dtype: float32, status_addr: 259, endian: little} 
+
+  4:  # 구동기 노드 (unit id = 4)
+    # ── 상태 정보(스위치)
+    fcu_opid:                         {area: HR, addr: 203, dtype: u16}
+    fcu_status:                       {area: HR, addr: 204, dtype: u16}
+    fcu_remaining_time:               {area: HR, addr: 205, dtype: float32, endian: little}
+    fcu_circulation_opid:             {area: HR, addr: 207, dtype: u16}
+    fcu_circulation_status:           {area: HR, addr: 208, dtype: u16}
+    fcu_circulation_remaining_time:   {area: HR, addr: 209, dtype: float32, endian: little}
+    co2_opid:                         {area: HR, addr: 211, dtype: u16}
+    co2_status:                       {area: HR, addr: 212, dtype: u16}
+    co2_remaining_time:               {area: HR, addr: 213, dtype: float32, endian: little}
+    fan_opid:                         {area: HR, addr: 215, dtype: u16}
+    fan_status:                       {area: HR, addr: 216, dtype: u16}
+    fan_remaining_time:               {area: HR, addr: 217, dtype: float32, endian: little}
+    fog_opid:                         {area: HR, addr: 219, dtype: u16}
+    fog_status:                       {area: HR, addr: 220, dtype: u16}
+    fog_remain:                       {area: HR, addr: 221, dtype: float32, endian: little}
+
+    # ── 상태 정보(개폐기)
+    sky_left_opid_status:      {area: HR, addr: 267, dtype: u16}
+    sky_left_status:           {area: HR, addr: 268, dtype: u16}
+    sky_left_remaining_time:   {area: HR, addr: 269, dtype: float32, endian: little}
+    sky_left_open_pct:         {area: HR, addr: 271, dtype: u16}
+    sky_right_opid_status:     {area: HR, addr: 272, dtype: u16}
+    sky_right_status:          {area: HR, addr: 273, dtype: u16}
+    sky_right_remaining_time:  {area: HR, addr: 274, dtype: float32, endian: little}
+    sky_right_open_pct:        {area: HR, addr: 276, dtype: u16}
+    shade_opid_status:         {area: HR, addr: 277, dtype: u16}
+    shade_status:              {area: HR, addr: 278, dtype: u16}
+    shade_remaining_time:      {area: HR, addr: 279, dtype: float32, endian: little}
+    shade_open_pct:            {area: HR, addr: 281, dtype: u16}
+    heat_opid_status:          {area: HR, addr: 282, dtype: u16}
+    heat_status:               {area: HR, addr: 283, dtype: u16}
+    heat_remaining_time:       {area: HR, addr: 284, dtype: float32, endian: little}
+    heat_open_pct:             {area: HR, addr: 286, dtype: u16}
+
+  5:  # 양액기 노드 (unit id = 5)
+    # ── 상태 정보 영역 (201~)  ※ 문서 표를 그대로 반영
+    ec1_value:                {area: HR, addr: 204, dtype: float32, status_addr: 206, endian: little}
+    # ec2_value:                {area: HR, addr: 207, dtype: float32, status_addr: 209, endian: little}
+    ph1_value:                {area: HR, addr: 213, dtype: float32, status_addr: 215, endian: little}
+    total_flow_value:         {area: HR, addr: 222, dtype: float32, status_addr: 224, endian: little}
+    flow1_value:              {area: HR, addr: 225, dtype: float32, status_addr: 227, endian: little}
+    fert_status:              {area: HR, addr: 401, dtype: u16}
+    fert_area:                {area: HR, addr: 402, dtype: u16}
+    fert_alarm:               {area: HR, addr: 403, dtype: u16}
+    fert_opid_status:         {area: HR, addr: 404, dtype: u16}
+    fert_remain_time:         {area: HR, addr: 405, dtype: float32, endian: little}
+    

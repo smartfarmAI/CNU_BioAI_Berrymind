@@ -5,7 +5,7 @@ from switch_actuator import SwitchActuator
 from retractable_actuator import RetractableActuator
 from nutsupply_actuator import NutSupplyActuator
 
-def load_conf(path="conf.yaml") -> dict:
+def load_conf(path="act_conf.yaml") -> dict:
     return yaml.safe_load(Path(path).read_text(encoding="utf-8"))
 
 def build_client(host="192.168.0.10", port=502):

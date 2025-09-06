@@ -1,5 +1,5 @@
 import time, schedule
-from sensor.sensor_mocking import SensorMock
+from mock_sensor.sensor_mocking import SensorMock
 from rule_engine.rule_decider import load_rules, decide_rules
 
 def main_loop(sensor: SensorMock, rules_path: str):
