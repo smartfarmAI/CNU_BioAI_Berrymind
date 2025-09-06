@@ -46,12 +46,12 @@ class EnvVars(BaseVariables):
         return int(self.vals.get("DAT", 0))
 
     @numeric_rule_variable(label="Indoor CO2")
-    def indoor_CO2(self) -> float:
-        return float(self.vals.get("indoor_CO2", 0.0))
+    def indoor_co2(self) -> float:
+        return float(self.vals.get("indoor_co2", 0.0))
 
-    @numeric_rule_variable(label="Water Content")
-    def water_content(self) -> float:
-        return float(self.vals.get("water_content", 0.0))
+    @numeric_rule_variable(label="Soil Water Content")
+    def soil_water_content(self) -> float:
+        return float(self.vals.get("soil_water_content", 0.0))
 
 # 2) ProbeActions
 class ProbeActions(BaseActions):
