@@ -58,14 +58,15 @@ class PlanScheduler:
         
         for act, item in plan.items.items():
             sig = self._sig(item)
-            # TODO pause_sec 기반 디듀프인데 작동 시간까지 추가해야함. 작동시간 + 퍼즈
             pause = int(item.action_param.get("pause_sec", 0))
+            duration = int(item.action_param.get("duration_sec", 0))
+            window_sec = max(0, pause + duration)
             if self.last_sig.get(act) == sig and self.debounce.get(act, now) > now:
                 print(f"{item.action_param.get('actuator', '')} pause_sec로 인한 디듀프")
                 continue
             self.last_sig[act] = sig
-            if pause > 0:
-                self.debounce[act] = now + timedelta(seconds=pause)
+            if window_sec > 0:
+                self.debounce[act] = now + timedelta(seconds=window_sec)
             # 고정 job_id로 교체 등록
             self.sched.add_job(
                 self.dispatch_fn, 
