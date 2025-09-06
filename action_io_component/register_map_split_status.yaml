@@ -33,47 +33,47 @@ devices:
       in_soil_t: {addr: 259}
   4:
     values:
-      fcu_opid: {addr: 203, dtype: u16}
-      fcu_status: {addr: 204, dtype: u16}
+      fcu_opid: {addr: 203}
+      fcu_status: {addr: 204}
       fcu_remaining_time: {addr: [205, 206], dtype: int32}
-      fcu_circulation_opid: {addr: 207, dtype: u16}
-      fcu_circulation_status: {addr: 208, dtype: u16}
+      fcu_circulation_opid: {addr: 207}
+      fcu_circulation_status: {addr: 208}
       fcu_circulation_remaining_time: {addr: [209, 210], dtype: int32}
-      co2_opid: {addr: 211, dtype: u16}
-      co2_status: {addr: 212, dtype: u16}
+      co2_opid: {addr: 211}
+      co2_status: {addr: 212}
       co2_remaining_time: {addr: [213, 214], dtype: int32}
-      fan_opid: {addr: 215, dtype: u16}
-      fan_status: {addr: 216, dtype: u16}
+      fan_opid: {addr: 215}
+      fan_status: {addr: 216}
       fan_remaining_time: {addr: [217, 218], dtype: int32}
-      fog_opid: {addr: 219, dtype: u16}
-      fog_status: {addr: 220, dtype: u16}
+      fog_opid: {addr: 219}
+      fog_status: {addr: 220}
       fog_remain: {addr: [221, 222], dtype: int32}
-      sky_left_opid_status: {addr: 267, dtype: u16}
-      sky_left_status: {addr: 268, dtype: u16}
+      sky_left_opid_status: {addr: 267}
+      sky_left_status: {addr: 268}
       sky_left_remaining_time: {addr: [269, 270], dtype: int32}
-      sky_left_open_pct: {addr: 271, dtype: u16}
-      sky_right_opid_status: {addr: 272, dtype: u16}
-      sky_right_status: {addr: 273, dtype: u16}
+      sky_left_open_pct: {addr: 271}
+      sky_right_opid_status: {addr: 272}
+      sky_right_status: {addr: 273}
       sky_right_remaining_time: {addr: [274, 275], dtype: int32}
-      sky_right_open_pct: {addr: 276, dtype: u16}
-      shade_opid_status: {addr: 277, dtype: u16}
-      shade_status: {addr: 278, dtype: u16}
+      sky_right_open_pct: {addr: 276}
+      shade_opid_status: {addr: 277}
+      shade_status: {addr: 278}
       shade_remaining_time: {addr: [279, 280], dtype: int32}
-      shade_open_pct: {addr: 281, dtype: u16}
-      heat_opid_status: {addr: 282, dtype: u16}
-      heat_status: {addr: 283, dtype: u16}
+      shade_open_pct: {addr: 281}
+      heat_opid_status: {addr: 282}
+      heat_status: {addr: 283}
       heat_remaining_time: {addr: [284, 285], dtype: int32}
-      heat_open_pct: {addr: 286, dtype: u16}
+      heat_open_pct: {addr: 286}
   5:
     values:
       ec1_value: {addr: [204, 205], dtype: float32}
       ph1_value: {addr: [213, 214], dtype: float32}
       total_flow_value: {addr: [222, 223], dtype: float32}
       flow1_value: {addr: [225, 226], dtype: float32}
-      fert_status: {addr: 401, dtype: u16}
-      fert_area: {addr: 402, dtype: u16}
-      fert_alarm: {addr: 403, dtype: u16}
-      fert_opid_status: {addr: 404, dtype: u16}
+      fert_status: {addr: 401}
+      fert_area: {addr: 402}
+      fert_alarm: {addr: 403}
+      fert_opid_status: {addr: 404}
       fert_remain_time: {addr: [405, 406], dtype: int32}
     status:
       ec1_value: {addr: 206}
