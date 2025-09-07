@@ -6,7 +6,7 @@
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":150,"pause_sec":1800}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":150,"pause_sec":1800}}],
         "priority": 90
     },
     {
@@ -16,7 +16,7 @@
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"OPEN","duration_sec":50}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":50}}],
         "priority": 90
     },
     {
@@ -26,7 +26,7 @@
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"OPEN","duration_sec":150,"pause_sec":1800}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":150,"pause_sec":1800}}],
         "priority": 90
     },
     {
@@ -34,7 +34,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":0}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":498}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":498}}],
         "priority": 100
     },
     {
@@ -42,7 +42,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":1}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":450}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":450}}],
         "priority": 100
     },
     {
@@ -50,7 +50,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":2}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":400}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":400}}],
         "priority": 100
     },
     {
@@ -58,7 +58,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":3}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":350}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":350}}],
         "priority": 100
     },
     {
@@ -66,7 +66,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":4}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":300}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":300}}],
         "priority": 100
     },
     {
@@ -74,7 +74,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":5}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":250}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":250}}],
         "priority": 100
     },
     {
@@ -82,7 +82,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":6}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":200}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":200}}],
         "priority": 100
     },
     {
@@ -90,7 +90,7 @@
         "conditions": {
             "all": [{"name":"DAT","operator":"equal_to","value":7}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"CLOSE","duration_sec":150}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":150}}],
         "priority": 100
     },
     {
@@ -98,7 +98,7 @@
         "conditions": {
             "all": [{"name":"rain","operator":"equal_to","value":true}]
         },
-        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"OPEN","duration_sec":150,"pause_sec":3600}}],
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":150,"pause_sec":3600}}],
         "priority": 99
     }
 ]

@@ -35,6 +35,7 @@ class Actuator(Generic[ST]):
     def __init__(self, client, regmap:Dict[str,int]):
         self.client = client
         self.reg = regmap
+        self.now_opid = 0
         self._next_opid = 1
 
     # ---- 하위 클래스가 오버라이드할 것 ----
@@ -55,9 +56,10 @@ class Actuator(Generic[ST]):
     def send(self, cmd: Command) -> int:
         payload = self._encode_command(cmd)
         # 상태 체크하는건 상태머신에서
-        self.client.write_registers(self.reg['cmd_start_addr'], payload, unit=self.reg["device_id"])
+        res = self.client.write_registers(self.reg['cmd_start_addr'], payload, unit=self.reg["device_id"])
         # TODO: 명령 보내고 결과를 받아오는 것 구현
-        # return 
+        print(res)
+        return self.now_opid
     
     def read_state(self) -> Dict:
         unit, sa, cnt = self.reg["device_id"], self.reg["state_start_addr"], self.reg["state_cnt"]
@@ -66,8 +68,8 @@ class Actuator(Generic[ST]):
         return asdict(st)
 
     def _alloc_opid(self) -> int:
-        v = self._next_opid
+        self.now_opid = self._next_opid
         self._next_opid += 1
         if self._next_opid > 20000:
             self._next_opid = 1
-        return v
+        return self.now_opid

@@ -14,21 +14,22 @@ class PlanItem:
 @dataclass
 class Plan: 
     items:Dict[str,PlanItem]
-    ts_ms:int # 만들어진 시각
 
 #룰 엔진에서 결정된 액션을 플랜으로 변환하는 함수
 def compile_plan(decisions: Dict[str, Any]) -> Plan:
-    items = {
-        act: PlanItem(d["action_name"], d["action_param"])
-        for act, d in decisions.items()
-    }
-    return Plan(items=items, ts_ms=int(time.time() * 1000))
+    items = {}
+    for act, d in decisions.items():
+        if isinstance(d, PlanItem):
+            items[act] = d
+        else:  # dict라고 가정
+            items[act] = PlanItem(d["action_name"], d["action_param"])
+    return Plan(items=items)
 
 
 # 플랜을 안전하게 한번씩 보내는 스케쥴러
 class PlanScheduler:
     def __init__(self, dispatch_fn, debounce_sec=0):
-        self.sched = BackgroundScheduler(job_defaults={"coalesce": True, "misfire_grace_time": 5, "max_instances": 1})
+        self.sched = BackgroundScheduler(timezone="Asia/Seoul", job_defaults={"coalesce": True, "misfire_grace_time": 30, "max_instances": 1})
         self.sched.start()
         self.dispatch_fn = dispatch_fn      # 상태머신에 전달하는 콜백
         self.last_sig = {}                  # 구동기별 마지막 시그니처, 디듀프 기준
@@ -47,9 +48,11 @@ class PlanScheduler:
     같은 구동기에 같은 시그니처가 윈도우 내면 무시
     통과 시 최신 시그니처/만료시각 갱신
     """
-    def submit_plan(self, plan: Plan):
+    def submit_plan(self, plan: Plan, run_at = None):
         now = datetime.now()
-        
+        if not run_at:
+            run_at = now
+
         # 전역 디바운스: 폭주 방지
         if self.debounce_sec > 0 and now < self.global_until:
             return
@@ -66,12 +69,12 @@ class PlanScheduler:
                 continue
             self.last_sig[act] = sig
             if window_sec > 0:
-                self.debounce[act] = now + timedelta(seconds=window_sec)
+                self.debounce[act] = run_at + timedelta(seconds=window_sec)
             # 고정 job_id로 교체 등록
             self.sched.add_job(
                 self.dispatch_fn, 
                 "date", 
-                run_date=now,
+                run_date=run_at,
                 id=f"{act}:apply",
                 replace_existing=True,
                 args=[act, item]
@@ -80,4 +83,4 @@ class PlanScheduler:
         
         # 전역 디바운스 갱신: 이번 제출에서 하나라도 등록되면 활성화
         if scheduled_any and self.debounce_sec > 0:
-            self.global_until = now + timedelta(seconds=self.debounce_sec)
+            self.global_until = run_at + timedelta(seconds=self.debounce_sec)

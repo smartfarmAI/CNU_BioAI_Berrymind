@@ -80,10 +80,14 @@ class ProbeActions(BaseActions):
     })
     def nutsupply(self, water_type: str, duration_sec: int, pause_sec: int = 0):
         wt = water_type.upper()
-        if wt not in ("WATER", "NUTRIENT"):
+        if wt  == "WATER":
+            state = "JUST_WATER"
+        else:
             wt = "NUTRIENT"  # 기본값 보정
+            state = "NUT_WATER"
         intent = {
             "actuator": "NUTRIENT_PUMP",  # 고정
+            "state": state,
             "water_type": wt,
             "duration_sec": duration_sec,
             "pause_sec": pause_sec

@@ -17,7 +17,7 @@ def main_loop(sensor: SensorMock, rules_path: str):
 
 if __name__ == "__main__":
     # 센서 준비
-    sensor = SensorMock("sensor/conf.yaml")
+    sensor = SensorMock("mock_sensor/conf.yaml")
     sensor.load()
 
     rules_path = "rule_engine/rules_conf"

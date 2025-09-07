@@ -7,7 +7,7 @@
             ]
         },
         "actions": [
-            {"name":"switch_action","params":{"actuator":"FOG","state":"ON","duration_sec":60,"pause_sec":1800}}
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":1800}}
         ],
         "priority": 90
     },
@@ -31,7 +31,7 @@
             ]
         },
         "actions": [
-            {"name":"switch_action","params":{"actuator":"FOG","state":"ON","duration_sec":60,"pause_sec":600}}
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":600}}
         ],
         "priority": 90
     },
@@ -55,7 +55,7 @@
             ]
         },
         "actions": [
-            {"name":"switch_action","params":{"actuator":"FOG","state":"ON","duration_sec":120,"pause_sec":600}}
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":120,"pause_sec":600}}
         ],
         "priority": 90
     },
@@ -79,7 +79,7 @@
             ]
         },
         "actions": [
-            {"name":"switch_action","params":{"actuator":"FOG","state":"ON","duration_sec":60,"pause_sec":1800}}
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":1800}}
         ],
         "priority": 90
     },

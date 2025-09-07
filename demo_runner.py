@@ -26,7 +26,7 @@ def main_loop():
     print("[JOBS]", jobs)
 
 if __name__ == "__main__":
-    sensor = SensorMock("sensor/conf.yaml")
+    sensor = SensorMock("mock_sensor/conf.yaml")
     sensor.load()
     sensor.tick()
     ps = PlanScheduler(dispatch_fn, debounce_sec=0)     # 전역 디바운스 0초(원하면 높이기)
