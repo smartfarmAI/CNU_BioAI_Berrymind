@@ -3,13 +3,7 @@ from typing import List, Dict
 from actuator_base import Actuator, BaseState, Command
 from ksconstants import STATCODE
 import logging
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+from logger_config import logger
 
 # "작업 중" 상태 집합
 WORKING_CODES = frozenset({

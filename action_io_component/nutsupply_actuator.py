@@ -3,17 +3,7 @@ from actuator_base import Actuator, Command, NutSupplyState
 from ksconstants import STATCODE, CMDCODE
 from utils import pack_i32, unpack_f32, unpack_i32
 import logging
-
-# 모듈명 기반 로거 생성 - 각 파일마다 개별 로거를 만들어서 로그 관리 가능
-logger = logging.getLogger(__name__)  
-logger.setLevel(logging.INFO)  # INFO 레벨 이상만 로그로 남김
-
-# 콘솔 출력용 핸들러
-ch = logging.StreamHandler()
-# 로그 출력 형식: 시간 - 레벨 - 메시지 형태
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+from logger_config import logger
 
 TIMED_COMMANDS = frozenset({
     CMDCODE.NUT_WATER, CMDCODE.JUST_WATER

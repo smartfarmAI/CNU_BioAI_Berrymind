@@ -3,14 +3,7 @@ from utils import pack_i32, unpack_i32
 from actuator_base import Actuator, Command, RetractableState
 from ksconstants import STATCODE, CMDCODE
 import logging
-
-# 로그 설정 (콘솔 출력만)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+from logger_config import logger
 
 # "시간 지정" 명령 집합
 TIMED_COMMANDS = frozenset({CMDCODE.TIMED_OPEN, CMDCODE.TIMED_CLOSE})
