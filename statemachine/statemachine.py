@@ -1,46 +1,47 @@
 import asyncio, time
-from typing import Optional, Protocol
-from transitions import Machine
-from ksconstants import STATCODE, CMDCODE
+from typing import Optional
 import requests
 
-# “워킹으로 간주”할 코드 집합(필요시 여기만 바꾸면 됨)
-WORKING_CODES = frozenset({
-    STATCODE.WORKING, STATCODE.OPENING, STATCODE.CLOSING,
-    STATCODE.PREPARING, STATCODE.SUPPLYING, STATCODE.FINISHING
-})
+class STATCODE:
+    READY = 100
+    ERROR = 900
+    WORKING = 201
 
-def is_working_code(code: STATCODE) -> bool:
-    try:
-        return code in WORKING_CODES
-    except Exception:
-        return False
+def is_working_code(code: Optional[int]) -> bool:
+    return code in {STATCODE.WORKING}
+
+def _extract_remaining(js: dict):
+    # 다양한 키를 남은시간(초)로 정규화
+    for k in ("remaining_sec", "remain_sec", "remain"):
+        if k in js and js[k] is not None:
+            try:
+                return int(js[k])
+            except Exception:
+                pass
+    return None
 
 class DeviceFSM:
     states = ["READY", "WORKING", "ERROR"]
 
-    def __init__(self, actuator_name: str, host: str, verify_interval: float = 1.0, timeout = 3000):
+    def __init__(self, actuator_name: str, host: str, verify_interval: float = 1.0, timeout: float = 30.0):
         self.actuator_name = actuator_name
         self.host = host.rstrip("/")
         self.base_url = f"{self.host}/actuators/{self.actuator_name}"
-        self.timeout = timeout # 이 시간동안 안되면 실패로 간주
-        self.machine = Machine(model=self, states=self.states, initial="READY", queued=True)
-        self.machine.add_transition("start",  "READY",   "WORKING", after="on_start")
-        self.machine.add_transition("finish", "WORKING", "READY",   after="on_finish")
-        self.machine.add_transition("fail",   "*",       "ERROR",   after="on_fail")
-        self.machine.add_transition("reset",  "ERROR",   "READY")
-
+        self.timeout = timeout
+        self.state = "READY"
         self.want_opid: Optional[int] = None
         self.deadline_ts: float = 0.0
         self._verify_interval = verify_interval
         self._task: Optional[asyncio.Task] = None
 
-        # 디버깅용: 마지막 장비 코드/서브상태 저장
-        self.last_state_code: Optional[int] = STATCODE["READY"]
+        # 캐시
+        self.last_state_code: Optional[int] = STATCODE.READY
+        self.last_opid: Optional[int] = None
+        self.last_remaining_sec: Optional[int] = None
 
     def _url(self, path: str) -> str:
         return f"{self.base_url}{path}"
-    
+
     def _send_command(self, cmd_name: str, duration_sec: int) -> int:
         r = requests.post(
             self._url("/send_command"),
@@ -48,78 +49,88 @@ class DeviceFSM:
             timeout=self.timeout,
         )
         r.raise_for_status()
-        # TODO self.state에 결과 받아서 와야함
-        return int(r.json()["opid"])
-    
+        js = r.json()
+        opid = int(js.get("opid"))
+        self.last_opid = opid
+        # Action IO가 돌려주는 상태/남은 시간 즉시 반영
+        if js.get("state_code") is not None:
+            self.last_state_code = int(js["state_code"])
+        rem = _extract_remaining(js)
+        if rem is not None:
+            self.last_remaining_sec = rem
+        return opid
+
     def _read_state(self):
         r = requests.get(self._url("/get_state"), timeout=self.timeout)
         r.raise_for_status()
-        js = r.json()
-        return js  # {"opid": ..., "state_code": ...}
-    
-    # --- 외부 진입점 ---
+        js = r.json()  # {"opid": ..., "state_code": ..., "remain_sec"/"remaining_sec"/"remain": ...}
+        return js
+
     async def start_job(self, cmd_name: str, duration_sec: int = 0) -> int:
+        # Preflight: 실제 IO가 READY가 아니면 명령을 보내지 않음 (외부 셧다운/점유 고려)
+        try:
+            js = await asyncio.to_thread(self._read_state)
+            code = js.get("state_code", None)
+            if code is not None and int(code) != STATCODE.READY:
+                self.last_state_code = int(code)
+                rem = _extract_remaining(js)
+                if rem is not None:
+                    self.last_remaining_sec = rem
+                raise RuntimeError("preflight_not_ready")
+        except Exception:
+            # 읽기 실패도 안전 쪽으로 보수적으로 차단
+            raise RuntimeError("preflight_read_failed")
+
         if self.state != "READY":
-            print("상태가 READY가 아닙니다.")
             raise RuntimeError(f"busy (state={self.state})")
         opid = await asyncio.to_thread(self._send_command, cmd_name, duration_sec)
-        ttl = self.timeout
-        self.start(opid=opid, deadline_ts=time.time() + ttl)
+        self.want_opid = opid
+        self.state = "WORKING"
+        # TTL은 안전망: 남은시간이 있으면 그 +5초를 최소로 보장
+        ttl = max(self.timeout, (self.last_remaining_sec or 0) + 5)
+        self.deadline_ts = time.time() + ttl
         if not self._task or self._task.done():
             self._task = asyncio.create_task(self._verify_loop())
         return opid
 
-    # --- 전이 훅 ---
     def on_start(self, opid: int, deadline_ts: float):
-        self.want_opid = opid
-        self.deadline_ts = deadline_ts
-        print(f"{opid} 시작됬습니다.")
+        pass
 
     def on_finish(self):
-        print(f"{self.want_opid} 끝났습니다.") # TODO: 이름도 같이 나오게
-        self.want_opid = None # opid 초기화
-
-    def on_fail(self):
-        print(f"{self.want_opid} 에러")
         self.want_opid = None
 
-    # --- 검증 루프 ---
+    def on_fail(self):
+        self.want_opid = None
+
     async def _verify_loop(self):
-        """
-        WORKING일 때만 주기적으로 read_state().
-        성공 조건(예시): opid 반영 && 더 이상 워킹 코드가 아님 → finish()
-        실패 조건: TTL 초과 → fail()
-        """
         while True:
             await asyncio.sleep(self._verify_interval)
-            if not is_working_code(STATCODE[self.state]):
-                continue
 
+            # TTL 초과 처리
             if self.want_opid and time.time() > self.deadline_ts:
-                self.fail()
+                self.state = "ERROR"
+                self.on_fail()
+                return
+
+            try:
+                st = await asyncio.to_thread(self._read_state)
+            except Exception:
                 continue
 
-            st = await asyncio.to_thread(self._read_state)
-            opid = st.get("opid",-1) # TODO 에러 구현
-            code = st.get("state_code",STATCODE["ERROR"]) # TODO 에러구현
+            opid = st.get("opid", None)
+            code = st.get("state_code", None)
+            rem = _extract_remaining(st)
 
-            self.last_opid = int(opid) if opid is not None else None
-            self.last_state_code = int(code) if code is not None else None
+            if opid is not None: self.last_opid = int(opid)
+            if code is not None: self.last_state_code = int(code)
+            if rem is not None: self.last_remaining_sec = rem
 
-            # 1) 에러 코드 즉시 감지
-            if self.last_state_code == STATCODE["ERROR"]:
-                self.fail()
-                continue
-
-            # 2) 우리가 보낸 opid가 장비에 반영됐는지
-            print(f"opid 받은것 : {opid}, want_opid : {self.want_opid} last_state_code : {self.last_state_code}")
-            reflected = (opid == self.want_opid)
-
-            # 3) 반영되었고, 장비가 더 이상 '워킹 코드'가 아니면 완료로 간주
-            #    (장비가 세부코드를 안 주는 환경이면, 아래 조건을 'reflected'만으로도 운용 가능)
-            if self.want_opid and reflected and not is_working_code(self.last_state_code):
-                self.finish()
-                continue
-
-            # 4) 반영만 되었고 아직 워킹 중이면 계속 기다림
-            #    (세부코드를 못 받는다면, finish 조건을 'reflected'로 바꾸면 즉시 종료됨)
+            # 외부 시스템 영향 포함: IO 상태를 신뢰하여 전이
+            if self.last_state_code == STATCODE.ERROR:
+                self.state = "ERROR"
+                self.on_fail()
+                return
+            if self.want_opid and self.last_state_code == STATCODE.READY:
+                self.state = "READY"
+                self.on_finish()
+                return
