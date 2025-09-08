@@ -1,8 +1,11 @@
 from datetime import datetime, timezone
 from sqlalchemy import create_engine, text
+import os
+
+db_url = os.environ.get("DATABASE_URL")
 
 # 호스트=localhost / 컨테이너=timescaledb
-engine = create_engine("postgresql+psycopg://admin:admin123@localhost:5432/berrymind")
+engine = create_engine(db_url)
 
 def insert_greenhouse2(rows: list[dict]):
     if not rows: return

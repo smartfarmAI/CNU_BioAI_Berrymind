@@ -10,6 +10,9 @@ import json
 import yaml
 import sys
 from pymodbus.client import ModbusTcpClient
+from insert_sensor_data import insert_greenhouse2
+from datetime import datetime, timezone
+import os, time
 
 # Add project root to path to allow module imports
 sys.path.append('.')
@@ -114,30 +117,45 @@ def main():
     with open('register_map_split_status.yaml', 'r') as f:
         sensor_map = yaml.safe_load(f)
 
-    # Connect to Modbus server
-    client = ModbusTcpClient(config['modbus_ip'], port=config['modbus_port'])
-    if not client.connect():
-        print("Modbus 서버에 연결할 수 없습니다.")
+    interval = int(os.environ.get("POLL_INTERVAL_SEC", "60"))  # 기본값 60
+
+    
+    for i in range(5):
+        # Connect to Modbus server
+        client = ModbusTcpClient(config['modbus_ip'], port=config['modbus_port'])
+        if not client.connect():
+            print(f"Modbus 서버에 연결할 수 없습니다. 재시도 {i+1}")
+        else:
+            break
+    else:
+        print("Modbus 서버에 연결할 수 없어 종료합니다.")
         exit()
+    
 
     # Process all devices and collect data
     all_sensor_data = {}
     devices = sensor_map.get('devices', {})
-    
-    # Process each device and collect data
-    for dev_id in [2, 3, 4, 5]:
-        if dev_id in devices:
-            print(f"\nProcessing device {dev_id}...")
-            device_data = process_device(client, dev_id, devices[dev_id])
-            if device_data:  # Only extend if we got data back
-                all_sensor_data.update(device_data)
-    
-    # Print the final JSON output
-    print("\n=== Sensor Data ===")
-    print(json.dumps(all_sensor_data, ensure_ascii=False, indent=2))
-    
-    # Close the connection
-    client.close()
+    while True:
+        try:
+            # Process each device and collect data
+            for dev_id in [2, 3, 4, 5]:
+                if dev_id in devices:
+                    print(f"\nProcessing device {dev_id}...")
+                    device_data = process_device(client, dev_id, devices[dev_id])
+                    if device_data:  # Only extend if we got data back
+                        all_sensor_data.update(device_data)
+            
+            # Print the final JSON output
+            print("\n=== Sensor Data ===")
+            print(json.dumps(all_sensor_data, ensure_ascii=False, indent=2))
+            all_sensor_data.update({"time": datetime.now(timezone.utc)})
+            insert_greenhouse2([all_sensor_data])
+            time.sleep(interval)
+        except Exception as e:
+            print(f"[ERROR] {e}")
+            # Close the connection
+            print("\n=== Sensor Error ===")
+            client.close()
 
 if __name__ == "__main__":
     main()

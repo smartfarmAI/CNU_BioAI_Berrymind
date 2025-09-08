@@ -15,6 +15,28 @@ services:
       - ./db/init:/docker-entrypoint-initdb.d:ro
     command: ["postgres","-c","timescaledb.telemetry_level=off","-c","timezone=Asia/Seoul"]
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d berrymind || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  sensor:
+    build: ./sensor
+    container_name: sensor
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    environment:
+      # DB 연결 정보 (같은 compose 네트워크에서는 host를 서비스명으로)
+      - DATABASE_URL=postgresql+psycopg://admin:admin123@timescaledb:5432/berrymind
+      # 모드버스 대상 (당신 conf.json 값과 동일하게)
+      - MODBUS_IP=192.168.0.10
+      - MODBUS_PORT=502
+      # 1분 주기
+      - POLL_INTERVAL_SEC=60
+    command: python insert_sensor_data.py
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana:latest
