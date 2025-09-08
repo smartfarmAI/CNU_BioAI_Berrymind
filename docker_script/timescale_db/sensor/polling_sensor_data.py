@@ -133,10 +133,11 @@ def main():
     
 
     # Process all devices and collect data
-    all_sensor_data = {}
     devices = sensor_map.get('devices', {})
     while True:
         try:
+            time.sleep(interval)
+            all_sensor_data = {}
             # Process each device and collect data
             for dev_id in [2, 3, 4, 5]:
                 if dev_id in devices:
@@ -150,7 +151,6 @@ def main():
             print(json.dumps(all_sensor_data, ensure_ascii=False, indent=2))
             all_sensor_data.update({"time": datetime.now(timezone.utc)})
             insert_greenhouse2([all_sensor_data])
-            time.sleep(interval)
         except Exception as e:
             print(f"[ERROR] {e}")
             # Close the connection
