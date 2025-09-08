@@ -57,6 +57,7 @@ class Actuator(Generic[ST]):
         payload = self._encode_command(cmd)
 
         print("payload",payload)
+        print(self.reg['cmd_start_addr'], payload, self.reg["device_id"])
         # 상태 체크하는건 상태머신에서
         res = self.client.write_registers(self.reg['cmd_start_addr'], payload, device_id=self.reg["device_id"])
         # TODO: 명령 보내고 결과를 받아오는 것 구현

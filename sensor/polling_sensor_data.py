@@ -55,14 +55,15 @@ def process_device(client, device_id, device_info):
         
         start += read_count
 
-    print(f"  - Reading block from {min_addr} to {max_addr} (count: {read_count})...")
-    res = client.read_holding_registers(min_addr, count=read_count, device_id=device_id)
+    # print(f"  - Reading block from {min_addr} to {max_addr} (count: {read_count})...")
+    # res = client.read_holding_registers(min_addr, count=read_count, device_id=device_id)
 
     if res.isError():
         print("  - 블록 읽기 실패")
         return []
 
-    block = res.registers
+    # block = res.registers
+    block = results
 
     # Parse the fetched block for each sensor
     for name, info in device_info.get('values', {}).items():
@@ -94,7 +95,7 @@ def process_device(client, device_id, device_info):
                 status_offset = status_addr - min_addr
                 status_val = block[status_offset]
                 sensor_data[f"{name}_status"] = status_val
-                print(f"    상태: {STATCODE(status_val)}")
+                # print(f"    상태: {STATCODE(status_val)}")
         
 
         except IndexError:

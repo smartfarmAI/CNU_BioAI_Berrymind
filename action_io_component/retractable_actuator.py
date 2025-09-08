@@ -3,7 +3,7 @@ from utils import pack_i32, unpack_i32
 from actuator_base import Actuator, Command, RetractableState
 from ksconstants import STATCODE
 
-STATUS = {"state":0, "opid":1, "remain":[2,3], "open_pct":4}
+STATUS = {"state":1, "opid":0, "remain":[2,3], "open_pct":4}
 CMD    = {"cmd":0, "opid":1, "duration":[2,3], "target_pct":4}
 
 class RetractableActuator(Actuator[RetractableState]):
