@@ -20,7 +20,7 @@ SENSOR = {
 class NutSupplyActuator(Actuator[NutSupplyState]):
     def _encode_command(self, cmd: Command) -> List[int]:
         # TODO 로그 구현
-        opid = self._alloc_opid
+        opid = self._alloc_opid()
         # cmd.duration_sec 0 이면 안되는거 검증 코드
         # start_area, end_area는 1로 고정
         return [cmd.name.value, opid, 1, 1].extend(pack_i32(int(cmd.duration_sec)))

@@ -18,7 +18,6 @@ devices:
     values:
       indoor_temp: {addr: [203, 204], dtype: float32}
       indoor_humidity: {addr: [212, 213], dtype: float32}
-      indoor_wind_speed: {addr: [230, 231], dtype: float32}
       indoor_co2: {addr: [239, 240], dtype: float32}
       indoor_ec: {addr: [242, 243], dtype: float32}
       soil_water_content: {addr: [248, 249], dtype: float32}
@@ -26,7 +25,6 @@ devices:
     status:
       indoor_temp_status: {addr: 205}
       indoor_humidity_status: {addr: 214}
-      indoor_wind_speed_status: {addr: 232}
       indoor_co2_status: {addr: 241}
       indoor_ec_status: {addr: 244}
       soil_water_content_status: {addr: 250}

@@ -9,13 +9,13 @@ CMD    = {"cmd":0, "opid":1, "duration":[2,3], "target_pct":4}
 class RetractableActuator(Actuator[RetractableState]):
     def _encode_command(self, cmd: Command) -> List[int]:
         # TODO 로그 구현
-        opid = self._alloc_opid
+        opid = self._alloc_opid()
         # TODO cmd가 시간열림 혹은 시간 닫힘인데 duration_sec가 0이면 에러
         if cmd.duration_sec:
             return [cmd.name.value, opid].extend(pack_i32(int(cmd.duration_sec)))
         return [cmd.name.value, opid]
 
-    def _decode_state(self, regs: List[int]) -> RetractableState:
+    def _decode(self, regs: List[int]) -> RetractableState:
         # TODO 로그
         return RetractableState(
                 STATCODE(regs[STATUS["state"]]), 

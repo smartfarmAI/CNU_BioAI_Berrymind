@@ -49,12 +49,14 @@ class Actuator(Generic[ST]):
     # ---- 공통 I/O ----
 
     def _read(self, start_addr, cnt) -> List[int]:
-        rr = self.client.read_holding_registers(start_addr, cnt, device_id=self.reg['device_id'])
+        rr = self.client.read_holding_registers(start_addr, count = cnt, device_id=self.reg['device_id'])
         regs = rr.registers if rr else [0] * cnt
         return regs
 
     def send(self, cmd: Command) -> int:
         payload = self._encode_command(cmd)
+
+        print("payload",payload)
         # 상태 체크하는건 상태머신에서
         res = self.client.write_registers(self.reg['cmd_start_addr'], payload, device_id=self.reg["device_id"])
         # TODO: 명령 보내고 결과를 받아오는 것 구현
@@ -63,7 +65,7 @@ class Actuator(Generic[ST]):
     
     def read_state(self) -> Dict:
         device_id, sa, cnt = self.reg["device_id"], self.reg["state_start_addr"], self.reg["state_cnt"]
-        rr = self._read(sa,cnt,device_id)
+        rr = self._read(sa,cnt)
         st = self._decode(rr)
         return asdict(st)
 

@@ -40,6 +40,20 @@ def process_device(client, device_id, device_info):
     min_addr = min(all_addrs)
     max_addr = max(all_addrs)
     read_count = max_addr - min_addr + 1
+    print(read_count)
+
+    MAX_REG_COUNT = 125
+    results = []
+
+    start = min_addr
+    while start <= max_addr:
+        read_count = min(MAX_REG_COUNT, max_addr - start + 1)
+        print(f"  - Reading block from {start} to {start + read_count - 1} (count: {read_count})...")
+        
+        res = client.read_holding_registers(start, count=read_count, device_id=device_id)
+        results.extend(res.registers)
+        
+        start += read_count
 
     print(f"  - Reading block from {min_addr} to {max_addr} (count: {read_count})...")
     res = client.read_holding_registers(min_addr, count=read_count, device_id=device_id)

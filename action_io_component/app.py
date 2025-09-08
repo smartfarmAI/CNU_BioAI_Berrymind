@@ -1,3 +1,4 @@
+# 실행: uvicorn app:app --reload --port 8000
 from fastapi import FastAPI, HTTPException
 from factory import load_conf, build_client, build_actuator
 from actuator_base import Command
@@ -30,9 +31,9 @@ def post_command(name: str, body: CommandIn):
 
     # 장치별 추가 인자 처리
     if name in {"SKY_WINDOW_LEFT","SKY_WINDOW_RIGHT","SHADING_SCREEN","HEAT_CURTAIN"}:
-        opid = act.send(Command(name=CMDCODE[body.name], duration_sec=body.duration_sec or 0))
+        opid = act.send(Command(name=CMDCODE(body.name), duration_sec=body.duration_sec or 0))
     elif name == "NUTRIENT_PUMP":
-        opid = act.send(Command(name=CMDCODE[body.name], duration_sec=body.duration_sec or 0))
+        opid = act.send(Command(name=CMDCODE(body.name), duration_sec=body.duration_sec or 0))
     else:
-        opid = act.send(Command(name=CMDCODE[body.name], duration_sec=body.duration_sec or 0))
+        opid = act.send(Command(name=CMDCODE(body.name), duration_sec=body.duration_sec or 0))
     return {"opid": opid}
