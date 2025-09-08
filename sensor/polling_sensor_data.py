@@ -93,9 +93,8 @@ def process_device(client, device_id, device_info):
                 status_addr = status_info['addr']
                 status_offset = status_addr - min_addr
                 status_val = block[status_offset]
-                status_text = '정상' if status_val == STATCODE.READY else '비정상'
-                sensor_data[f"{name}_status"] = status_text
-                print(f"    상태: {status_text}")
+                sensor_data[f"{name}_status"] = status_val
+                print(f"    상태: {STATCODE(status_val)}")
         
 
         except IndexError:

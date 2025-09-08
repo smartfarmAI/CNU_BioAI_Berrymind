@@ -58,10 +58,10 @@ devices:
       shading_screen_status: {addr: 278}
       shading_screen_remaining_time: {addr: [279, 280], dtype: int32}
       shading_screen_open_pct: {addr: 281}
-      heat_opid_status: {addr: 282}
-      heat_status: {addr: 283}
-      heat_remaining_time: {addr: [284, 285], dtype: int32}
-      heat_open_pct: {addr: 286}
+      heat_curtain_opid_status: {addr: 282}
+      heat_curtain_status: {addr: 283}
+      heat_curtain_remaining_time: {addr: [284, 285], dtype: int32}
+      heat_curtain_open_pct: {addr: 286}
   5:
     values:
       nut_ec_value: {addr: [204, 205], dtype: float32}

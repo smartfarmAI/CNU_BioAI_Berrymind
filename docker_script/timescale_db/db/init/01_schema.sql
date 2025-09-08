@@ -70,10 +70,10 @@ CREATE TABLE IF NOT EXISTS greenhouse2 (
   shading_screen_status SMALLINT,
   shading_screen_remaining_time INTEGER,
   shading_screen_open_pct SMALLINT,
-  heat_opid_status SMALLINT,
-  heat_status SMALLINT,
-  heat_remaining_time INTEGER,
-  heat_open_pct SMALLINT,
+  heat_curtain_opid_status SMALLINT,
+  heat_curtain_status SMALLINT,
+  heat_curtain_remaining_time INTEGER,
+  heat_curtain_open_pct SMALLINT,
 
   -- device 5 values
   nut_ec_value REAL,
