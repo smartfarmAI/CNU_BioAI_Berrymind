@@ -3,7 +3,7 @@ services:
     image: timescale/timescaledb:latest-pg16
     container_name: tsdb
     # M1/M2면 다음 줄 유지(인텔이면 주석 처리 가능)
-    platform: linux/arm64/v8
+    platform: linux/arm64
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
@@ -35,7 +35,7 @@ services:
       - MODBUS_PORT=502
       # 1분 주기
       - POLL_INTERVAL_SEC=60
-    command: python insert_sensor_data.py
+    command: python polling_sensor_data.py
     restart: unless-stopped
 
   grafana:
