@@ -36,3 +36,6 @@ def submit_schedule(plan: Plan):
 @app.get("/get_schedules")
 def get_schedule():
     return [ (j.id, j.next_run_time) for j in ps.sched.get_jobs() ]
+
+@app.get("/health")
+def health(): return {"status": "ok"}
