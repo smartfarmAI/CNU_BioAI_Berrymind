@@ -17,7 +17,7 @@ class Plan(BaseModel):
 
 def dispatch_fn(actuator: str, item: PlanItem):
     # 리퀘스트 보냄 /devies/{actuator}/jobs {"cmd_name": "string", "duration_sec": 0}
-    res = requests.post(url=f"{FSM_HOST_BASE}/{actuator}/jobs",json={"cmd_name":item.action_name,"duration_sec": item.action_param["duration_sec"]})
+    res = requests.post(url=f"{FSM_HOST_BASE}/{actuator}/jobs",json={"cmd_name":item.action_param["state"],"duration_sec": item.action_param["duration_sec"]})
     return res
     # print(f"[DISPATCH] {actuator} -> {item.action_name} {item.action_param}")
 
