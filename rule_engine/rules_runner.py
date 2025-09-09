@@ -19,7 +19,7 @@ with engine.connect() as conn:
 calculator = SunriseCalculator()
 res["timeband"] = calculator.get_timeband(res["time"].strftime("%Y-%m-%d %H:%M:%S"))
 cutoff = date(2025, 9, 22) # 정식일
-res["DAT"] = max((res["time"] - cutoff).days, 0)
+res["DAT"] = max((res["time"].date() - cutoff).days, 0)
 print(res)
 
 rules  = load_rules("rules_conf")
