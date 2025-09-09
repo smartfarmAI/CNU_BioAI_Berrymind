@@ -1,0 +1,6 @@
+pyyaml 
+transitions
+fastapi
+pydantic
+uvicorn[standard]
+requests

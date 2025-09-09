@@ -1,4 +1,20 @@
 services:
+  fsm:
+    build: ./statemachine         # FastAPI 서버 Dockerfile 위치
+    container_name: fsm
+    environment:
+      - TZ=Asia/Seoul
+    ports:
+      - "9000:9000"
+    healthcheck:
+      # wget/curl 없이 Python 표준 라이브러리로 체크
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; r=urllib.request.urlopen('http://localhost:9000/health', timeout=2); sys.exit(0 if r.status==200 else 1)\""]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - timescale_db_default
+
   scheduler:
     build: ./scheduler_component         # FastAPI 서버 Dockerfile 위치
     container_name: scheduler
@@ -6,6 +22,9 @@ services:
       - TZ=Asia/Seoul
     ports:
       - "8001:8001"
+    depends_on:
+      fsm:
+        condition: service_healthy
     healthcheck:
       # wget/curl 없이 Python 표준 라이브러리로 체크
       test: ["CMD-SHELL", "python -c \"import urllib.request,sys; r=urllib.request.urlopen('http://localhost:8001/health', timeout=2); sys.exit(0 if r.status==200 else 1)\""]

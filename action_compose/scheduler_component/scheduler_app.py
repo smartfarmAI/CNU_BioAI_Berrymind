@@ -5,11 +5,11 @@ from scheduler_component import PlanScheduler, compile_plan, PlanItem
 from typing import Any, Dict
 from datetime import datetime
 from zoneinfo import ZoneInfo
-import requests
+import requests,os
 
 app = FastAPI()
 
-FSM_HOST_BASE = "http://localhost:9000/devices"
+FSM_HOST_BASE = os.getenv("FSM_HOST_BASE","http://fsm:9000/devices")
 
 class Plan(BaseModel):
     items: Dict[str,PlanItem]
