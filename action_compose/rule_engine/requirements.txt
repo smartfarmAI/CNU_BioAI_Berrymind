@@ -2,3 +2,4 @@ SQLAlchemy
 psycopg[binary]
 business-rules
 ephem
+requests
