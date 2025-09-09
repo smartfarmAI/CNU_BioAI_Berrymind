@@ -39,7 +39,7 @@ class Actuator(Generic[ST]):
         self._next_opid = 1
 
     # ---- 하위 클래스가 오버라이드할 것 ----
-    def _encode_command(self, cmd: Command) -> List[int]:
+    def _encode_command(self, cmd: Command, opid: int) -> List[int]:
         raise NotImplementedError
     def _decode(self, regs: List[int]) -> ST:
         raise NotImplementedError
@@ -54,6 +54,7 @@ class Actuator(Generic[ST]):
         return regs
 
     def send(self, cmd: Command) -> int:
+<<<<<<< HEAD
         payload = self._encode_command(cmd)
 
         print("payload",payload)
@@ -63,6 +64,13 @@ class Actuator(Generic[ST]):
         # TODO: 명령 보내고 결과를 받아오는 것 구현
         print(res)
         return self.now_opid
+=======
+        opid = self._alloc_opid()
+        payload = self._encode_command(cmd, opid)
+        # 상태 체크하는건 상태머신에서
+        self.client.write_registers(self.reg['cmd_start_addr'], payload, unit=self.reg["device_id"])
+        return opid 
+>>>>>>> fe724439d295bf51a50b0b9f314f9fa76d1b7366
     
     def read_state(self) -> Dict:
         device_id, sa, cnt = self.reg["device_id"], self.reg["state_start_addr"], self.reg["state_cnt"]
