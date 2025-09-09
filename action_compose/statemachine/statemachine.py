@@ -73,14 +73,14 @@ class DeviceFSM:
     def on_start(self, opid: int, deadline_ts: float):
         self.want_opid = opid
         self.deadline_ts = deadline_ts
-        print(f"{opid} 시작됬습니다.")
+        print(f"{self.actuator_name} {opid} 시작됬습니다.")
 
     def on_finish(self):
-        print(f"{self.want_opid} 끝났습니다.") # TODO: 이름도 같이 나오게
+        print(f"{self.actuator_name} {self.want_opid} 끝났습니다.") # TODO: 이름도 같이 나오게
         self.want_opid = None # opid 초기화
 
     def on_fail(self):
-        print(f"{self.want_opid} 에러")
+        print(f"{self.actuator_name} {self.want_opid} 에러")
         self.want_opid = None
 
     # --- 검증 루프 ---
@@ -96,10 +96,12 @@ class DeviceFSM:
                 continue
 
             if self.want_opid and time.time() > self.deadline_ts:
+                print("시간조건으로 인해 fail로 넘어갑니다.")
                 self.fail()
                 continue
 
             st = await asyncio.to_thread(self._read_state)
+            print(f"state 요청으로 인해 받은 값 {self.actuator_name} {st}")
             opid = st.get("opid",-1) # TODO 에러 구현
             code = st.get("state_code",STATCODE["ERROR"]) # TODO 에러구현
 
@@ -108,6 +110,7 @@ class DeviceFSM:
 
             # 1) 에러 코드 즉시 감지
             if self.last_state_code == STATCODE["ERROR"]:
+                print(f"에러 코드 즉시 감지로 인해 fail로 넘어갑니다. {self.last_state_code}")
                 self.fail()
                 continue
 
