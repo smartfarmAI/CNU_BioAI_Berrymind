@@ -41,15 +41,18 @@ class FSMStateResp(BaseModel):
 @app.post("/devices/{name}/jobs", response_model=StartJobResp)
 async def start_job(name: str, req: StartJobReq):
     fsm = get_fsm(name)
+    print(f"{name} 요청이 들어왔습니다. req: {req}")
     async with _locks[name]:
         if fsm.state != "READY":
             print(f"{name} 기존 요청 처리중으로 거부되었습니다. 현재 작업중 {fsm.last_opid}")
-            return
+            return fsm.last_opid
             # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
+        print(f"{name} fsm.start_job을 시작합니다.")
         opid = await fsm.start_job(
             cmd_name=req.cmd_name,
             duration_sec=req.duration_sec
         )
+        print(f"{name} {opid} 시작되었습니다.")
         return StartJobResp(opid=opid, state=fsm.state)
 
 @app.get("/devices/{name}/state", response_model=FSMStateResp)
