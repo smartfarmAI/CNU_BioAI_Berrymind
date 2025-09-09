@@ -1,0 +1,8 @@
+pyyaml 
+schedule
+apscheduler
+transitions
+fastapi
+pydantic
+uvicorn[standard]
+requests

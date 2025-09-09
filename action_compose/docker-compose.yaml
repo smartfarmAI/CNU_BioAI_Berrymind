@@ -1,0 +1,38 @@
+services:
+  scheduler:
+    build: ./scheduler_component         # FastAPI 서버 Dockerfile 위치
+    container_name: scheduler
+    environment:
+      - TZ=Asia/Seoul
+    ports:
+      - "8001:8001"
+    healthcheck:
+      # wget/curl 없이 Python 표준 라이브러리로 체크
+      test: ["CMD-SHELL", "python - <<'PY'\nimport sys,urllib.request\n"
+                          "try:\n  r=urllib.request.urlopen('http://localhost:8001/health',timeout=2)\n"
+                          "  sys.exit(0 if r.status==200 else 1)\n"
+                          "except Exception:\n  sys.exit(1)\nPY"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - timescale_db_default
+
+  rule_engine:
+    build: ./rule_engine              # 룰엔진 Dockerfile 위치
+    container_name: rule_engine
+    environment:
+      - TZ=Asia/Seoul
+      - DATABASE_URL=postgresql+psycopg://admin:admin123@tsdb:5432/berrymind  # DB 호스트명 확인(예: tsdb)
+      - SUBMIT_BASE_URL=http://scheduler:8001/submit_schedules
+    depends_on:
+      scheduler:
+        condition: service_healthy
+    command: ["python", "rules_runner.py"]   # 1분마다 도는 APScheduler 엔트리포인트
+    restart: unless-stopped
+    networks:
+      - timescale_db_default
+
+networks:
+  timescale_db_default:
+    external: true
