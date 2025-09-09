@@ -1,5 +1,5 @@
 # fsm_server.py
-import asyncio
+import asyncio, os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from statemachine import DeviceFSM  # 네가 만든 FSM
@@ -7,7 +7,7 @@ from statemachine import DeviceFSM  # 네가 만든 FSM
 # uvicorn fsm_server:app --reload --port 9000
 
 # 액션 I/O 서버(네 mock_action_io) 주소
-ACTION_IO_HOST = "http://localhost:8000"
+ACTION_IO_HOST = os.getenv("ACTION_IO_HOST","http://actionio:8000")
 
 app = FastAPI(title="FSM Controller")
 
