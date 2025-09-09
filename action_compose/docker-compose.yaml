@@ -8,10 +8,7 @@ services:
       - "8001:8001"
     healthcheck:
       # wget/curl 없이 Python 표준 라이브러리로 체크
-      test: ["CMD-SHELL", "python - <<'PY'\nimport sys,urllib.request\n"
-                          "try:\n  r=urllib.request.urlopen('http://localhost:8001/health',timeout=2)\n"
-                          "  sys.exit(0 if r.status==200 else 1)\n"
-                          "except Exception:\n  sys.exit(1)\nPY"]
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; r=urllib.request.urlopen('http://localhost:8001/health', timeout=2); sys.exit(0 if r.status==200 else 1)\""]
       interval: 10s
       timeout: 3s
       retries: 5
