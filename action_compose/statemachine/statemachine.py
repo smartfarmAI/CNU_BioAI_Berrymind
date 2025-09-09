@@ -62,6 +62,7 @@ class DeviceFSM:
         if self.state != "READY":
             print("상태가 READY가 아닙니다.")
             raise RuntimeError(f"busy (state={self.state})")
+        print(f"{self.actuator_name} 요청을 보냅니다. {cmd_name} {duration_sec}")
         opid = await asyncio.to_thread(self._send_command, cmd_name, duration_sec)
         ttl = self.timeout
         self.start(opid=opid, deadline_ts=time.time() + ttl)
@@ -103,7 +104,7 @@ class DeviceFSM:
             st = await asyncio.to_thread(self._read_state)
             print(f"state 요청으로 인해 받은 값 {self.actuator_name} {st}")
             opid = st.get("opid",-1) # TODO 에러 구현
-            code = st.get("state_code",STATCODE["ERROR"]) # TODO 에러구현
+            code = st.get("state",STATCODE["ERROR"]) # TODO 에러구현
 
             self.last_opid = int(opid) if opid is not None else None
             self.last_state_code = int(code) if code is not None else None
