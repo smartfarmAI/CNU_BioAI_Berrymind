@@ -1,7 +1,7 @@
 # 실행: uvicorn scheduler_app:app --reload --port 8001
 from fastapi import FastAPI
 from pydantic import BaseModel
-from scheduler_component import PlanScheduler, compile_plan, PlanItem
+from .scheduler_component import PlanScheduler, compile_plan, PlanItem
 from typing import Any, Dict
 from datetime import datetime
 from zoneinfo import ZoneInfo
