@@ -18,13 +18,13 @@ class RetractableActuator(Actuator[RetractableState]):
     def _decode(self, regs: List[int]) -> RetractableState:
         # TODO 로그
         return RetractableState(
-                STATCODE(regs[STATUS["state"]]), 
-                regs[STATUS["opid"]], 
-                unpack_i32(
+                state=STATCODE(regs[STATUS["state"]]), 
+                opid=regs[STATUS["opid"]], 
+                remain_sec=unpack_i32(
                     regs[STATUS["remain"][0]],
                     regs[STATUS["remain"][1]]
                 ),
-                regs[STATUS["open_pct"]]
+                open_pct=regs[STATUS["open_pct"]]
         )
 
     # TODO 좌우천장은 따로 구현 해야함
