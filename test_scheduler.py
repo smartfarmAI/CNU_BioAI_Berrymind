@@ -1,88 +1,118 @@
-import requests
-from datetime import datetime, timedelta
-import pandas as pd
-import sys
 import os
+import sys
+import json
+import time
+import random
+import requests
+import pandas as pd
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
-# Add the project root to the Python path
+# Add the project root to the Python path so relative imports work when run from repo root
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from rule_engine.rule_decider import load_rules, decide_rules
 from util.SRSSCalc import SunriseCalculator
 
-# Scheduler app endpoint
 SCHEDULER_URL = "http://localhost:8001/submit_schedules"
+TZ = ZoneInfo("Asia/Seoul")
 
-def get_test_data():
-    """Load test data from CSV and prepare sensor values"""
-    df = pd.read_csv("test_sample.csv")
-    first_row = df.iloc[0]
-    
-    # Initialize sunrise calculator with sample coordinates
-    calculator = SunriseCalculator(35.8, 127.1)
-    
-    return {
-        'time_band': calculator.get_timeband(first_row["저장시간"]),
-        'indoor_temp': first_row["내부온도(1)"],
-        'indoor_humidity': first_row["내부습도(1)"],
-        'rain': first_row["감우"],
-        'wind_speed': first_row["풍속"],
-        'temp_diff': 2,
-        'outdoor_temp': first_row["외부온도"],
-        'solar_radiation': first_row["외부일사"],
-        'DAT': 7,
-        'indoor_CO2': first_row["CO2농도(1)"],
-        'water_content': 12
-    }
+# 완주군 이서면 농생명로 100
+LATITUDE = 35.8
+LONGITUDE = 127.1
 
-def create_fcu_plan():
-    """Create a scheduling plan for FCU based on test data"""
-    test_data = get_test_data()
+CSV_PATH = "test_sample.csv"
+
+
+def row_to_sensor_vals(row, calculator: SunriseCalculator):
+    """Mirror test_real_data.py mapping for a single pandas row -> sensor values dict."""
+    # '저장시간'이 문자열/타임스탬프 어떤 형식이든 get_timeband가 처리하도록 그대로 전달
+    vals = {
+            'time_band': calculator.get_timeband(row["저장시간"]), 
+            'indoor_temp': row["내부온도(1)"], 
+            'indoor_humidity': row["내부습도(1)"], 
+            'rain': row["감우"], 
+            'wind_speed': row["풍속"], 
+            'temp_diff': 2, 
+            'outdoor_temp': row["외부온도"], 
+            'solar_radiation': row["외부일사"], 
+            'DAT': random.choice([0,4,7,11]), 
+            'indoor_CO2': row["CO2농도(1)"], 
+            'water_content': random.choice([10,11,12,13,14])
+        }
+    return vals
+
+
+def find_fcu_decision_from_csv(csv_path: str) -> dict | None:
+    """Scan test_sample.csv, run rule_engine, and return the first FCU decision found."""
+    df = pd.read_csv(csv_path)
+    calc = SunriseCalculator(LATITUDE, LONGITUDE)
     rules = load_rules("rule_engine/rules_conf")
-    decisions = decide_rules(test_data, rules)
-    
-    fcu_decision = decisions.get('FCU', {})
+
+    # Iterate rows to find one that triggers FCU
+    for i, row in df.iterrows():
+        try:
+            vals = row_to_sensor_vals(row, calc)
+            decisions = decide_rules(vals, rules)
+            fcu = decisions.get("FCU")
+            if fcu:
+                print(f"[HIT] Row {i} triggers FCU: time_band={vals['time_band']}, indoor_temp={vals['indoor_temp']}, "
+                      f"indoor_humidity={vals['indoor_humidity']}")
+                print("[FCU Decision]", json.dumps(fcu, ensure_ascii=False))
+                return fcu
+        except KeyError as e:
+            # If any required column missing, raise a clear error
+            raise KeyError(f"CSV missing required column: {e}. Check headers in {csv_path}.") from e
+        except Exception as e:
+            # Continue scanning even if a row has an issue
+            print(f"[WARN] Skipping row {i} due to: {e}")
+            continue
+    return None
+
+
+def schedule_fcu_action(run_after_minutes: int = 1):
+    """Pick FCU decision from CSV and schedule it via scheduler_app.
+       - OFF  : now + run_after_minutes (default 1)
+       - ON   : now
+    """
+    fcu_decision = find_fcu_decision_from_csv(CSV_PATH)
     if not fcu_decision:
-        print("No FCU decision made with the test data")
-        return None
-    
-    # Convert the decision to the format expected by the scheduler
-    action_name = fcu_decision.get('action', 'off')
-    duration_sec = fcu_decision.get('duration_sec', 60)
-    
-    return {
-        "items": {
-            "FCU": {
-                "action_name": action_name,
-                "action_param": {
-                    "duration_sec": duration_sec
-                }
-            }
-        },
-        "run_at": (datetime.now() + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
+        print("[ERROR] No FCU decision could be derived from the CSV and rules. Aborting.")
+        return
+
+    # Build plan for only FCU
+    item = {
+        "action_name": fcu_decision["action_name"],
+        "action_param": fcu_decision["action_param"],
     }
 
-def test_scheduler():
-    """Test the scheduler by submitting an FCU plan"""
-    plan = create_fcu_plan()
-    if not plan:
-        return
-    
-    print("Scheduling FCU action:", plan)
-    
+    # state 확인 (없으면 즉시 실행으로 간주)
+    state = str(fcu_decision.get("action_param", {}).get("state", "")).upper()
+
+    now_kst = datetime.now(tz=TZ)
+    if state == "OFF":
+        run_at_dt = now_kst + timedelta(minutes=run_after_minutes)
+    else:
+        # ON 또는 기타 값/누락 → 즉시
+        run_at_dt = now_kst
+
+    plan = {
+        "items": {"FCU": item},
+        "run_at": run_at_dt.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+
+    print(f"[POST] Scheduling FCU to run at (KST): {plan['run_at']}  (state={state})")
+    print("[POST] Payload:", json.dumps(plan, ensure_ascii=False))
+
+    resp = requests.post(SCHEDULER_URL, json=plan, timeout=10)
+    print(f"[RESP] Status: {resp.status_code}")
     try:
-        response = requests.post(SCHEDULER_URL, json=plan)
-        if response.status_code == 200:
-            print("Successfully scheduled FCU action")
-            print("Scheduled to run at:", plan["run_at"])
-            print("Action details:", plan["items"]["FCU"])
-        else:
-            print(f"Failed to schedule. Status code: {response.status_code}")
-            print("Response:", response.text)
-    except Exception as e:
-        print(f"Error scheduling FCU action: {str(e)}")
+        print("[RESP] Body:", resp.json())
+    except Exception:
+        print("[RESP] Body (text):", resp.text)
+
 
 if __name__ == "__main__":
-    print("Make sure the scheduler app is running on port 8001")
-    print("Run: uvicorn scheduler_component.scheduler_app:app --reload --port 8001")
-    test_scheduler()
+    print("NOTE: Ensure the scheduler app is running:")
+    print("      uvicorn scheduler_component.scheduler_app:app --reload --port 8001\n")
+    schedule_fcu_action(run_after_minutes=1)
