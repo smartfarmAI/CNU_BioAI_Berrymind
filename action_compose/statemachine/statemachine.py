@@ -42,11 +42,13 @@ class DeviceFSM:
         return f"{self.base_url}{path}"
     
     def _send_command(self, cmd_name: str, duration_sec: int) -> int:
+        print(f"actionio에 요청을 보냅니다. {self.actuator_name} cmd_name : {cmd_name} duration_sec : {duration_sec}")
         r = requests.post(
             self._url("/send_command"),
             json={"cmd_name": cmd_name, "duration_sec": duration_sec},
             timeout=self.timeout,
         )
+        print(f"actionio에 요청을 보낸 결과 {self.actuator_name} {r.json()}")
         r.raise_for_status()
         # TODO self.state에 결과 받아서 와야함
         return int(r.json()["opid"])
