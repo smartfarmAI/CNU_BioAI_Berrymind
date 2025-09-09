@@ -28,7 +28,7 @@ def is_CMD_code(cmd_code: CMDCODE) -> bool:
         logger.warning(f"명령 코드 확인 오류: {e}")
         return False
 
-STATUS = {"state":0, "opid":1, "remain":[2,3], "open_pct":4}
+STATUS = {"state":1, "opid":0, "remain":[2,3], "open_pct":4}
 CMD    = {"cmd":0, "opid":1, "duration":[2,3], "target_pct":4}
 
 class RetractableActuator(Actuator[RetractableState]):
@@ -39,6 +39,7 @@ class RetractableActuator(Actuator[RetractableState]):
         self.cmd_addr = cmd_addr
 
     def _encode_command(self, cmd: Command) -> List[int]:
+<<<<<<< HEAD
         opid = self._alloc_opid
         if is_CMD_code(cmd.name):
             if cmd.duration_sec == 0:
@@ -49,8 +50,16 @@ class RetractableActuator(Actuator[RetractableState]):
             regs = [cmd.name.value, opid]
         logger.debug(f"레지스터 배열: {regs}")
         return regs
+=======
+        # TODO 로그 구현
+        opid = self._alloc_opid()
+        # TODO cmd가 시간열림 혹은 시간 닫힘인데 duration_sec가 0이면 에러
+        if cmd.duration_sec:
+            return [cmd.name.value, opid].extend(pack_i32(int(cmd.duration_sec)))
+        return [cmd.name.value, opid]
+>>>>>>> 6325297f44fa4562f15e5ca6504827e03c45035d
 
-    def _decode_state(self, regs: List[int]) -> RetractableState:
+    def _decode(self, regs: List[int]) -> RetractableState:
         # TODO 로그
         state = RetractableState(
                 STATCODE(regs[STATUS["state"]]), 

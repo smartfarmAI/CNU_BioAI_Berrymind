@@ -46,12 +46,12 @@ class EnvVars(BaseVariables):
         return int(self.vals.get("DAT", 0))
 
     @numeric_rule_variable(label="Indoor CO2")
-    def indoor_CO2(self) -> float:
-        return float(self.vals.get("indoor_CO2", 0.0))
+    def indoor_co2(self) -> float:
+        return float(self.vals.get("indoor_co2", 0.0))
 
-    @numeric_rule_variable(label="Water Content")
-    def water_content(self) -> float:
-        return float(self.vals.get("water_content", 0.0))
+    @numeric_rule_variable(label="Soil Water Content")
+    def soil_water_content(self) -> float:
+        return float(self.vals.get("soil_water_content", 0.0))
 
 # 2) ProbeActions
 class ProbeActions(BaseActions):
@@ -80,10 +80,14 @@ class ProbeActions(BaseActions):
     })
     def nutsupply(self, water_type: str, duration_sec: int, pause_sec: int = 0):
         wt = water_type.upper()
-        if wt not in ("WATER", "NUTRIENT"):
+        if wt  == "WATER":
+            state = "JUST_WATER"
+        else:
             wt = "NUTRIENT"  # 기본값 보정
+            state = "NUT_WATER"
         intent = {
             "actuator": "NUTRIENT_PUMP",  # 고정
+            "state": state,
             "water_type": wt,
             "duration_sec": duration_sec,
             "pause_sec": pause_sec

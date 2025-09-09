@@ -1,0 +1,57 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: tsdb
+    # M1/M2면 다음 줄 유지(인텔이면 주석 처리 가능)
+    platform: linux/amd64
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: berrymind         # 기본 DB명을 여기로 지정 (아래 SQL과 맞추기)
+    ports:
+      - "5432:5432"
+    volumes:
+      - tsdb_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    command: ["postgres","-c","timescaledb.telemetry_level=off","-c","timezone=Asia/Seoul"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d berrymind || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  sensor:
+    build: ./sensor
+    container_name: sensor
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    environment:
+      # DB 연결 정보 (같은 compose 네트워크에서는 host를 서비스명으로)
+      - DATABASE_URL=postgresql+psycopg://admin:admin123@timescaledb:5432/berrymind
+      # 모드버스 대상 (당신 conf.json 값과 동일하게)
+      - MODBUS_IP=192.168.0.10
+      - MODBUS_PORT=502
+      # 1분 주기
+      - POLL_INTERVAL_SEC=60
+    command: python polling_sensor_data.py
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - timescaledb
+    restart: unless-stopped
+
+volumes:
+  tsdb_data:
+  grafana_data:

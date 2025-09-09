@@ -16,8 +16,8 @@ def main_loop():
             'outdoor_temp': row["외부온도"], 
             'solar_radiation': row["외부일사"], 
             'DAT': random.choice([0,4,7,11]), 
-            'indoor_CO2': row["CO2농도(1)"], 
-            'water_content': random.choice([10,11,12,13,14])
+            'indoor_co2': row["CO2농도(1)"], 
+            'soil_water_content': random.choice([10,11,12,13,14])
         }
     print("[SENSOR]", vals)
 

@@ -1,4 +1,4 @@
-# 실행: uvicorn mock_action_io:app --reload --port 8000
+# 실행: uvicorn app:app --reload --port 8000
 from fastapi import FastAPI
 from pydantic import BaseModel
 

@@ -2,7 +2,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":350},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":350},
                 {"name":"time_band","operator":"equal_to","value":1}
             ]
         },
@@ -12,7 +12,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":650},
+                {"name":"indoor_co2","operator":"greater_than","value":650},
                 {"name":"time_band","operator":"equal_to","value":1}
             ]
         },
@@ -22,7 +22,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":300},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":300},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
@@ -32,7 +32,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":550},
+                {"name":"indoor_co2","operator":"greater_than","value":550},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
@@ -42,7 +42,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
@@ -52,7 +52,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":500},
+                {"name":"indoor_co2","operator":"greater_than","value":500},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
@@ -62,7 +62,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
@@ -72,7 +72,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":400},
+                {"name":"indoor_co2","operator":"greater_than","value":400},
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
@@ -82,7 +82,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"time_band","operator":"equal_to","value":5}
             ]
         },
@@ -92,7 +92,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":300},
+                {"name":"indoor_co2","operator":"greater_than","value":300},
                 {"name":"time_band","operator":"equal_to","value":5}
             ]
         },
@@ -102,7 +102,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
@@ -112,7 +112,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":300},
+                {"name":"indoor_co2","operator":"greater_than","value":300},
                 {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
@@ -122,7 +122,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
@@ -132,7 +132,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":300},
+                {"name":"indoor_co2","operator":"greater_than","value":300},
                 {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
@@ -142,7 +142,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
@@ -152,7 +152,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_CO2","operator":"greater_than","value":450},
+                {"name":"indoor_co2","operator":"greater_than","value":450},
                 {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
@@ -164,7 +164,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":350},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":350},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -176,7 +176,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"indoor_CO2","operator":"greater_than","value":520},
+                {"name":"indoor_co2","operator":"greater_than","value":520},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -188,7 +188,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":300},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":300},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -200,7 +200,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"indoor_CO2","operator":"greater_than","value":440},
+                {"name":"indoor_co2","operator":"greater_than","value":440},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -212,7 +212,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -224,7 +224,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"indoor_CO2","operator":"greater_than","value":400},
+                {"name":"indoor_co2","operator":"greater_than","value":400},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -236,7 +236,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":4},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -248,7 +248,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":4},
-                {"name":"indoor_CO2","operator":"greater_than","value":320},
+                {"name":"indoor_co2","operator":"greater_than","value":320},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -260,7 +260,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":5},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -272,7 +272,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":5},
-                {"name":"indoor_CO2","operator":"greater_than","value":240},
+                {"name":"indoor_co2","operator":"greater_than","value":240},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -284,7 +284,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":6},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -296,7 +296,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":6},
-                {"name":"indoor_CO2","operator":"greater_than","value":240},
+                {"name":"indoor_co2","operator":"greater_than","value":240},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -308,7 +308,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":7},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -320,7 +320,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":7},
-                {"name":"indoor_CO2","operator":"greater_than","value":240},
+                {"name":"indoor_co2","operator":"greater_than","value":240},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -332,7 +332,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":8},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -344,7 +344,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":8},
-                {"name":"indoor_CO2","operator":"greater_than","value":360},
+                {"name":"indoor_co2","operator":"greater_than","value":360},
                 {"name":"solar_radiation","operator":"less_than_or_equal_to","value":50}
             ]
         },
@@ -356,7 +356,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":350},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":350},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -368,7 +368,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"indoor_CO2","operator":"greater_than","value":390},
+                {"name":"indoor_co2","operator":"greater_than","value":390},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -380,7 +380,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":300},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":300},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -392,7 +392,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"indoor_CO2","operator":"greater_than","value":330},
+                {"name":"indoor_co2","operator":"greater_than","value":330},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -404,7 +404,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -416,7 +416,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"indoor_CO2","operator":"greater_than","value":300},
+                {"name":"indoor_co2","operator":"greater_than","value":300},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -428,7 +428,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":4},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -440,7 +440,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":4},
-                {"name":"indoor_CO2","operator":"greater_than","value":240},
+                {"name":"indoor_co2","operator":"greater_than","value":240},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -452,7 +452,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":5},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":180},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":180},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -464,7 +464,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":5},
-                {"name":"indoor_CO2","operator":"greater_than","value":180},
+                {"name":"indoor_co2","operator":"greater_than","value":180},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -476,7 +476,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":6},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":180},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":180},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -488,7 +488,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":6},
-                {"name":"indoor_CO2","operator":"greater_than","value":180},
+                {"name":"indoor_co2","operator":"greater_than","value":180},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -500,7 +500,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":7},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":180},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":180},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -512,7 +512,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":7},
-                {"name":"indoor_CO2","operator":"greater_than","value":180},
+                {"name":"indoor_co2","operator":"greater_than","value":180},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -524,7 +524,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":8},
-                {"name":"indoor_CO2","operator":"less_than_or_equal_to","value":200},
+                {"name":"indoor_co2","operator":"less_than_or_equal_to","value":200},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },
@@ -536,7 +536,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":8},
-                {"name":"indoor_CO2","operator":"greater_than","value":270},
+                {"name":"indoor_co2","operator":"greater_than","value":270},
                 {"name":"rain","operator":"equal_to","value":true}
             ]
         },

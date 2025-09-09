@@ -46,7 +46,7 @@ SENSOR = {
 class NutSupplyActuator(Actuator[NutSupplyState]):
     def _encode_command(self, cmd: Command) -> List[int]:
         # TODO 로그 구현
-        opid = self._alloc_opid
+        opid = self._alloc_opid()
         # cmd.duration_sec 0 이면 안되는거 검증 코드
         if cmd.duration_sec == 0:
             raise ValueError(f"{cmd.name}명령은 실행 시간이 필요합니다")
