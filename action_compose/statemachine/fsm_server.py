@@ -43,8 +43,9 @@ async def start_job(name: str, req: StartJobReq):
     fsm = get_fsm(name)
     async with _locks[name]:
         if fsm.state != "READY":
-            # TODO 기존 요청 처리중이라는 메세지 남은시간도 보여주기
-            raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
+            print(f"{name} 기존 요청 처리중으로 거부되었습니다. 현재 작업중 {fsm.last_opid}")
+            return
+            # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
         opid = await fsm.start_job(
             cmd_name=req.cmd_name,
             duration_sec=req.duration_sec
