@@ -17,7 +17,7 @@ with engine.connect() as conn:
 
 # 센서값에 timeband, DAT 추가
 calculator = SunriseCalculator()
-res["timeband"] = calculator.get_timeband(res["time"])
+res["timeband"] = calculator.get_timeband(res["time"].strftime("%Y%m%d"))
 cutoff = date(2025, 9, 22)
 res["DAT"] = max((res["time"] - cutoff).days, 0)
 print(res)
