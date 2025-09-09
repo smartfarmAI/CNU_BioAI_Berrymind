@@ -18,7 +18,7 @@ def get_state(name: str):
         raise HTTPException(404, f"unknown actuator: {name}")
 
 class CommandIn(BaseModel):
-    name: CMDCODE
+    name: str
     duration_sec: int  = 0
     # 추가 파라미터가 필요한 장치는 라우트 분리 or 쿼리파라미터로 처리
 
@@ -31,11 +31,11 @@ def post_command(name: str, body: CommandIn):
     print(body)
     # 장치별 추가 인자 처리
     if name in {"SKY_WINDOW_LEFT","SKY_WINDOW_RIGHT","SHADING_SCREEN","HEAT_CURTAIN"}:
-        opid = act.send(Command(name=CMDCODE(body.name), duration_sec=body.duration_sec or 0))
+        opid = act.send(Command(name=CMDCODE[body.name], duration_sec=body.duration_sec or 0))
     elif name == "NUTRIENT_PUMP":
-        opid = act.send(Command(name=CMDCODE(body.name), duration_sec=body.duration_sec or 0))
+        opid = act.send(Command(name=CMDCODE[body.name], duration_sec=body.duration_sec or 0))
     else:
-        opid = act.send(Command(name=CMDCODE(body.name), duration_sec=body.duration_sec or 0))
+        opid = act.send(Command(name=CMDCODE[body.name], duration_sec=body.duration_sec or 0))
     return {"opid": opid}
 
 @app.get("/health")
