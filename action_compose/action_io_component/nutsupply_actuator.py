@@ -23,7 +23,7 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
         opid = self._alloc_opid()
         # cmd.duration_sec 0 이면 안되는거 검증 코드
         # start_area, end_area는 1로 고정
-        return [cmd.name.value, opid, 1, 1].extend(pack_i32(int(cmd.duration_sec)))
+        return [cmd.name.value, opid, 1, 1, *pack_i32(int(cmd.duration_sec or 0))]
 
     def _decode_state(self, regs: List[int]) -> NutSupplyState:
         return NutSupplyState(

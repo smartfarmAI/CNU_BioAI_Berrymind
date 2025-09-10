@@ -54,6 +54,7 @@ class Actuator(Generic[ST]):
         return regs
 
     def send(self, cmd: Command) -> int:
+        print(f"base send 진입 {cmd}")
         payload = self._encode_command(cmd)
 
         print(f"payload 인코딩 결과 {payload}")

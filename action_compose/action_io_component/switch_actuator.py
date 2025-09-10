@@ -12,7 +12,7 @@ class SwitchActuator(Actuator[BaseState]):
         print(opid)
         print(cmd.duration_sec)
         if cmd.duration_sec:
-            return [cmd.name.value, opid].extend(pack_i32(int(cmd.duration_sec)))
+            return [cmd.name.value, opid, *pack_i32(int(cmd.duration_sec or 0))]
         return [cmd.name.value, opid]
     
     def _decode(self, regs: List[int]) -> BaseState:
