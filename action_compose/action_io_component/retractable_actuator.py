@@ -10,7 +10,10 @@ class RetractableActuator(Actuator[RetractableState]):
     def _encode_command(self, cmd: Command) -> List[int]:
         print("_encode_command in")
         # TODO 로그 구현
-        opid = self._alloc_opid()
+        try:
+            opid = self._alloc_opid()
+        except Exception:
+            print("opid 발급 에러")
         # TODO cmd가 시간열림 혹은 시간 닫힘인데 duration_sec가 0이면 에러
         if cmd.duration_sec:
             print([cmd.name.value, opid].extend(pack_i32(int(cmd.duration_sec))))
