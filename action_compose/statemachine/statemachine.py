@@ -61,6 +61,8 @@ class DeviceFSM:
     
     # --- 외부 진입점 ---
     async def start_job(self, cmd_name: str, duration_sec: int = 0) -> int:
+        # 여기서 한번 상태를 체크 할것.
+        
         if self.state != "READY":
             print("상태가 READY가 아닙니다.")
             raise RuntimeError(f"busy (state={self.state})")

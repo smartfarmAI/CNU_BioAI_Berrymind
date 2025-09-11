@@ -25,7 +25,7 @@ def run_once():
 
     t = res["time"].astimezone(KST) if res["time"].tzinfo else res["time"].replace(tzinfo=KST)
     res["timeband"] = calc.get_timeband(t.strftime("%Y-%m-%d %H:%M:%S"))
-    res["DAT"] = max((t.date() - cutoff).days, 0)
+    res["DAT"] = max((t.date() - cutoff).days)
     logging.info("[SENSOR] %s", res)
 
     decision = decide_rules(res, rules)
