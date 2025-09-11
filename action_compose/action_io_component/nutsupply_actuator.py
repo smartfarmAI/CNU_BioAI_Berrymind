@@ -5,17 +5,17 @@ from utils import pack_i32, unpack_f32, unpack_i32
 
 STATUS = {"state":0, "area":1, "alarm":2, "opid":3, "remain":[4,5]}
 CMD    = {"cmd":0, "opid":1, "start_area":2, "end_area":3, "time":[4,5], "ec":[6,7], "ph":[8,9]}
-SENSOR = {
-            "ec": {
-                "addr":204
-            },
-            "ph": {
-                "addr":213
-            },
-            "flow": {
-                "addr":225
-            }
-        }
+# SENSOR = {
+#             "ec": {
+#                 "addr":204
+#             },
+#             "ph": {
+#                 "addr":213
+#             },
+#             "flow": {
+#                 "addr":225
+#             }
+#         }
 
 class NutSupplyActuator(Actuator[NutSupplyState]):
     def _encode_command(self, cmd: Command) -> List[int]:
@@ -34,10 +34,10 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
             remain_sec=unpack_i32(regs[STATUS["remain"][0]],regs[STATUS["remain"][1]])
         )
     
-    def read_sensor(self) -> Dict:
-        res = {"ec":0.0,"ph":0.0,"flow":0.0}
-        for key in res.keys():
-            regs = self._read(SENSOR[key]["addr"],3)
-            res[key] = unpack_f32(regs[0],regs[1])
-        return res
+    # def read_sensor(self) -> Dict:
+    #     res = {"ec":0.0,"ph":0.0,"flow":0.0}
+    #     for key in res.keys():
+    #         regs = self._read(SENSOR[key]["addr"],3)
+    #         res[key] = unpack_f32(regs[0],regs[1])
+    #     return res
 
