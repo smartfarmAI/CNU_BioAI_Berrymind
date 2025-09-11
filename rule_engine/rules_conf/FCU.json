@@ -2,6 +2,15 @@
     {
         "conditions": {
             "all": [
+                {"name":"time_band","operator":"equal_to","value":1}
+            ]
+        },
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"OFF"}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
                 {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
@@ -34,6 +43,15 @@
             "all": [
                 {"name":"indoor_temp","operator":"less_than_or_equal_to","value":25},
                 {"name":"time_band","operator":"equal_to","value":3}
+            ]
+        },
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"OFF"}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"OFF"}}],
