@@ -86,5 +86,41 @@
         },
         "actions": [{"name":"nutsupply","params":{"water_type":"NUTRIENT","duration_sec":15}}],
         "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":5}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":6}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":7}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":8}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "priority": 90
     }
 ]
