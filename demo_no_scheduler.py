@@ -1,6 +1,6 @@
 import time, schedule
 from mock_sensor.sensor_mocking import SensorMock
-from rule_engine.rule_decider import load_rules, decide_rules
+from action_compose.rule_engine.rule_decider import load_rules, decide_rules
 
 def main_loop(sensor: SensorMock, rules_path: str):
     # 1) 센서 tick → 새로운 값 생성

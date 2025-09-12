@@ -1,8 +1,8 @@
 # demo_runner.py (핵심만)
 import time, schedule
 from mock_sensor.sensor_mocking import SensorMock
-from rule_engine.rule_decider import load_rules, decide_rules
-from scheduler_component.scheduler_component import PlanScheduler, compile_plan, PlanItem, Plan
+from action_compose.rule_engine.rule_decider import load_rules, decide_rules
+from action_compose.scheduler_component.scheduler_component import PlanScheduler, compile_plan, PlanItem, Plan
 
 # 상태머신 대신: 테스트용 디스패치(스케줄러만 검증)
 def dispatch_fn(actuator: str, item: PlanItem):

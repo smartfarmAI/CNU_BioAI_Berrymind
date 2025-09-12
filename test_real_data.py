@@ -1,5 +1,5 @@
 import time, schedule, random
-from rule_engine.rule_decider import load_rules, decide_rules
+from action_compose.rule_engine.rule_decider import load_rules, decide_rules
 from util.SRSSCalc import SunriseCalculator
 import pandas as pd
 

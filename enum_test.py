@@ -1,4 +1,4 @@
-from ksconstants import STATCODE, CMDCODE
+from action_compose.action_io_component.ksconstants import STATCODE, CMDCODE
 
 WORKING_CODES = frozenset({
     STATCODE.WORKING, STATCODE.OPENING, STATCODE.CLOSING,

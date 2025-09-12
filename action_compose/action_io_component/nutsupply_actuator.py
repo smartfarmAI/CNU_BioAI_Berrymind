@@ -66,16 +66,6 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
         logger.debug(f"상태 디코딩 완료: 상태={state.state}, 영역={state.area}, 남은시간={state.remain_sec}초")
         return state
     
-<<<<<<< HEAD:action_io_component/nutsupply_actuator.py
-    def read_sensor(self) -> Dict:
-        res = {"ec":0.0,"ph":0.0,"flow":0.0}
-        for key in res.keys():
-            regs = self._read(SENSOR[key]["addr"],3)
-            res[key] = unpack_f32(regs[0],regs[1])
-            logger.debug(f"센서 '{key}' 값: {res[key]}")
-        logger.info(f"전체 센서 측정값: EC={res['ec']}, pH={res['ph']}, 유량={res['flow']}")
-        return res
-=======
     # def read_sensor(self) -> Dict:
     #     res = {"ec":0.0,"ph":0.0,"flow":0.0}
     #     for key in res.keys():
@@ -83,4 +73,3 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
     #         res[key] = unpack_f32(regs[0],regs[1])
     #     return res
 
->>>>>>> 862a96638f1cfeff6e6c7e3bb270345c01ad2173:action_compose/action_io_component/nutsupply_actuator.py
