@@ -93,7 +93,7 @@
                 {"name":"time_band","operator":"equal_to","value":5}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT_PUMP","state":"OFF"}}],
         "priority": 90
     },
     {
@@ -102,7 +102,7 @@
                 {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT_PUMP","state":"OFF"}}],
         "priority": 90
     },
     {
@@ -111,7 +111,7 @@
                 {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT_PUMP","state":"OFF"}}],
         "priority": 90
     },
     {
@@ -120,7 +120,7 @@
                 {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT","state":"OFF"}}],
+        "actions": [{"name":"nutsupply","params":{"actuator":"NUTRIENT_PUMP","state":"OFF"}}],
         "priority": 90
     }
 ]

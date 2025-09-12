@@ -1,3 +1,0 @@
-pymodbus
-httpx
-multipart
