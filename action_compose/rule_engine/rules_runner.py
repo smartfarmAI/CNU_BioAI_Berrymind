@@ -1,5 +1,5 @@
 # rules_runner.py
-import os, time, requests, logger
+import os, time, requests
 from datetime import datetime, date
 from zoneinfo import ZoneInfo
 from sqlalchemy import create_engine, text
