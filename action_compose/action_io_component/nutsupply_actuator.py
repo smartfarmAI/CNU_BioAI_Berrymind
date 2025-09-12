@@ -31,17 +31,17 @@ def is_CMD_code(code: CMDCODE) -> bool:
 
 STATUS = {"state":0, "area":1, "alarm":2, "opid":3, "remain":[4,5]}
 CMD    = {"cmd":0, "opid":1, "start_area":2, "end_area":3, "time":[4,5], "ec":[6,7], "ph":[8,9]}
-SENSOR = {
-            "ec": {
-                "addr":204
-            },
-            "ph": {
-                "addr":213
-            },
-            "flow": {
-                "addr":225
-            }
-        }
+# SENSOR = {
+#             "ec": {
+#                 "addr":204
+#             },
+#             "ph": {
+#                 "addr":213
+#             },
+#             "flow": {
+#                 "addr":225
+#             }
+#         }
 
 class NutSupplyActuator(Actuator[NutSupplyState]):
     def _encode_command(self, cmd: Command) -> List[int]:
@@ -53,7 +53,7 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
         logger.info(f"명령 인코딩 시작: '{cmd.name}', 작업ID={opid}, 실행시간={cmd.duration_sec}초")
 
         # start_area, end_area는 1로 고정
-        return [cmd.name.value, opid, 1, 1].extend(pack_i32(int(cmd.duration_sec)))
+        return [cmd.name.value, opid, 1, 1, *pack_i32(int(cmd.duration_sec or 0))]
 
     def _decode_state(self, regs: List[int]) -> NutSupplyState:
         state = NutSupplyState(
@@ -66,6 +66,7 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
         logger.debug(f"상태 디코딩 완료: 상태={state.state}, 영역={state.area}, 남은시간={state.remain_sec}초")
         return state
     
+<<<<<<< HEAD:action_io_component/nutsupply_actuator.py
     def read_sensor(self) -> Dict:
         res = {"ec":0.0,"ph":0.0,"flow":0.0}
         for key in res.keys():
@@ -74,3 +75,12 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
             logger.debug(f"센서 '{key}' 값: {res[key]}")
         logger.info(f"전체 센서 측정값: EC={res['ec']}, pH={res['ph']}, 유량={res['flow']}")
         return res
+=======
+    # def read_sensor(self) -> Dict:
+    #     res = {"ec":0.0,"ph":0.0,"flow":0.0}
+    #     for key in res.keys():
+    #         regs = self._read(SENSOR[key]["addr"],3)
+    #         res[key] = unpack_f32(regs[0],regs[1])
+    #     return res
+
+>>>>>>> 862a96638f1cfeff6e6c7e3bb270345c01ad2173:action_compose/action_io_component/nutsupply_actuator.py

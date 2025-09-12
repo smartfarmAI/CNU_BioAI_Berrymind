@@ -14,7 +14,7 @@ def build_client(host="192.168.0.10", port=502):
     return cli
 
 def build_actuator(kind: str, client, reg: dict):
-    if kind in {"FCU","FCU_CIRCULATION","CO2","FAN","FOG"}:
+    if kind in {"FCU_FAN","FCU_PUMP","CO2","FAN","FOG"}:
         return SwitchActuator(client, reg)
     if kind in {"SKY_WINDOW_LEFT","SKY_WINDOW_RIGHT","SHADING_SCREEN","HEAT_CURTAIN"}:
         return RetractableActuator(client, reg)

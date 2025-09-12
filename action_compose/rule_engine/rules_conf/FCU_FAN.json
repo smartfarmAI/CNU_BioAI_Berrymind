@@ -15,7 +15,7 @@
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
         "priority": 90
     },
     {
@@ -25,7 +25,7 @@
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"OFF"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF"}}],
         "priority": 90
     },
     {
@@ -35,7 +35,7 @@
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
         "priority": 90
     },
     {
@@ -45,7 +45,7 @@
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU","state":"OFF"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF"}}],
         "priority": 90
     },
     {

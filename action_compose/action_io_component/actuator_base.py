@@ -54,11 +54,15 @@ class Actuator(Generic[ST]):
         return regs
 
     def send(self, cmd: Command) -> int:
+<<<<<<< HEAD:action_io_component/actuator_base.py
 <<<<<<< HEAD
+=======
+        print(f"base send 진입 {cmd}")
+>>>>>>> 862a96638f1cfeff6e6c7e3bb270345c01ad2173:action_compose/action_io_component/actuator_base.py
         payload = self._encode_command(cmd)
 
-        print("payload",payload)
-        print(self.reg['cmd_start_addr'], payload, self.reg["device_id"])
+        print(f"payload 인코딩 결과 {payload}")
+        print(f"cmd_start_addr : {self.reg['cmd_start_addr']} \ndevice_id : {self.reg["device_id"]}")
         # 상태 체크하는건 상태머신에서
         res = self.client.write_registers(self.reg['cmd_start_addr'], payload, device_id=self.reg["device_id"])
         # TODO: 명령 보내고 결과를 받아오는 것 구현

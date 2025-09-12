@@ -2,12 +2,12 @@ connect:
   host: 192.168.0.10
   port: 502
 devices:
-  FCU:
+  FCU_FAN:
     device_id: 4
     state_start_addr: 203
     state_cnt: 4   
     cmd_start_addr: 503
-  FCU_CIRCULATION:
+  FCU_PUMP:
     device_id: 4
     state_start_addr: 207   
     state_cnt: 4   

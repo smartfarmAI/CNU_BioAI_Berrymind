@@ -39,6 +39,7 @@ class RetractableActuator(Actuator[RetractableState]):
         self.cmd_addr = cmd_addr
 
     def _encode_command(self, cmd: Command) -> List[int]:
+<<<<<<< HEAD:action_io_component/retractable_actuator.py
 <<<<<<< HEAD
         opid = self._alloc_opid
         if is_CMD_code(cmd.name):
@@ -51,10 +52,17 @@ class RetractableActuator(Actuator[RetractableState]):
         logger.debug(f"레지스터 배열: {regs}")
         return regs
 =======
+=======
+        print(f"_encode_command in : cmd {cmd}")
+>>>>>>> 862a96638f1cfeff6e6c7e3bb270345c01ad2173:action_compose/action_io_component/retractable_actuator.py
         # TODO 로그 구현
-        opid = self._alloc_opid()
+        try:
+            opid = self._alloc_opid()
+        except Exception:
+            print("opid 발급 에러")
         # TODO cmd가 시간열림 혹은 시간 닫힘인데 duration_sec가 0이면 에러
         if cmd.duration_sec:
+<<<<<<< HEAD:action_io_component/retractable_actuator.py
             return [cmd.name.value, opid].extend(pack_i32(int(cmd.duration_sec)))
         return [cmd.name.value, opid]
 >>>>>>> 6325297f44fa4562f15e5ca6504827e03c45035d
@@ -65,10 +73,23 @@ class RetractableActuator(Actuator[RetractableState]):
                 STATCODE(regs[STATUS["state"]]), 
                 regs[STATUS["opid"]], 
                 unpack_i32(
+=======
+            print([cmd.name.value, opid, *pack_i32(int(cmd.duration_sec or 0))])
+            return [cmd.name.value, opid, *pack_i32(int(cmd.duration_sec or 0))]
+        print([cmd.name.value, opid, *pack_i32(int(cmd.duration_sec or 0))])
+        return [cmd.name.value, opid, *pack_i32(int(cmd.duration_sec or 0))]
+
+    def _decode(self, regs: List[int]) -> RetractableState:
+        # TODO 로그
+        return RetractableState(
+                state=STATCODE(regs[STATUS["state"]]), 
+                opid=regs[STATUS["opid"]], 
+                remain_sec=unpack_i32(
+>>>>>>> 862a96638f1cfeff6e6c7e3bb270345c01ad2173:action_compose/action_io_component/retractable_actuator.py
                     regs[STATUS["remain"][0]],
                     regs[STATUS["remain"][1]]
                 ),
-                regs[STATUS["open_pct"]]
+                open_pct=regs[STATUS["open_pct"]]
         )
         if is_working_code(state.state):
             logger.info(f"작업 중: {state.state}, 남은시간={state.remain_sec}s")

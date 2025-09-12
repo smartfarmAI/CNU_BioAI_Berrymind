@@ -42,11 +42,13 @@ class DeviceFSM:
         return f"{self.base_url}{path}"
     
     def _send_command(self, cmd_name: str, duration_sec: int) -> int:
+        print(f"actionio에 요청을 보냅니다. {self.actuator_name} cmd_name : {cmd_name} duration_sec : {duration_sec}")
         r = requests.post(
             self._url("/send_command"),
             json={"cmd_name": cmd_name, "duration_sec": duration_sec},
             timeout=self.timeout,
         )
+        print(f"actionio에 요청을 보낸 결과 {self.actuator_name} {r.json()}")
         r.raise_for_status()
         # TODO self.state에 결과 받아서 와야함
         return int(r.json()["opid"])
@@ -62,6 +64,7 @@ class DeviceFSM:
         if self.state != "READY":
             print("상태가 READY가 아닙니다.")
             raise RuntimeError(f"busy (state={self.state})")
+        print(f"{self.actuator_name} 요청을 보냅니다. {cmd_name} {duration_sec}")
         opid = await asyncio.to_thread(self._send_command, cmd_name, duration_sec)
         ttl = self.timeout
         self.start(opid=opid, deadline_ts=time.time() + ttl)
@@ -73,14 +76,14 @@ class DeviceFSM:
     def on_start(self, opid: int, deadline_ts: float):
         self.want_opid = opid
         self.deadline_ts = deadline_ts
-        print(f"{opid} 시작됬습니다.")
+        print(f"{self.actuator_name} {opid} 시작됬습니다.")
 
     def on_finish(self):
-        print(f"{self.want_opid} 끝났습니다.") # TODO: 이름도 같이 나오게
+        print(f"{self.actuator_name} {self.want_opid} 끝났습니다.") # TODO: 이름도 같이 나오게
         self.want_opid = None # opid 초기화
 
     def on_fail(self):
-        print(f"{self.want_opid} 에러")
+        print(f"{self.actuator_name} {self.want_opid} 에러")
         self.want_opid = None
 
     # --- 검증 루프 ---
@@ -96,18 +99,21 @@ class DeviceFSM:
                 continue
 
             if self.want_opid and time.time() > self.deadline_ts:
+                print("시간조건으로 인해 fail로 넘어갑니다.")
                 self.fail()
                 continue
 
             st = await asyncio.to_thread(self._read_state)
+            print(f"state 요청으로 인해 받은 값 {self.actuator_name} {st}")
             opid = st.get("opid",-1) # TODO 에러 구현
-            code = st.get("state_code",STATCODE["ERROR"]) # TODO 에러구현
+            code = st.get("state",STATCODE["ERROR"]) # TODO 에러구현
 
             self.last_opid = int(opid) if opid is not None else None
             self.last_state_code = int(code) if code is not None else None
 
             # 1) 에러 코드 즉시 감지
             if self.last_state_code == STATCODE["ERROR"]:
+                print(f"에러 코드 즉시 감지로 인해 fail로 넘어갑니다. {self.last_state_code}")
                 self.fail()
                 continue
 

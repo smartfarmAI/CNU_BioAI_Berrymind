@@ -1,5 +1,5 @@
 # fsm_server.py
-import asyncio
+import asyncio, os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from statemachine import DeviceFSM  # 네가 만든 FSM
@@ -7,7 +7,7 @@ from statemachine import DeviceFSM  # 네가 만든 FSM
 # uvicorn fsm_server:app --reload --port 9000
 
 # 액션 I/O 서버(네 mock_action_io) 주소
-ACTION_IO_HOST = "http://localhost:8000"
+ACTION_IO_HOST = os.getenv("ACTION_IO_HOST","http://actionio:8000")
 
 app = FastAPI(title="FSM Controller")
 
@@ -41,14 +41,18 @@ class FSMStateResp(BaseModel):
 @app.post("/devices/{name}/jobs", response_model=StartJobResp)
 async def start_job(name: str, req: StartJobReq):
     fsm = get_fsm(name)
+    print(f"{name} 요청이 들어왔습니다. req: {req}")
     async with _locks[name]:
         if fsm.state != "READY":
-            # TODO 기존 요청 처리중이라는 메세지 남은시간도 보여주기
-            raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
+            print(f"{name} 기존 요청 처리중으로 거부되었습니다. 현재 작업중 {fsm.last_opid}")
+            return fsm.last_opid
+            # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
+        print(f"{name} fsm.start_job을 시작합니다.")
         opid = await fsm.start_job(
             cmd_name=req.cmd_name,
             duration_sec=req.duration_sec
         )
+        print(f"{name} {opid} 시작되었습니다.")
         return StartJobResp(opid=opid, state=fsm.state)
 
 @app.get("/devices/{name}/state", response_model=FSMStateResp)

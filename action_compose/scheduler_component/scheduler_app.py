@@ -5,11 +5,11 @@ from scheduler_component import PlanScheduler, compile_plan, PlanItem
 from typing import Any, Dict
 from datetime import datetime
 from zoneinfo import ZoneInfo
-import requests
+import requests,os
 
 app = FastAPI()
 
-FSM_HOST_BASE = "http://localhost:9000/devices"
+FSM_HOST_BASE = os.getenv("FSM_HOST_BASE","http://fsm:9000/devices")
 
 class Plan(BaseModel):
     items: Dict[str,PlanItem]
@@ -17,7 +17,7 @@ class Plan(BaseModel):
 
 def dispatch_fn(actuator: str, item: PlanItem):
     # 리퀘스트 보냄 /devies/{actuator}/jobs {"cmd_name": "string", "duration_sec": 0}
-    res = requests.post(url=f"{FSM_HOST_BASE}/{actuator}/jobs",json={"cmd_name":item.action_name,"duration_sec": item.action_param["duration_sec"]})
+    res = requests.post(url=f"{FSM_HOST_BASE}/{actuator}/jobs",json={"cmd_name":item.action_param["state"],"duration_sec": item.action_param["duration_sec"]})
     return res
     # print(f"[DISPATCH] {actuator} -> {item.action_name} {item.action_param}")
 
@@ -36,3 +36,6 @@ def submit_schedule(plan: Plan):
 @app.get("/get_schedules")
 def get_schedule():
     return [ (j.id, j.next_run_time) for j in ps.sched.get_jobs() ]
+
+@app.get("/health")
+def health(): return {"status": "ok"}

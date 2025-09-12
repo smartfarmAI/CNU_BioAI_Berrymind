@@ -1,0 +1,6 @@
+pyyaml 
+fastapi
+pydantic
+uvicorn[standard]
+requests
+pymodbus
