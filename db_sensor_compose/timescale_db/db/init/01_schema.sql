@@ -96,3 +96,30 @@ CREATE TABLE IF NOT EXISTS greenhouse2 (
 -- 3) 하이퍼테이블 + 인덱스
 SELECT create_hypertable('greenhouse2','time', if_not_exists => TRUE);
 CREATE INDEX IF NOT EXISTS idx_greenhouse2_time ON greenhouse2 (time DESC);
+
+
+
+-- 로거 관련
+CREATE TABLE IF NOT EXISTS app_logs (
+  id        BIGSERIAL PRIMARY KEY,
+  ts        TIMESTAMPTZ NOT NULL,
+  level     TEXT NOT NULL,
+  logger    TEXT NOT NULL,   -- 앱 이름 (logger name) 저장
+  module    TEXT,
+  func      TEXT,
+  lineno    INT,
+  message   TEXT NOT NULL,
+  extra     JSONB,
+  exc_text  TEXT
+);
+
+-- 인덱스
+CREATE INDEX IF NOT EXISTS idx_app_logs_ts        ON app_logs(ts);
+CREATE INDEX IF NOT EXISTS idx_app_logs_level     ON app_logs(level);
+CREATE INDEX IF NOT EXISTS idx_app_logs_logger_ts ON app_logs(logger, ts DESC);
+
+-- extra 검색 자주 할 경우
+CREATE INDEX IF NOT EXISTS idx_app_logs_extra_gin ON app_logs USING GIN (extra jsonb_path_ops);
+
+-- 에러만 빠르게 조회할 때 선택
+CREATE INDEX IF NOT EXISTS idx_app_logs_error_ts  ON app_logs(ts DESC) WHERE level = 'ERROR';
