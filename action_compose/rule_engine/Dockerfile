@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     TZ=Asia/Seoul \
     DATABASE_URL=postgresql+psycopg://admin:admin123@timescaledb:5432/berrymind \
     SCHEDULER_URL=http://scheduler:8001/submit_schedules \
-    APP_NAME=scheduler
+    APP_NAME=rule_engine
 
 WORKDIR /app
 
