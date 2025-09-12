@@ -1,0 +1,9 @@
+{
+  "items": {
+    "CO2": {
+      "action_name": "switch_action",
+      "action_param": {"actuator": "CO2", "state": "ON", "duration_sec": 0, "pause_sec": 0}
+    }
+  },
+  "run_at": "2025-09-07 03:30:00"
+}
