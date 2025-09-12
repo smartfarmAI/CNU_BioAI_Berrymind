@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from sqlalchemy import create_engine, Table, MetaData
 
 DB_URL   = os.getenv("DATABASE_URL", "postgresql+psycopg://admin:admin123@tsdb:5432/berrymind")
-APP_NAME = os.getenv("APP_NAME", "berrymind-scheduler")
+APP_NAME = os.getenv("APP_NAME", "scheduler")
 
 engine   = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=1800)
 app_logs = Table("app_logs", MetaData(), autoload_with=engine)  # DDL 없이 반사(reflect)
