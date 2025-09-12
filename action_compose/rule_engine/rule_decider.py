@@ -74,21 +74,15 @@ class ProbeActions(BaseActions):
     
     
     @rule_action(params={
-        "water_type": FIELD_TEXT,         # "WATER" or "NUTRIENT" (구동기: 양액기 고정)
+        "state": FIELD_TEXT,         # "WATER" or "NUTRIENT" (구동기: 양액기 고정)
         "duration_sec": FIELD_NUMERIC,    # 주입시간(sec)
         "pause_sec": FIELD_NUMERIC        # pause time(sec)
     })
-    def nutsupply(self, water_type: str, duration_sec: int, pause_sec: int = 0):
-        wt = water_type.upper()
-        if wt  == "WATER":
-            state = "JUST_WATER"
-        else:
-            wt = "NUTRIENT"  # 기본값 보정
-            state = "NUT_WATER"
+    def nutsupply(self, state: str, duration_sec: int = 0, pause_sec: int = 0):
+        state = state.upper()
         intent = {
             "actuator": "NUTRIENT_PUMP",  # 고정
             "state": state,
-            "water_type": wt,
             "duration_sec": duration_sec,
             "pause_sec": pause_sec
         }

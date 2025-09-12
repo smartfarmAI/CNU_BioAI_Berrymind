@@ -21,7 +21,7 @@ def main_loop():
         }
     print("[SENSOR]", vals)
 
-    rules = load_rules("rule_engine/rules_conf")
+    rules = load_rules("action_compose/rule_engine/rules_conf")
     decisions = decide_rules(vals, rules)               # {'FCU': {...}, 'CO2': {...}}
     print("[DECISION]", decisions)
 
