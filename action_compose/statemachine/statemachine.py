@@ -78,8 +78,12 @@ class DeviceFSM:
     # --- 리셋 ---
     async def reset(self):
         print(f"{self.actuator_name} 리셋 합니다.")
-        res = await self.start_job(cmd_name="OFF")
-        print(f"{self.actuator_name} 리셋 {res}")
+        self.state = "WORKING"
+        opid = await asyncio.to_thread(self._send_command, "OFF")
+        if not self._task or self._task.done():
+            self._task = asyncio.create_task(self._verify_loop())
+        print(f"{self.actuator_name} 리셋 완료 {opid}")
+        return opid
 
 
     # --- 전이 훅 ---
