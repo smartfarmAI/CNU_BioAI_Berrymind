@@ -88,9 +88,9 @@
         "priority": 100
     },
     {
-        "name": "time_band all : Fundamental permise : wind speed >= 14m/sec : SKY_WINDOW_LEFT CLOSE",
+        "name": "time_band all : Fundamental permise : wind speed >= 100m/sec : SKY_WINDOW_LEFT CLOSE",
         "conditions": {
-            "all": [{"name":"wind_speed","operator":"greater_than_or_equal_to","value":14}]
+            "all": [{"name":"wind_speed","operator":"greater_than_or_equal_to","value":100}]
         },
         "actions": [{"name":"vent_action","params":{"actuator":"SKY_WINDOW_LEFT","state":"TIMED_CLOSE","duration_sec":500,"pause_sec":300}}],
         "priority": 100

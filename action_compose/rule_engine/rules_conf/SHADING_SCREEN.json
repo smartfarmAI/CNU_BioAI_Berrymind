@@ -20,7 +20,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"solar_radiation","operator":"greater_than_or_equal_to","value":400},
+                {"name":"solar_radiation","operator":"greater_than_or_equal_to","value":800},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
@@ -30,7 +30,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"solar_radiation","operator":"less_than","value":400},
+                {"name":"solar_radiation","operator":"less_than","value":800},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
@@ -40,7 +40,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"solar_radiation","operator":"less_than_or_equal_to","value":400},
+                {"name":"solar_radiation","operator":"less_than_or_equal_to","value":800},
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
