@@ -64,8 +64,9 @@ class DeviceFSM:
         # 여기서 한번 상태를 체크 할것.
         
         if self.state != "READY":
-            print("상태가 READY가 아닙니다.")
-            raise RuntimeError(f"busy (state={self.state})")
+            print(f"상태가 READY가 아닙니다. last_opid : {self.last_opid}")
+            return self.last_opid
+            # raise RuntimeError(f"busy (state={self.state})")
         print(f"{self.actuator_name} 요청을 보냅니다. {cmd_name} {duration_sec}")
         opid = await asyncio.to_thread(self._send_command, cmd_name, duration_sec)
         ttl = self.timeout
@@ -73,6 +74,13 @@ class DeviceFSM:
         if not self._task or self._task.done():
             self._task = asyncio.create_task(self._verify_loop())
         return opid
+    
+    # --- 리셋 ---
+    async def reset(self):
+        print(f"{self.actuator_name} 리셋 합니다.")
+        res = await self.start_job(cmd_name="OFF")
+        print(f"{self.actuator_name} 리셋 {res}")
+
 
     # --- 전이 훅 ---
     def on_start(self, opid: int, deadline_ts: float):

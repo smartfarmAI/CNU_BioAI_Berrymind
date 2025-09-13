@@ -19,6 +19,7 @@ def get_fsm(name: str) -> DeviceFSM:
     if name not in _devices:
         _devices[name] = DeviceFSM(host=ACTION_IO_HOST, actuator_name=name, verify_interval=1.0)
         _locks[name] = asyncio.Lock()
+        _devices[name].reset()
     return _devices[name]
 
 # ---- 스키마 ----
