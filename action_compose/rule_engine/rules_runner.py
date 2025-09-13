@@ -25,7 +25,7 @@ def run_once():
     res = dict(row._mapping)
 
     t = res["time"].astimezone(KST) if res["time"].tzinfo else res["time"].replace(tzinfo=KST)
-    res["timeband"] = calc.get_timeband(t.strftime("%Y-%m-%d %H:%M:%S"))
+    res["time_band"] = calc.get_timeband(t.strftime("%Y-%m-%d %H:%M:%S"))
     res["DAT"] = (t.date() - cutoff).days
     logger.info("[SENSOR] %s", res)
 
