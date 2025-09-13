@@ -12,6 +12,7 @@ def main_loop():
             'indoor_humidity': row["내부습도(1)"], 
             'rain': row["감우"], 
             'wind_speed': row["풍속"], 
+            'wind_direction': row["풍향"],
             'temp_diff': 2, 
             'outdoor_temp': row["외부온도"], 
             'solar_radiation': row["외부일사"], 
