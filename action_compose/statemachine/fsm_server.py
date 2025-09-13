@@ -17,9 +17,8 @@ _locks: dict[str, asyncio.Lock] = {}
 
 def get_fsm(name: str) -> DeviceFSM:
     if name not in _devices:
-        _devices[name] = DeviceFSM(host=ACTION_IO_HOST, actuator_name=name, verify_interval=1.0)
+        _devices[name] = DeviceFSM(host=ACTION_IO_HOST, actuator_name=name, verify_interval=3.0)
         _locks[name] = asyncio.Lock()
-        _devices[name].reset()
     return _devices[name]
 
 # ---- 스키마 ----
@@ -46,7 +45,7 @@ async def start_job(name: str, req: StartJobReq):
     async with _locks[name]:
         if fsm.state != "READY":
             print(f"{name} 기존 요청 처리중으로 거부되었습니다. 현재 작업중 {fsm.last_opid}")
-            return fsm.last_opid
+            return StartJobResp(opid=fsm.last_opid, state=fsm.state)
             # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
         print(f"{name} fsm.start_job을 시작합니다.")
         opid = await fsm.start_job(

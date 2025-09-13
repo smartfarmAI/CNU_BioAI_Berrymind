@@ -24,7 +24,12 @@ class DeviceFSM:
         self.host = host.rstrip("/")
         self.base_url = f"{self.host}/actuators/{self.actuator_name}"
         self.timeout = timeout # 이 시간동안 안되면 실패로 간주
-        self.machine = Machine(model=self, states=self.states, initial="READY", queued=True)
+        resp = self._read_state()
+        print(f"{self.actuator_name} 초기화 {resp}")
+        initial_state = "READY"
+        if resp["state_code"] != 0:
+            initial_state = "WORKING" # TODO
+        self.machine = Machine(model=self, states=self.states, initial=initial_state, queued=True)
         self.machine.add_transition("start",  "READY",   "WORKING", after="on_start")
         self.machine.add_transition("finish", "WORKING", "READY",   after="on_finish")
         self.machine.add_transition("fail",   "*",       "ERROR",   after="on_fail")
