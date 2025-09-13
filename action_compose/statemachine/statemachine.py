@@ -27,7 +27,7 @@ class DeviceFSM:
         resp = self._read_state()
         print(f"{self.actuator_name} 초기화 {resp}")
         initial_state = "READY"
-        if resp["state_code"] != 0:
+        if resp["state"] != 0:
             initial_state = "WORKING" # TODO
         self.machine = Machine(model=self, states=self.states, initial=initial_state, queued=True)
         self.machine.add_transition("start",  "READY",   "WORKING", after="on_start")
@@ -62,7 +62,7 @@ class DeviceFSM:
         r = requests.get(self._url("/get_state"), timeout=self.timeout)
         r.raise_for_status()
         js = r.json()
-        return js  # {"opid": ..., "state_code": ...}
+        return js  # {"opid": ..., "state": ...}
     
     # --- 외부 진입점 ---
     async def start_job(self, cmd_name: str, duration_sec: int = 0) -> int:
