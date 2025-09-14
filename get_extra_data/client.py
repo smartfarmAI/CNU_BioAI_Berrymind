@@ -45,7 +45,7 @@ class ExtraClient:
             logging.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}: {exc}")
             raise
 
-    async def get_image(self, farm_id: int = 1, data_id: int = None):
+    async def get_image(self, farm_id: int = 2, data_id: int = None):
         """Get an image from the API.
 
         Args:
@@ -119,7 +119,7 @@ class ExtraClient:
             logging.error(error_msg)
             raise e
 
-    async def post_heartbeat(self, content: str, farm_id: int = 1, category: str = "ai", created_time: str = None):
+    async def post_heartbeat(self, content: str, farm_id: int = 2, category: str = "ai", created_time: str = None):
         """Post a heartbeat to the API.
 
         Args:
@@ -151,7 +151,7 @@ class ExtraClient:
                          Example: 
                              [
                                  {
-                                     "farm_id": 1,
+                                     "farm_id": 2,
                                      "temperature": 25.5,
                                      "humidity": 65.0,
                                      "CO2": 800.0,

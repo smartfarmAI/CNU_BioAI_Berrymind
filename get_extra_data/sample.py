@@ -56,7 +56,7 @@ async def main():
                     print(f"Error getting image for data_id {data_id}: {e}")
     else:
         print("No dataids_for_camera found in the configuration file.")
-
+    """
     # Test post_heartbeat
     try:
         print("Posting heartbeat...")
@@ -75,7 +75,7 @@ async def main():
         target_time = (datetime.now() + timedelta(minutes=10)).isoformat(timespec='seconds')
         target_payload = [
             {
-                "farm_id": 1,
+                "farm_id": 2,
                 "temperature": 25.5,
                 "humidity": 65.0,
                 "CO2": 800.0,
@@ -89,6 +89,7 @@ async def main():
             print(f"Response: {response.json()}")
     except Exception as e:
         print(f"Error posting target: {e}")
+    """
 
 if __name__ == "__main__":
     # To run this sample, you would typically execute `python sample.py` in your terminal.
