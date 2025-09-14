@@ -28,6 +28,7 @@ class DeviceFSM:
         print(f"{self.actuator_name} 초기화 {resp}")
         initial_state = "READY"
         if is_working_code(resp["state"]):
+            print(f"{self.actuator_name}의 현재 상태는 레디가 아닙니다. {resp["state"]}")
             initial_state = "WORKING" # TODO
         self.machine = Machine(model=self, states=self.states, initial=initial_state, queued=True)
         self.machine.add_transition("start",  "READY",   "WORKING", after="on_start")
