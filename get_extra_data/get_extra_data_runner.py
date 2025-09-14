@@ -55,8 +55,8 @@ def get_forecast_job():
 sched = BlockingScheduler()
 
 # 이미지 오전 10시 , 15시
-sched.add_job(get_image_job, "cron", hour=3, minute=11)
-sched.add_job(get_image_job, "cron", hour=3, minute=12)
+sched.add_job(get_image_job, "cron", hour=10, minute=5)
+sched.add_job(get_image_job, "cron", hour=15, minute=5)
 
 # 기상 3시간 마다
 sched.add_job(get_forecast_job, "interval", hours=3)
