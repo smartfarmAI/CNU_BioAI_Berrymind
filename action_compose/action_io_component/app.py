@@ -4,11 +4,23 @@ from factory import load_conf, build_client, build_actuator
 from actuator_base import Command
 from ksconstants import CMDCODE
 from pydantic import BaseModel
+import asyncio
 
 app = FastAPI()
 CONF = load_conf()
 CLIENT = build_client(CONF["connect"]["host"],int(CONF["connect"]["port"]))
 ACTS = {name: build_actuator(name, CLIENT, reg) for name, reg in CONF["devices"].items()}
+
+
+@app.on_event("startup")
+async def startup_event():
+    for name, act in ACTS.items():
+        state = act.read_state()
+        act.now_opid = state.get("opid",20001)
+        act.send(Command(name="OFF"))
+    await asyncio.sleep(30)  # 30초 대기
+    print("app startup")
+
 
 @app.get("/actuators/{name}/get_state")
 def get_state(name: str):
