@@ -80,10 +80,11 @@ class DeviceFSM:
             # raise RuntimeError(f"busy (state={self.state})")
         print(f"{self.actuator_name} 요청을 보냅니다. {cmd_name} {duration_sec}")
         opid = await asyncio.to_thread(self._send_command, cmd_name, duration_sec)
-        ttl = self.timeout
-        self.start(opid=opid, deadline_ts=time.time() + ttl)
-        if not self._task or self._task.done():
-            self._task = asyncio.create_task(self._verify_loop())
+        if opid != -1:
+            ttl = self.timeout
+            self.start(opid=opid, deadline_ts=time.time() + ttl)
+            if not self._task or self._task.done():
+                self._task = asyncio.create_task(self._verify_loop())
         return opid
     
     # # --- 리셋 ---
