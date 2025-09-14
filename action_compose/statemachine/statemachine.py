@@ -49,6 +49,11 @@ class DeviceFSM:
     
     def _send_command(self, cmd_name: str, duration_sec: int) -> int:
         print(f"actionio에 요청을 보냅니다. {self.actuator_name} cmd_name : {cmd_name} duration_sec : {duration_sec}")
+        
+        if CMDCODE[cmd_name] == STATCODE(self.last_state_code):
+            print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {cmd_name}")
+            return self.last_opid
+        
         r = requests.post(
             self._url("/send_command"),
             json={"cmd_name": cmd_name, "duration_sec": duration_sec},
@@ -71,7 +76,7 @@ class DeviceFSM:
         
         if self.state != "READY":
             print(f"상태가 READY가 아닙니다. last_opid : {self.last_opid}")
-            return self.last_opid
+            return self.last_opid if self.last_opid else -1
             # raise RuntimeError(f"busy (state={self.state})")
         print(f"{self.actuator_name} 요청을 보냅니다. {cmd_name} {duration_sec}")
         opid = await asyncio.to_thread(self._send_command, cmd_name, duration_sec)
@@ -115,8 +120,8 @@ class DeviceFSM:
         """
         while True:
             await asyncio.sleep(self._verify_interval)
-            if not is_working_code(STATCODE(self.last_state_code)):
-                continue
+            # if not is_working_code(STATCODE(self.last_state_code)):
+            #     continue
 
             if self.want_opid and time.time() > self.deadline_ts:
                 print("시간조건으로 인해 fail로 넘어갑니다.")
