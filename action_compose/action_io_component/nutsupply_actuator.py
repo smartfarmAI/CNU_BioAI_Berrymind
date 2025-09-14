@@ -25,7 +25,7 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
         # start_area, end_area는 1로 고정
         return [cmd.name.value, opid, 1, 1, *pack_i32(int(cmd.duration_sec or 0))]
 
-    def _decode_state(self, regs: List[int]) -> NutSupplyState:
+    def _decode(self, regs: List[int]) -> NutSupplyState:
         return NutSupplyState(
             state=STATCODE(regs[STATUS["state"]]),
             area=regs[STATUS["area"]],
