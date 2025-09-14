@@ -3,6 +3,7 @@ import json
 import logging
 import os
 from typing import Dict, Any, List
+from datetime import datetime
 
 class ExtraClient:
     def __init__(self, config: Dict[str, Any]):
@@ -85,7 +86,7 @@ class ExtraClient:
                 ext = '.bmp'
             elif 'webp' in content_type:
                 ext = '.webp'
-            filename = f"image_{data_id}{ext}"
+            filename = f"image_{data_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{ext}"
         
         image_path = f"images/{filename}"
         
@@ -110,7 +111,7 @@ class ExtraClient:
         response = await self._make_request("GET", endpoint)
         try:
             forecast_data = json.loads(response.text)
-            with open("forecasts/forecast.json", "w") as f:
+            with open(f"forecasts/forecast_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json", "w") as f:
                 json.dump(forecast_data, f, indent=4)
             return forecast_data
         except (json.JSONDecodeError, SyntaxError) as e:

@@ -47,12 +47,12 @@ async def start_job(name: str, req: StartJobReq):
             print(f"{name} 기존 요청 처리중으로 거부되었습니다. \nstate : {fsm.state}  want_opid : {fsm.want_opid}\nlast_state_code : {fsm.last_state_code}")
             return StartJobResp(opid=-1, state=fsm.state)
             # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
-        print(f"{name} fsm.start_job을 시작합니다.")
+        # print(f"{name} fsm.start_job을 시작합니다.")
         opid = await fsm.start_job(
             cmd_name=req.cmd_name,
             duration_sec=req.duration_sec
         )
-        print(f"{name} {opid} 시작되었습니다.")
+        # print(f"{name} {opid} 시작되었습니다.")
         return StartJobResp(opid=opid, state=fsm.state)
 
 @app.get("/devices/{name}/state", response_model=FSMStateResp)
