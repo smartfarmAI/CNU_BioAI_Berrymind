@@ -52,7 +52,7 @@ class DeviceFSM:
         
         if CMDCODE[cmd_name] == STATCODE(self.last_state_code):
             print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {cmd_name}")
-            return self.last_opid
+            return self.last_opid if self.last_opid else -1
         
         r = requests.post(
             self._url("/send_command"),
@@ -120,8 +120,9 @@ class DeviceFSM:
         """
         while True:
             await asyncio.sleep(self._verify_interval)
-            # if not is_working_code(STATCODE(self.last_state_code)):
-            #     continue
+            print(STATCODE(self.last_state_code),"<<<<<<<")
+            if not is_working_code(STATCODE(self.last_state_code)):
+                continue
 
             if self.want_opid and time.time() > self.deadline_ts:
                 print("시간조건으로 인해 fail로 넘어갑니다.")
