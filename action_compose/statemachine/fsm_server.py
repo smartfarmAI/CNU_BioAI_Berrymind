@@ -44,7 +44,7 @@ async def start_job(name: str, req: StartJobReq):
     print(f"{name} 요청이 들어왔습니다. req: {req}")
     async with _locks[name]:
         if fsm.state != "READY":
-            print(f"{name} 기존 요청 처리중으로 거부되었습니다.")
+            print(f"{name} 기존 요청 처리중으로 거부되었습니다. \nstate : {fsm.state}  last_opid : {fsm.last_opid}\nlast_state_code : {fsm.last_state_code}")
             return StartJobResp(opid=-1, state=fsm.state)
             # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
         print(f"{name} fsm.start_job을 시작합니다.")
