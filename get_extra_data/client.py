@@ -11,6 +11,7 @@ class ExtraClient:
         self.base_url = config.get("url")
         self.apikey = config.get("apikey")
         self.dataids = config.get("dataids_for_camera", [])
+        self.farm_id = config.get("farm_id",2)
 
     async def _make_request(self, method: str, endpoint: str, **kwargs):
         """Make a request to the API.
@@ -45,7 +46,7 @@ class ExtraClient:
             logging.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}: {exc}")
             raise
 
-    async def get_image(self, farm_id: int = 2, data_id: int = None):
+    async def get_image(self, data_id: int = None):
         """Get an image from the API.
 
         Args:
@@ -62,7 +63,7 @@ class ExtraClient:
         if data_id is None:
             error_msg = f"data_id is None"
             raise ValueError(error_msg)
-        params = {"farm_id": farm_id, "data_id": data_id}
+        params = {"farm_id": self.farm_id, "data_id": data_id}
 
         response = await self._make_request("GET", endpoint, params=params)
         
@@ -119,7 +120,7 @@ class ExtraClient:
             logging.error(error_msg)
             raise e
 
-    async def post_heartbeat(self, content: str, farm_id: int = 2, category: str = "ai", created_time: str = None):
+    async def post_heartbeat(self, content: str, category: str = "ai", created_time: str = None):
         """Post a heartbeat to the API.
 
         Args:
@@ -133,7 +134,7 @@ class ExtraClient:
         """
         endpoint = "/heartbeat"
         data = {
-            "farm_id": farm_id,
+            "farm_id": self.farm_id,
             "category": category,
             "content": content
         }
