@@ -52,6 +52,10 @@ class EnvVars(BaseVariables):
     @numeric_rule_variable(label="Soil Water Content")
     def soil_water_content(self) -> float:
         return float(self.vals.get("soil_water_content", 0.0))
+    
+    @numeric_rule_variable(label="Wind Direction")
+    def wind_direction(self) -> float:
+        return float(self.vals.get("wind_direction", 0.0))
 
 # 2) ProbeActions
 class ProbeActions(BaseActions):

@@ -33,5 +33,5 @@ def get_query() -> str:
         AND COALESCE(p.indoor_co2,0) <> 0
       ORDER BY p.time DESC LIMIT 1
     ), b.indoor_co2) ELSE b.indoor_co2 END AS indoor_co2,
-    b.soil_water_content
+    b.soil_water_content, b.wind_direction
   FROM b;"""
