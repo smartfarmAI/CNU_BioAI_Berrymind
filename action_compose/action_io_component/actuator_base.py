@@ -35,8 +35,8 @@ class Actuator(Generic[ST]):
     def __init__(self, client, regmap:Dict[str,int]):
         self.client = client
         self.reg = regmap
-        self.now_opid = 0
-        self._next_opid = 1
+        self.now_opid = 999
+        self._next_opid = 1000
 
     # ---- 하위 클래스가 오버라이드할 것 ----
     def _encode_command(self, cmd: Command) -> List[int]:

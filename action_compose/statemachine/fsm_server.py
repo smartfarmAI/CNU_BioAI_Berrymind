@@ -17,7 +17,7 @@ _locks: dict[str, asyncio.Lock] = {}
 
 def get_fsm(name: str) -> DeviceFSM:
     if name not in _devices:
-        _devices[name] = DeviceFSM(host=ACTION_IO_HOST, actuator_name=name, verify_interval=3.0)
+        _devices[name] = DeviceFSM(host=ACTION_IO_HOST, actuator_name=name, verify_interval=1.0)
         _locks[name] = asyncio.Lock()
     return _devices[name]
 
