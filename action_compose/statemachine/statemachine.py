@@ -52,7 +52,7 @@ class DeviceFSM:
         
         if CMDCODE[cmd_name] == STATCODE(self.last_state_code):
             print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {cmd_name}")
-            return self.last_opid if self.last_opid else -1
+            return -1
         
         r = requests.post(
             self._url("/send_command"),
