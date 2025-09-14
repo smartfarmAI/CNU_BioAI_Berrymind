@@ -24,12 +24,12 @@ class DeviceFSM:
         self.host = host.rstrip("/")
         self.base_url = f"{self.host}/actuators/{self.actuator_name}"
         self.timeout = timeout # 이 시간동안 안되면 실패로 간주
-        resp = self._read_state()
-        print(f"{self.actuator_name} 초기화 {resp}")
+        # resp = self._read_state()
+        # print(f"{self.actuator_name} 초기화 {resp}")
         initial_state = "READY"
-        if is_working_code(resp["state"]):
-            print(f"{self.actuator_name}의 현재 상태는 레디가 아닙니다. {resp["state"]}")
-            initial_state = "WORKING" # TODO
+        # if is_working_code(resp["state"]):
+        #     print(f"{self.actuator_name}의 현재 상태는 레디가 아닙니다. {resp["state"]}")
+        #     initial_state = "WORKING" # TODO
         self.machine = Machine(model=self, states=self.states, initial=initial_state, queued=True)
         self.machine.add_transition("start",  "READY",   "WORKING", after="on_start")
         self.machine.add_transition("finish", "WORKING", "READY",   after="on_finish")
@@ -81,15 +81,15 @@ class DeviceFSM:
             self._task = asyncio.create_task(self._verify_loop())
         return opid
     
-    # --- 리셋 ---
-    async def reset(self):
-        print(f"{self.actuator_name} 리셋 합니다.")
-        self.state = "WORKING"
-        opid = await asyncio.to_thread(self._send_command, "OFF")
-        if not self._task or self._task.done():
-            self._task = asyncio.create_task(self._verify_loop())
-        print(f"{self.actuator_name} 리셋 완료 {opid}")
-        return opid
+    # # --- 리셋 ---
+    # async def reset(self):
+    #     print(f"{self.actuator_name} 리셋 합니다.")
+    #     self.state = "WORKING"
+    #     opid = await asyncio.to_thread(self._send_command, "OFF")
+    #     if not self._task or self._task.done():
+    #         self._task = asyncio.create_task(self._verify_loop())
+    #     print(f"{self.actuator_name} 리셋 완료 {opid}")
+    #     return opid
 
 
     # --- 전이 훅 ---
