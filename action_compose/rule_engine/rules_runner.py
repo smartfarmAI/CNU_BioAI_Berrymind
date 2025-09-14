@@ -11,7 +11,7 @@ from log_db_handler import setup_logging
 DB_URL = os.getenv("DATABASE_URL", "postgresql+psycopg://admin:admin123@tsdb:5432/berrymind")
 SUBMIT_URL = os.getenv("SCHEDULER_URL", "http://scheduler:8001/submit_schedules")
 KST = ZoneInfo("Asia/Seoul")
-cutoff = date(2025, 9, 22)
+cutoff = date(2025, 9, 18)
 
 engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=1800)
 rules = load_rules("rules_conf")         # 규칙이 자주 바뀌면 이 줄을 함수 안으로 이동
