@@ -2,6 +2,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from client import ExtraClient
 import os, json
 import asyncio
+from datetime import datetime
 
 # Load configuration from conf.json
 try:
@@ -59,6 +60,6 @@ sched.add_job(get_image_job, "cron", hour=10, minute=5)
 sched.add_job(get_image_job, "cron", hour=15, minute=5)
 
 # 기상 3시간 마다
-sched.add_job(get_forecast_job, "interval", hours=3)
+sched.add_job(get_forecast_job, "interval", hours=3, next_run_time=datetime.now())
 
 sched.start()
