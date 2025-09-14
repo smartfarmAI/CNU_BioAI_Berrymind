@@ -115,8 +115,8 @@ class DeviceFSM:
         """
         while True:
             await asyncio.sleep(self._verify_interval)
-            if not is_working_code(STATCODE[self.state]):
-                print("in !!!!!!!!", {self.state})
+            if not is_working_code(STATCODE(self.last_state_code)):
+                print("in !!!!!!!!", {self.last_state_code})
                 continue
 
             if self.want_opid and time.time() > self.deadline_ts:
