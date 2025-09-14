@@ -1,14 +1,11 @@
 services:
   file-client:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: file-client
+    build: .
+    container_name: extra-data-client
     restart: unless-stopped
     environment:
       - TZ=Asia/Seoul
-    working_dir: /app
-    command: python app.py
     volumes:
-      - /srv/archive:/data/archive
-      - ./:/app:ro
+      # 호스트 → 컨테이너 마운트
+      - ./images:/app/images
+      - ./forecasts:/app/forecasts

@@ -13,3 +13,4 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
+CMD ["python", "get_extra_data_runner.py"]
