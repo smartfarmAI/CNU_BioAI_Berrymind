@@ -1,6 +1,7 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from client import ExtraClient
 import os, json
+import asyncio
 
 # Load configuration from conf.json
 try:
@@ -22,7 +23,7 @@ def get_image_job():
         for data_id in client.dataids:
             try:
                 print(f"Getting image for data_id: {data_id}...")
-                result = client.get_image(data_id=data_id)
+                result = asyncio.run(client.get_image(data_id=data_id))
                 print(f"Image for data_id {data_id} received and saved to {result['image_path']}")
                 print(f"Image filename: {result['filename']}")
             except Exception as e:
@@ -44,7 +45,7 @@ def get_forecast_job():
     # Test get_forecast
     try:
         print("Getting forecast data...")
-        client.get_forecast()
+        asyncio.run(client.get_forecast())
         print("Forecast data received and saved to forecasts/forecast.json")
         # You can uncomment the line below to print the forecast data
         # print(json.dumps(forecast, indent=4))
@@ -54,7 +55,7 @@ def get_forecast_job():
 sched = BlockingScheduler()
 
 # 이미지 오전 9시
-sched.add_job(get_image_job, "cron", hour=2, minute=50)
+sched.add_job(get_image_job, "cron", hour=2, minute=58)
 sched.add_job(get_image_job, "cron", hour=3, minute=0)
 
 # 기상 3시간 마다
