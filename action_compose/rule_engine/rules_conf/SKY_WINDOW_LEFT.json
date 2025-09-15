@@ -7,7 +7,7 @@
     },
     {
       "name": "p99 : wind>=14 m/s -> LEFT CLOSE",
-      "conditions": { "all": [ { "name": "wind_speed", "operator": "greater_than_or_equal_to", "value": 14 } ] },
+      "conditions": { "all": [ { "name": "wind_speed", "operator": "greater_than_or_equal_to", "value": 100 } ] },
       "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "CLOSE", "pause_sec": 300 } } ],
       "priority": 99
     },
