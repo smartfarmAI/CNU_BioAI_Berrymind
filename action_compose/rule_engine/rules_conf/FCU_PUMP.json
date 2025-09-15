@@ -11,7 +11,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":28},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
@@ -21,7 +21,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":27},
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":25},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
