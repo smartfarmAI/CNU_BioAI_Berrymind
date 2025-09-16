@@ -1,7 +1,7 @@
 # 실행: uvicorn app:app --reload --port 8000
 from fastapi import FastAPI, HTTPException
 from factory import load_conf, build_client, build_actuator
-from actuator_base import Command
+from actuator_base import Command, NutSupplyCommand
 from ksconstants import CMDCODE
 from pydantic import BaseModel
 import asyncio
@@ -32,7 +32,8 @@ def get_state(name: str):
 class CommandIn(BaseModel):
     cmd_name: str
     duration_sec: int  = 0
-    # 추가 파라미터가 필요한 장치는 라우트 분리 or 쿼리파라미터로 처리
+    ec: float | None = None
+    ph: float | None = None
 
 @app.post("/actuators/{name}/send_command")
 def post_command(name: str, body: CommandIn):
@@ -45,7 +46,12 @@ def post_command(name: str, body: CommandIn):
     if name in {"SKY_WINDOW_LEFT","SKY_WINDOW_RIGHT","SHADING_SCREEN","HEAT_CURTAIN"}:
         opid = act.send(Command(name=CMDCODE[body.cmd_name], duration_sec=body.duration_sec or 0))
     elif name == "NUTRIENT_PUMP":
-        opid = act.send(Command(name=CMDCODE[body.cmd_name], duration_sec=body.duration_sec or 0))
+        opid = act.send(NutSupplyCommand(name=CMDCODE[body.cmd_name], 
+                                duration_sec=body.duration_sec or 0,
+                                ec=body.ec,
+                                ph=body.ph
+                                )
+                        )
     else:
         opid = act.send(Command(name=CMDCODE[body.cmd_name], duration_sec=body.duration_sec or 0))
     return {"opid": opid}

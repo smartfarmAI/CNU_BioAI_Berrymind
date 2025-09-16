@@ -51,7 +51,7 @@ devices:
     device_id: 5
     state_start_addr: 401   
     state_cnt: 6 
-    cmd_start_addr: 582
+    cmd_start_addr: 504
 
 
   

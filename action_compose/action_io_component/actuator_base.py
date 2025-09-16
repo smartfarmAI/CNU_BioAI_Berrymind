@@ -7,8 +7,12 @@ from dataclasses import asdict
 @dataclass
 class Command:
     name: CMDCODE               # 'ON', 'OFF', 'OPEN', 'CLOSE', 'JUST_WATER', 'NUT_WATER' 등
-    duration_sec: Optional[int]=0
+    duration_sec: Optional[int] = 0
 
+@dataclass
+class NutSupplyCommand(Command):
+    ec: float | None = None
+    ph: float | None = None
 
 @dataclass
 class BaseState: # 장비가 반환하는 스테이트 
