@@ -7,3 +7,12 @@
   },
   "run_at": "2025-09-07 03:30:00"
 }
+
+{
+  "items": {
+    "NUTRIENT_PUMP": {
+      "action_name": "nutsupply",
+      "action_param": {"state":"NUT_WATER","duration_sec":50, "ec":0.8, "ph":5.5}
+    }
+  }
+}

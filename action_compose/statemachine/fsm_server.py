@@ -25,6 +25,8 @@ def get_fsm(name: str) -> DeviceFSM:
 class StartJobReq(BaseModel):
     cmd_name: str           # "OPEN" 같은 문자열
     duration_sec: int | None = 0
+    ec: float | None = None
+    ph: float | None = None    
 
 class StartJobResp(BaseModel):
     opid: int
@@ -48,9 +50,9 @@ async def start_job(name: str, req: StartJobReq):
             return StartJobResp(opid=-1, state=fsm.state)
             # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
         # print(f"{name} fsm.start_job을 시작합니다.")
+        payload = req.model_dump(exclude_none=True)
         opid = await fsm.start_job(
-            cmd_name=req.cmd_name,
-            duration_sec=req.duration_sec
+            payload = payload
         )
         # print(f"{name} {opid} 시작되었습니다.")
         return StartJobResp(opid=opid, state=fsm.state)
