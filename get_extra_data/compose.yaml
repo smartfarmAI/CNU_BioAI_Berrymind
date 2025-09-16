@@ -11,3 +11,6 @@ services:
       - ./forecasts:/app/forecasts
     networks:
       - timescale_db_default
+networks:
+  timescale_db_default:
+    external: true
