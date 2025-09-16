@@ -15,7 +15,7 @@
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON","pause_sec":60}}],
         "priority": 90
     },
     {
@@ -35,7 +35,7 @@
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON","pause_sec":60}}],
         "priority": 90
     },
     {
@@ -64,7 +64,7 @@
                 {"name":"time_band","operator":"equal_to","value":5}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON","pause_sec":60}}],
         "priority": 90
     },
     {
@@ -84,7 +84,7 @@
                 {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON","pause_sec":60}}],
         "priority": 90
     },
     {
@@ -104,7 +104,7 @@
                 {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON","pause_sec":60}}],
         "priority": 90
     },
     {
@@ -124,7 +124,7 @@
                 {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON","pause_sec":60}}],
         "priority": 90
     },
     {
@@ -136,19 +136,5 @@
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
         "priority": 90
-    }        
-    {
-       "name": "Fundamental premise : FCU_PUMP OFF : 60s after FCU_FAN OFF",
-        "conditions": {
-            "all": [
-            {"name": "actuator_state", "operator": "changed_to", "value": {"actuator": "FCU_PUMP", "state": "OFF"}}
-            ]
-        },
-        "actions": [
-            {"name": "switch_action", "params": {"actuator": "FCU_FAN", "state": "ON"}},
-            {"name": "switch_action", "params": {"actuator": "FCU_FAN", "state": "OFF", "pause_sec": 60}}
-        ],
-        "priority": 100
-    }
-
+    }  
 ]
