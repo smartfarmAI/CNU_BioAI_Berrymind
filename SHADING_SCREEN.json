@@ -117,7 +117,7 @@
         },
         "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":150,"pause_sec":3600}}],
         "priority": 100
-    }
+    },
     {
         "name": "Fundamental premise : OUTDOOR_TEMP ≥26 : SHADING SCREEN CLOSE ALL",
         "conditions": {
