@@ -18,7 +18,7 @@ class Plan(BaseModel):
 def dispatch_fn(actuator: str, item: PlanItem):
     # 리퀘스트 보냄 /devies/{actuator}/jobs {"cmd_name": "string", "duration_sec": 0, ...}
     # 룰 파일과 이름 달라서 변경
-    item.action_param["cmd_name"] = item.action_param["cmd_name"].pop("state")
+    item.action_param["cmd_name"] = item.action_param.pop("state")
     res = requests.post(url=f"{FSM_HOST_BASE}/{actuator}/jobs",json=item.action_param)
     return res
     # print(f"[DISPATCH] {actuator} -> {item.action_name} {item.action_param}")
