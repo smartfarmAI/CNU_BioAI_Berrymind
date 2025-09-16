@@ -109,7 +109,7 @@ def post_heartbeat_job():
             )
 
         header = [
-            "# Heartbeat",
+            "# BerryMind",
             f"_generated: {datetime.now()}_",
             "",
             "| ts | logger | message |",

@@ -16,3 +16,30 @@
     }
   }
 }
+
+
+{
+  "items": {
+    "FCU_FAN": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_FAN","state":"ON","pause_sec":60}
+    },
+    "FCU_PUMP": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_PUMP","state":"ON"}
+    }
+  }
+}
+
+{
+  "items": {
+    "FCU_FAN": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_FAN","state":"OFF"}
+    },
+    "FCU_PUMP": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_PUMP","state":"OFF"}
+    }
+  }
+}
