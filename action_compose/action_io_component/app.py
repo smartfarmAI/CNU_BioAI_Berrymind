@@ -17,7 +17,10 @@ async def startup_event():
     for name, act in ACTS.items():
         state = act.read_state()
         act.now_opid = state.get("opid",20001)
-        act.send(Command(name=CMDCODE(0)))
+        if name == "NUTRIENT_PUMP":
+            act.send(NutSupplyCommand(name=CMDCODE(0)))
+        else:
+            act.send(Command(name=CMDCODE(0)))
     await asyncio.sleep(30)  # 30초 대기
     print("app startup")
 

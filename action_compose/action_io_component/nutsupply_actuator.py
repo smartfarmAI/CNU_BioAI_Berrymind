@@ -11,7 +11,7 @@ class NutSupplyActuator(Actuator[NutSupplyState]):
     def _encode_command(self, cmd: NutSupplyCommand) -> List[int]:
         opid = self._alloc_opid()
         # start_area, end_area는 1로 고정
-        if cmd.ec and cmd.ph:
+        if cmd.ec is not None and cmd.ph is not None:
             return [cmd.name.value, opid, 1, 1, 
                     *pack_i32(int(cmd.duration_sec or 0)), 
                     *pack_f32(cmd.ec),
