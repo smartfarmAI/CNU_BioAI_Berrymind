@@ -78,17 +78,21 @@ class ProbeActions(BaseActions):
     
     
     @rule_action(params={
-        "state": FIELD_TEXT,         # "NUT_WATER" or "JUST_WATER" of "OFF" (구동기: 양액기 고정)
+        "state": FIELD_TEXT,         # "NUT_WATER" or "OFF" (구동기: 양액기 고정)
         "duration_sec": FIELD_NUMERIC,    # 주입시간(sec)
-        "pause_sec": FIELD_NUMERIC        # pause time(sec)
+        "pause_sec": FIELD_NUMERIC,        # pause time(sec)
+        "ec" : FIELD_NUMERIC,
+        "ph" : FIELD_NUMERIC
     })
-    def nutsupply(self, state: str, duration_sec: int = 0, pause_sec: int = 0):
+    def nutsupply(self, state: str, duration_sec: int = 0, pause_sec: int = 0, ec: float = 0.0, ph: float = 0.0):
         state = state.upper()
         intent = {
             "actuator": "NUTRIENT_PUMP",  # 고정
             "state": state,
             "duration_sec": duration_sec,
-            "pause_sec": pause_sec
+            "pause_sec": pause_sec,
+            "ec": ec,
+            "ph": ph
         }
         self.intents.append((intent["actuator"], intent))
 
@@ -100,13 +104,13 @@ class ProbeActions(BaseActions):
         "duration_sec": FIELD_NUMERIC,    # 개폐시간(sec)
         "pause_sec": FIELD_NUMERIC        # pause time(sec)
     })
-    def vent_action(self, actuator: str, state: str, temp_diff: float = 0, duration_sec: float = 0, pause_sec: float = 0):
+    def vent_action(self, actuator: str, state: str, temp_diff: int = 0, duration_sec: int = 0, pause_sec: int = 0):
         intent = {
             "actuator": actuator.upper(),
             "state": state.upper(),
-            "temp_diff": float(temp_diff),
-            "duration_sec": int(duration_sec),
-            "pause_sec": int(pause_sec)
+            "temp_diff": temp_diff,
+            "duration_sec": duration_sec,
+            "pause_sec": pause_sec
         }
         self.intents.append((intent["actuator"], intent))
 
