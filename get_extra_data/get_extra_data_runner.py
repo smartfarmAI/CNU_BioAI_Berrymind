@@ -4,6 +4,7 @@ import os, json
 import asyncio
 from datetime import datetime
 from sqlalchemy import create_engine, text
+import json, ast
 
 DB_URL = os.getenv("DATABASE_URL", "postgresql+psycopg://admin:admin123@tsdb:5432/berrymind")
 engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=1800)
@@ -60,6 +61,38 @@ def get_forecast_job():
 def _md_escape(s: str) -> str:
     return str(s).replace("|", r"\|").replace("\n", " ").replace("\r", " ")
 
+def _msgparsor(s: str) -> str:
+    if not s.startswith("[DECISION]"):
+        return s
+
+    # 본문(객체) 시작 위치
+    i = s.find("{")
+    if i < 0:
+        return s
+    body = s[i:]
+
+    # JSON → 실패 시 literal 파싱
+    try:
+        obj = json.loads(body)
+    except json.JSONDecodeError:
+        try:
+            obj = ast.literal_eval(body)
+        except Exception:
+            return s
+
+    if not isinstance(obj, dict):
+        return s
+
+    # 각 구동기의 action_param만 남기기
+    pruned = {
+        actuator: spec.get("action_param")
+        for actuator, spec in obj.items()
+        if isinstance(spec, dict) and "action_param" in spec
+    }
+
+    # 문자열(JSON)로 변환 + 접두어 복원
+    return "[DECISION] " + json.dumps(pruned, ensure_ascii=False, separators=(",", ":"))
+
 def post_heartbeat_job():
     # health check 호출하기 스케쥴러는 등록된 스케쥴도
     # 거른 센서값
@@ -84,7 +117,7 @@ def post_heartbeat_job():
         ]
         body = [
             f"| {r['ts']} "
-            f"| {_md_escape(r['logger'])} | {_md_escape(r['message'])} |"
+            f"| {_md_escape(r['logger'])} | {_md_escape(_msgparsor(r['message']))} |"
             for r in rows
         ] or ["_no recent logs_"]
 
