@@ -3,6 +3,10 @@ from client import ExtraClient
 import os, json
 import asyncio
 from datetime import datetime
+from sqlalchemy import create_engine, text
+
+DB_URL = os.getenv("DATABASE_URL", "postgresql+psycopg://admin:admin123@tsdb:5432/berrymind")
+engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=1800)
 
 # Load configuration from conf.json
 try:
@@ -52,7 +56,46 @@ def get_forecast_job():
         # print(json.dumps(forecast, indent=4))
     except Exception as e:
         print(f"Error getting forecast: {e}")
-    
+
+def _md_escape(s: str) -> str:
+    return str(s).replace("|", r"\|").replace("\n", " ").replace("\r", " ")
+
+def post_heartbeat_job():
+    # health check 호출하기 스케쥴러는 등록된 스케쥴도
+    # 거른 센서값
+    # 룰
+    # 스케쥴러 등록 결과
+    # 상태머신에서 보내진 결과
+    # 액션 io 에서 보낸 결과
+    try:
+        with engine.connect() as conn:
+            rows = (
+                conn.execute(
+                    text("SELECT ts, logger, message FROM app_logs ORDER BY id DESC LIMIT 3;")
+                ).mappings().all()
+            )
+
+        header = [
+            "# Heartbeat",
+            f"_generated: {datetime.now()}_",
+            "",
+            "| ts | logger | message |",
+            "|---|---|---|",
+        ]
+        body = [
+            f"| {r['ts']} "
+            f"| {_md_escape(r['logger'])} | {_md_escape(r['message'])} |"
+            for r in rows
+        ] or ["_no recent logs_"]
+
+        md = "\n".join(header + body)
+        print(md)
+        asyncio.run(client.post_heartbeat(content=md))
+    except Exception as e:
+        print(f"Error posting heartbeat: {e}", flush=True)
+
+
+
 sched = BlockingScheduler()
 
 # 이미지 오전 10시 , 15시
@@ -61,5 +104,6 @@ sched.add_job(get_image_job, "cron", hour=15, minute=5)
 
 # 기상 3시간 마다
 sched.add_job(get_forecast_job, "interval", hours=3, next_run_time=datetime.now())
+sched.add_job(post_heartbeat_job, "interval", minutes=5, next_run_time=datetime.now())
 
 sched.start()
