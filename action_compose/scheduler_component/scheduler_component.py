@@ -83,19 +83,19 @@ class PlanScheduler:
             if act == "FCU_PUMP" and item.action_param.get("state",None) == "OFF":
                 item.action_param["actuator"] = "FCU_FAN"
                 new_time = run_at + timedelta(seconds=60)
-                job = self.sched.get_job("FCU_FAN:apply") # 자꾸 갱신 되기 때문에 이전 스케쥴로 처리
+                job_id = "FCU_FAN:apply"
+                job = self.sched.get_job(job_id)
                 if job:
-                    if new_time < job.next_run_time:
-                        self.sched.modify_job("FCU_FAN:apply", next_run_time=new_time)
-                else:
-                    self.sched.add_job(
-                        self.dispatch_fn, 
-                        "date", 
-                        run_date=new_time,
-                        id="FCU_FAN:apply",
-                        replace_existing=True,
-                        args=["FCU_FAN", item]
-                    )
+                    self.sched.remove_job(job_id)         # 중복 방지
+                    self.dispatch_fn("FCU_FAN", item)     # 즉시 1회 실행
+                self.sched.add_job(
+                    self.dispatch_fn, 
+                    "date", 
+                    run_date=new_time,
+                    id="FCU_FAN:apply",
+                    replace_existing=True,
+                    args=["FCU_FAN", item]
+                )
 
             scheduled_any = True
         
