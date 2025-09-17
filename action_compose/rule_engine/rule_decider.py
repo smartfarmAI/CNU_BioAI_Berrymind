@@ -56,6 +56,10 @@ class EnvVars(BaseVariables):
     @numeric_rule_variable(label="Wind Direction")
     def wind_direction(self) -> float:
         return float(self.vals.get("wind_direction", 0.0))
+    
+    @numeric_rule_variable(label="FCU Pump Status")
+    def fcu_circulation_status(self) -> int:
+        return float(self.vals.get("fcu_circulation_status", 0))
 
 # 2) ProbeActions
 class ProbeActions(BaseActions):
