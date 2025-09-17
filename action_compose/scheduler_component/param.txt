@@ -32,7 +32,7 @@
   "items": {
     "FCU_FAN": {
       "action_name": "switch_action",
-      "action_param": {"actuator":"FCU_FAN","state":"ON","pause_sec":60}
+      "action_param": {"actuator":"FCU_FAN","state":"ON"}
     },
     "FCU_PUMP": {
       "action_name": "switch_action",
