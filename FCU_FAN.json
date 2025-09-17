@@ -2,11 +2,26 @@
     {
         "conditions": {
             "all": [
-                {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 28},
+                {"name": "time_band", "operator": "equal_to", "value": 1}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF"}}],
+        "actions": [
+            {"name": "switch_action", "params": {"actuator": "FCU_FAN", "state": "ON"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 25},
+                {"name": "time_band", "operator": "equal_to", "value": 1},
+                {"name": "fcu_circulation_status", "operator": "equal_to", "value": 0}
+            ]
+        },
+        "actions": [
+            {"name": "switch_action", "params": {"actuator": "FCU_FAN", "state": "OFF", "pause_sec": 1800}}
+        ],
         "priority": 90
     },
     {
@@ -51,14 +66,29 @@
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
         "priority": 90
     },
+   {
+        "conditions": {
+            "all": [
+                {"name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 28},
+                {"name": "time_band", "operator": "equal_to", "value": 4}
+            ]
+        },
+        "actions": [
+            {"name": "switch_action", "params": {"actuator": "FCU_FAN", "state": "ON"}}
+        ],
+        "priority": 90
+    },
     {
         "conditions": {
             "all": [
-                {"name":"time_band","operator":"equal_to","value":4},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 25},
+                {"name": "time_band", "operator": "equal_to", "value": 4},
+                {"name": "fcu_circulation_status", "operator": "equal_to", "value": 0}
             ]
         },
-        "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF"}}],
+        "actions": [
+            {"name": "switch_action", "params": {"actuator": "FCU_FAN", "state": "OFF", "pause_sec": 1800}}
+        ],
         "priority": 90
     },
     {
@@ -70,7 +100,7 @@
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"ON"}}],
         "priority": 90
-    },
+    }, 
     {
         "conditions": {
             "all": [
