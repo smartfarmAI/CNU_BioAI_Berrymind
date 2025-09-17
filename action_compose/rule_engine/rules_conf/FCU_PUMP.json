@@ -2,6 +2,17 @@
     {
         "conditions": {
             "all": [
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":28},
+                {"name":"time_band","operator":"equal_to","value":1}
+            ]
+        },
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_PUMP","state":"ON"}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":25},
                 {"name":"time_band","operator":"equal_to","value":1}
             ]
         },
@@ -51,6 +62,17 @@
     {
         "conditions": {
             "all": [
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":28},
+                {"name":"time_band","operator":"equal_to","value":4}
+            ]
+        },
+        "actions": [{"name":"switch_action","params":{"actuator":"FCU_PUMP","state":"ON"}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":25},
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
