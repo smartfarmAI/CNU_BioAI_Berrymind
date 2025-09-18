@@ -3,41 +3,107 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"less_than_or_equal_to","value":3}
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":16},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":7}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":50, "ec":0.8, "ph":5.5}}],
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":90, "ec":0.8, "ph":5.5}}],
         "priority": 90
     },
     {
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"greater_than","value":3}
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":16},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":30}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":50, "ec":0.8, "ph":5.5}}],
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":90, "ec":1.0, "ph":5.5}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":1},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":16},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":60}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":90, "ec":1.2, "ph":5.5}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":1},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":16},
+                {"name":"DAT","operator":"greater_than","value":61}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":90, "ec":1.4, "ph":5.5}}],
+        "priority": 90
+    },
+    
+    
+
+    
+    
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":2},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":25},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":7}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":60, "ec":0.8, "ph":5.5}}],
         "priority": 90
     },
     {
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"less_than_or_equal_to","value":3}
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":25},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":30}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":0.8, "ph":5.5}}],
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":60, "ec":1.0, "ph":5.5}}],
         "priority": 90
     },
     {
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"greater_than","value":3}
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":25},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":60}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":60, "ec":1.2, "ph":5.5}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":2},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":25},
+                {"name":"DAT","operator":"greater_than","value":61}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":60, "ec":1.4, "ph":5.5}}],
+        "priority": 90
+    },
+    
+    
+    
+    
+    
+    
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":3},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":20},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":7}
             ]
         },
         "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":0.8, "ph":5.5}}],
@@ -47,22 +113,48 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"less_than_or_equal_to","value":3}
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":20},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":30}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":20, "ec":0.8, "ph":5.5}}],
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":1.0, "ph":5.5}}],
         "priority": 90
     },
     {
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"greater_than","value":3}
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":20},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":60}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":20, "ec":0.8, "ph":5.5}}],
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":1.2, "ph":5.5}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":3},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":20},
+                {"name":"DAT","operator":"greater_than","value":61}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":1.4, "ph":5.5}}],
+        "priority": 90
+    },
+    
+    
+    
+    
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":4},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
+                {"name":"DAT","operator":"less_than_or_equal_to","value":7}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":0.8, "ph":5.5}}],
         "priority": 90
     },
     {
@@ -70,10 +162,10 @@
             "all": [
                 {"name":"time_band","operator":"equal_to","value":4},
                 {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"less_than_or_equal_to","value":3}
+                {"name":"DAT","operator":"less_than_or_equal_to","value":30}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":15, "ec":0.8, "ph":5.5}}],
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":1.0, "ph":5.5}}],
         "priority": 90
     },
     {
@@ -81,12 +173,29 @@
             "all": [
                 {"name":"time_band","operator":"equal_to","value":4},
                 {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
-                {"name":"DAT","operator":"greater_than","value":3}
+                {"name":"DAT","operator":"less_than_or_equal_to","value":60}
             ]
         },
-        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":15, "ec":0.8, "ph":5.5}}],
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":1.2, "ph":5.5}}],
         "priority": 90
     },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":4},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":12.5},
+                {"name":"DAT","operator":"greater_than","value":61}
+            ]
+        },
+        "actions": [{"name":"nutsupply","params":{"state":"NUT_WATER","duration_sec":30, "ec":1.4, "ph":5.5}}],
+        "priority": 90
+    },
+
+
+
+
+
+
     {
         "conditions": {
             "all": [
