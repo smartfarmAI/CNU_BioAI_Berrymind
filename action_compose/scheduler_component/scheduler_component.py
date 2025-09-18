@@ -50,8 +50,10 @@ class PlanScheduler:
     """
     def submit_plan(self, plan: Plan, run_at = None):
         now = datetime.now()
+        job_id_new_flag = True
         if not run_at:
             run_at = now
+            job_id_new_flag = False
 
         # 전역 디바운스: 폭주 방지
         if self.debounce_sec > 0 and now < self.global_until:
@@ -71,11 +73,14 @@ class PlanScheduler:
             if window_sec > 0:
                 self.debounce[act] = run_at + timedelta(seconds=window_sec)
             # 고정 job_id로 교체 등록
+            job_id = f"{act}:apply"
+            if job_id_new_flag:
+                job_id = f"{act}:apply:{run_at}"
             self.sched.add_job(
                 self.dispatch_fn, 
                 "date", 
                 run_date=run_at,
-                id=f"{act}:apply",
+                id=job_id,
                 replace_existing=True,
                 args=[act, item]
             )
