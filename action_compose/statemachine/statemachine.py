@@ -140,6 +140,15 @@ class DeviceFSM:
         """
         while True:
             await asyncio.sleep(self._verify_interval)
+            if self.state == "ERROR":
+                st = await asyncio.to_thread(self._read_state)
+                opid = st.get("opid",-1) # TODO 에러 구현
+                code = st.get("state",STATCODE["ERROR"]) 
+                if code == 0:
+                    self.state = "READY"
+                self.last_state_code = int(code) if code is not None else None
+                continue
+
             if self.state != "WORKING":
                 continue
 
