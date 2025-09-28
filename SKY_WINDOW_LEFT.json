@@ -2,22 +2,22 @@
     {
       "name": "p100 : rain -> LEFT CLOSE",
       "conditions": { "all": [ { "name": "rain", "operator": "equal_to", "value": true } ] },
-      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 500, "pause_sec": 300 } } ],
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 160, "pause_sec": 300 } } ],
       "priority": 100
     },
     {
       "name": "p99 : wind>=100 m/s -> LEFT CLOSE",
       "conditions": { "all": [ { "name": "wind_speed", "operator": "greater_than_or_equal_to", "value": 100 } ] },
-      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 500, "pause_sec": 300 } } ],
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 160, "pause_sec": 300 } } ],
       "priority": 99
     },
   
     {
-      "name": "TB1: LEFT OPEN 30s if temp>=20",
+      "name": "TB1: LEFT OPEN 30s if temp>=26",
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 1 },
-          { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 20 }
+          { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 26 }
         ]
       },
       "actions": [
