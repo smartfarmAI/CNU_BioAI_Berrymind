@@ -26,7 +26,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":26},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
@@ -38,7 +38,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than","value":28},
+                {"name":"indoor_temp","operator":"less_than","value":26},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
@@ -50,19 +50,19 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":26},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
         "actions": [
-            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":600}}
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":120,"pause_sec":600}}
         ],
         "priority": 90
     },
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than","value":28},
+                {"name":"indoor_temp","operator":"less_than","value":26},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
@@ -74,7 +74,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":28},
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
