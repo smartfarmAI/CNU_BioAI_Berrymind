@@ -11,7 +11,7 @@ class ExtraClient:
         self.base_url = config.get("url")
         self.apikey = config.get("apikey")
         self.dataids = config.get("dataids_for_camera", [])
-        self.farm_id = config.get("farm_id",2)
+        self.farm_id = config.get("farm_id",1)
 
     async def _make_request(self, method: str, endpoint: str, **kwargs):
         """Make a request to the API.
@@ -152,7 +152,7 @@ class ExtraClient:
                          Example: 
                              [
                                  {
-                                     "farm_id": 2,
+                                     "farm_id": 1,
                                      "temperature": 25.5,
                                      "humidity": 65.0,
                                      "CO2": 800.0,

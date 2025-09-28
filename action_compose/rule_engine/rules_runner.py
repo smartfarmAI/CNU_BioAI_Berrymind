@@ -1,6 +1,6 @@
 # rules_runner.py
 import os, time, requests
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 from sqlalchemy import create_engine, text
 from query import get_query
@@ -17,6 +17,9 @@ engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=1800)
 rules = load_rules("rules_conf")         # 규칙이 자주 바뀌면 이 줄을 함수 안으로 이동
 calc = SunriseCalculator()
 
+#관수이벤트를 위한 변수
+last_daily = None
+
 def run_once():
     with engine.connect() as conn:
         row = conn.execute(text(get_query())).first()
@@ -26,8 +29,46 @@ def run_once():
 
     t = res["time"].astimezone(KST) if res["time"].tzinfo else res["time"].replace(tzinfo=KST)
     res["time_band"] = calc.get_timeband(t.strftime("%Y-%m-%d %H:%M:%S"))
-    res["DAT"] = (t.date() - cutoff).days
+    dat = (t.date() - cutoff).days
+    res["DAT"] = dat
     logger.info("[SENSOR] %s", res)
+
+    """
+    매일 SR+1시간에 120초간 관수
+
+    급액 EC와 pH는 아래와 같은 수치를 따름
+
+    DAT ~7 EC 0.8, pH 5.5
+    DAT 8 -30 EC 1.0, pH 5.5
+    DAT 31 -60 EC 1.2, pH 5.5
+    DAT 61- EC 1.4, pH 5.5
+    """
+    global last_daily
+    today = date.today()
+    if last_daily != today:
+        last_daily = today
+        sr, _ = calc.calculate_sunrise_sunset(today.strftime("%Y%m%d"))
+        nut_event_t = datetime.strptime(datetime.today().strftime("%Y-%m-%d ") + sr, "%Y-%m-%d %H:%M") + timedelta(hours=1)
+        ec = 0.8
+        if dat <= 7:
+            ec =  0.8
+        elif 8 <= dat <= 30:
+            ec = 1.0
+        elif 31 <= dat <= 60:
+            ec = 1.2
+        else:  # dat >= 61
+            ec = 1.4
+        params = {
+            "items": {
+                "NUTRIENT_PUMP": {
+                    "action_name": "nutsupply",
+                    "action_param": {"state":"NUT_WATER","duration_sec":120, "ec":ec, "ph":5.5}
+                }
+            },
+            "run_at": nut_event_t.strftime("%Y-%m-%d %H:%M:%S")
+        }
+        r = requests.post(SUBMIT_URL, json=params, timeout=5)
+
 
     decision = decide_rules(res, rules)
     logger.info("[DECISION] %s", decision)

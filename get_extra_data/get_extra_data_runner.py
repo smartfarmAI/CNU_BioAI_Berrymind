@@ -1,10 +1,17 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from client import ExtraClient
-import os, json
+import os, json, yaml, joblib
 import asyncio
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import create_engine, text
 import json, ast
+from pathlib import Path
+from get_X_dev_sql import get_X_sql
+from data_prep.registry import REGISTRY
+import data_prep.rules  # 필수: 룰 등록
+import pandas as pd
+import numpy as np
+from calc_vpd import vpd_kpa
 
 DB_URL = os.getenv("DATABASE_URL", "postgresql+psycopg://admin:admin123@tsdb:5432/berrymind")
 engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=1800)
@@ -22,6 +29,97 @@ except json.JSONDecodeError:
 # Create an instance of ExtraClient
 client = ExtraClient(config)
 
+TARGETS = ["after_30min_indoor_co2","after_30min_indoor_humidity","after_30min_indoor_temp"]
+
+cfg = yaml.safe_load(open("conf/base.yaml"))
+models, features = {}, {}
+for t in TARGETS:
+    d = Path(f"lgbm_models/model_{t}")
+    mp, fp = d / f"{t}.pkl", d / "features.txt"
+    if mp.exists():
+        models[t] = joblib.load(mp)
+        with open(fp) as f:
+            features[t] = [ln.strip() for ln in f if ln.strip()]
+    
+def predict_job(): 
+    with engine.connect() as conn:   
+        test_x = pd.read_sql(get_X_sql(), conn)
+
+    if test_x.empty:
+        return  # 이번 턴 스킵
+
+    # 시간 컬럼이 있을 때만 TZ 변환
+    if "time" in test_x.columns and pd.api.types.is_datetime64_any_dtype(test_x["time"]):
+        test_x["time"] = test_x["time"].dt.tz_convert("Asia/Seoul")
+
+    # DB에 넣을 값
+    insert_data= dict()
+
+    # id 문자열(필요 시)
+    if "id" in test_x.columns:
+        idxs = ",".join(test_x["id"].astype(str))
+        insert_data["idxs"] = idxs
+
+    # 전처리
+    fn = REGISTRY["r2_for_inference"]
+    out = fn(test_x, cfg)  # ['set_id','time',<features...>]
+
+    for t in TARGETS:
+        if t not in models:              # 모델 없으면 스킵
+            print(f"❌ 모델 없음: {t} (스킵)")
+            continue
+
+        feats = features[t]
+        pred_X = out.drop(columns=["time"] + TARGETS, errors="ignore").copy()
+        for c in feats:
+            if c not in pred_X.columns:
+                pred_X[c] = 0.0
+        pred_X = pred_X[feats]
+
+        preds = models[t].predict(pred_X)
+        insert_data[t] = float(preds)
+        clipped = np.clip(preds, cfg["post"]["bounds"][t]["min"], cfg["post"]["bounds"][t]["max"])
+        insert_data[f"clipped_{t}"] = float(clipped)
+
+    insert_data["vpd"] = float(vpd_kpa(temp_c=insert_data["clipped_after_30min_indoor_temp"],rh_percent=insert_data["clipped_after_30min_indoor_humidity"]))
+
+    with engine.begin() as conn:
+        conn.execute(
+            text("""
+            INSERT INTO predictions (
+                idxs,
+                after_30min_indoor_co2,
+                after_30min_indoor_humidity,
+                after_30min_indoor_temp,
+                clipped_after_30min_indoor_co2,
+                clipped_after_30min_indoor_humidity,
+                clipped_after_30min_indoor_temp,
+                vpd
+            )
+            VALUES (
+                :idxs,
+                :after_30min_indoor_co2,
+                :after_30min_indoor_humidity,
+                :after_30min_indoor_temp,
+                :clipped_after_30min_indoor_co2,
+                :clipped_after_30min_indoor_humidity,
+                :clipped_after_30min_indoor_temp,
+                :vpd
+            )
+            """),
+            insert_data
+        )
+    # TODO: 목표제어발행 주석 풀기
+    target_time = (datetime.now() + timedelta(minutes=35)).isoformat(timespec='seconds')
+    targets = {
+                    "farm_id": 1,
+                    "temperature": insert_data["clipped_after_30min_indoor_temp"],
+                    "humidity": insert_data["clipped_after_30min_indoor_humidity"],
+                    "CO2": insert_data["clipped_after_30min_indoor_co2"],
+                    "VPD": insert_data["vpd"],
+                    "targettime": target_time
+                }
+    asyncio.run(client.post_target([targets]))
 
 def get_image_job():
     # Test get_image for each dataid
@@ -131,12 +229,14 @@ def post_heartbeat_job():
 
 sched = BlockingScheduler()
 
-# 이미지 오전 10시 , 15시
-sched.add_job(get_image_job, "cron", hour=10, minute=5)
-sched.add_job(get_image_job, "cron", hour=15, minute=5)
+# 이미지 오전 10시 , 15시 TODO 주석풀기
+# sched.add_job(get_image_job, "cron", hour=10, minute=5)
+# sched.add_job(get_image_job, "cron", hour=15, minute=5)
 
-# 기상 3시간 마다
-sched.add_job(get_forecast_job, "interval", hours=3, next_run_time=datetime.now())
-sched.add_job(post_heartbeat_job, "interval", minutes=5, next_run_time=datetime.now())
+# 기상 3시간 마다 TODO 주석풀기
+# sched.add_job(get_forecast_job, "interval", hours=3, next_run_time=datetime.now())
+# sched.add_job(post_heartbeat_job, "interval", minutes=5, next_run_time=datetime.now())
+
+sched.add_job(predict_job, "interval", minutes=1, next_run_time=datetime.now())
 
 sched.start()

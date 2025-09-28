@@ -1,0 +1,66 @@
+window: "10min"
+window_size: 10
+
+# 보간(interpolation) : 관측된 점들 사이의 값을, 간단한 함수(선형·스플라인 등)로 추정해 채우는 것 (범위 밖은 외삽)
+# 결측 대치(imputation) : 이전/다음 값 복사 단순 대치(imputation)
+
+# 0) RAW 단계 이상치 처리
+pre:
+  bounds:                          # 컬럼별 허용범위
+    outdoor_temp:                  {min: -30, max: 50}
+    wind_direction:                {min: 0,   max: 360}
+    wind_speed:                    {min: 0,   max: 100}
+    rain:                          {min: 0,   max: 1}
+    solar_radiation:               {min: 0,   max: 2000}
+    indoor_temp:                   {min: -10, max: 50}
+    indoor_humidity:               {min: 0,   max: 100}
+    indoor_co2:                    {min: 0,   max: 5000}
+    sky_window_left_open_pct:      {min: 0,   max: 100}
+    sky_window_right_open_pct:     {min: 0,   max: 100}
+    heat_curtain_open_pct:         {min: 0, max: 100}
+    shading_screen_open_pct:       {min: 0,   max: 100}
+  bounds_mode: "nan"         # "nan"(범위 밖→NaN) | "clip"(경계로 자름)
+  impute:
+    strategy: "ffill_then_bfill"  # "ffill" | "bfill" | "ffill_then_bfill"
+    limit: 30  # 분 단위 한계(±K분)
+    day_fallback_days: [1,2,3]      # 1 == 전일, 2 == 2일전, ...
+    day_tolerance_min: 0        # 전일 같은 시각 정확히(±0분)
+    by: null                 # 그룹키 있으면 예: "device_id"
+    order_col: "time"
+
+# 1) 값 변환 (열별 매핑)
+value_map:
+  fan_status:             {201: 1, 0: 0, 1: 0}
+  fcu_status:             {201: 1, 0: 0, 1: 0}
+  fcu_circulation_status: {201: 1, 0: 0, 1: 0}
+  fog_status:             {201: 1, 0: 0, 1: 0}
+  co2_status:             {201: 1, 0: 0, 1: 0}
+
+# 2) 집계 대상
+x_mean_cols:            # 윈도우 평균
+  - outdoor_temp
+  - wind_direction
+  - wind_speed                  
+  - solar_radiation
+  - indoor_temp
+  - indoor_humidity
+  - indoor_co2
+  - sky_window_left_open_pct
+  - sky_window_right_open_pct
+  - heat_curtain_open_pct       
+  - shading_screen_open_pct
+
+x_sum_cols:             # 윈도우 누적 합
+  - rain
+  - fan_status
+  - fcu_status
+  - fcu_circulation_status
+  - fog_status
+  - co2_status
+
+post:
+  bounds:
+    after_30min_indoor_co2:      {min: 200, max: 650}
+    after_30min_indoor_humidity: {min: 40,  max: 100}
+    after_30min_indoor_temp:     {min: 10,  max: 35}
+  

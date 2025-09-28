@@ -123,3 +123,22 @@ CREATE INDEX IF NOT EXISTS idx_app_logs_extra_gin ON app_logs USING GIN (extra j
 
 -- 에러만 빠르게 조회할 때 선택
 CREATE INDEX IF NOT EXISTS idx_app_logs_error_ts  ON app_logs(ts DESC) WHERE level = 'ERROR';
+
+CREATE TABLE predictions (
+    id BIGSERIAL PRIMARY KEY,
+    idxs TEXT NOT NULL,  -- "13641,13642,..." 형태의 문자열
+
+    -- 원본 값
+    after_30min_indoor_co2        DOUBLE PRECISION,
+    after_30min_indoor_humidity   DOUBLE PRECISION,
+    after_30min_indoor_temp       DOUBLE PRECISION,
+
+    -- 클리핑된 값
+    clipped_after_30min_indoor_co2      DOUBLE PRECISION,
+    clipped_after_30min_indoor_humidity DOUBLE PRECISION,
+    clipped_after_30min_indoor_temp     DOUBLE PRECISION,
+    
+    vpd DOUBLE PRECISION,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
