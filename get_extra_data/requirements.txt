@@ -3,3 +3,8 @@ multipart
 apscheduler
 SQLAlchemy
 psycopg[binary]
+lightgbm 
+PyYAML==6.0.2
+pandas==2.3.1
+numpy==2.3.2
+scikit-learn==1.7.1

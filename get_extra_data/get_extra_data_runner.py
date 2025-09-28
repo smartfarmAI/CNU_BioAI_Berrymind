@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine, text
 import json, ast
 from pathlib import Path
-from get_X_dev_sql import get_X_sql
+from get_X_prod_sql import get_X_sql
 from data_prep.registry import REGISTRY
 import data_prep.rules  # 필수: 룰 등록
 import pandas as pd
@@ -200,31 +200,73 @@ def post_heartbeat_job():
     # 액션 io 에서 보낸 결과
     try:
         with engine.connect() as conn:
+            # 1) 최근 로그 3개
             rows = (
                 conn.execute(
                     text("SELECT ts, logger, message FROM app_logs ORDER BY id DESC LIMIT 3;")
                 ).mappings().all()
             )
 
-        header = [
-            "# BerryMind",
-            f"_generated: {datetime.now()}_",
+            # 2) 35분 이전의 가장 최근 예측 1행
+            pred = conn.execute(text("""
+                SELECT   created_at
+                    , after_30min_indoor_co2
+                    , after_30min_indoor_humidity
+                    , after_30min_indoor_temp
+                    , clipped_after_30min_indoor_co2
+                    , clipped_after_30min_indoor_humidity
+                    , clipped_after_30min_indoor_temp
+                    , vpd
+                FROM predictions
+                WHERE created_at <= NOW() - INTERVAL '35 minutes'
+                ORDER BY created_at DESC, id DESC
+                LIMIT 1;
+            """)).mappings().first()
+
+        header_logs = [
+            "",
+            "### Recent logs",
             "",
             "| ts | logger | message |",
             "|---|---|---|",
         ]
-        body = [
-            f"| {r['ts']} "
-            f"| {_md_escape(r['logger'])} | {_md_escape(_msgparsor(r['message']))} |"
+        body_logs = [
+            f"| {r['ts']} | {_safe(r['logger'])} | {_safe(_msgparsor(r['message']))} |"
             for r in rows
         ] or ["_no recent logs_"]
 
-        md = "\n".join(header + body)
+        # 2) 예측 표
+        header_pred = [
+            "",
+            "### Latest prediction (<= now-35m)",
+            "",
+            "| created_at | co2 | humidity | temp | clipped_co2 | clipped_humidity | clipped_temp | vpd |",
+            "|---|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+        if pred:
+            created = pred["created_at"]
+            created_str = (
+                created.isoformat(timespec="seconds")
+                if hasattr(created, "isoformat") else str(created)
+            )
+            body_pred = [(
+                f"| {created_str}"
+                f" | {_fmt_num(pred['after_30min_indoor_co2'])}"
+                f" | {_fmt_num(pred['after_30min_indoor_humidity'])}"
+                f" | {_fmt_num(pred['after_30min_indoor_temp'])}"
+                f" | {_fmt_num(pred['clipped_after_30min_indoor_co2'])}"
+                f" | {_fmt_num(pred['clipped_after_30min_indoor_humidity'])}"
+                f" | {_fmt_num(pred['clipped_after_30min_indoor_temp'])}"
+                f" | {_fmt_num(pred['vpd'])} |"
+            )]
+        else:
+            body_pred = ["_no eligible predictions (<= now-35m)_"]
+
+        md = "\n".join(header_logs + body_logs + header_pred + body_pred)
         print(md)
         asyncio.run(client.post_heartbeat(content=md))
     except Exception as e:
         print(f"Error posting heartbeat: {e}", flush=True)
-
 
 
 sched = BlockingScheduler()
@@ -240,3 +282,15 @@ sched = BlockingScheduler()
 sched.add_job(predict_job, "interval", minutes=1, next_run_time=datetime.now())
 
 sched.start()
+
+
+def _safe(s):  # _md_escape 대체용 (이미 있으면 이건 지워도 됨)
+    return s.replace("|", "\\|").replace("`", "\\`") if isinstance(s, str) else s
+
+def _fmt_num(x, nd=3):
+    if x is None:
+        return "—"
+    try:
+        return f"{float(x):.{nd}f}"
+    except Exception:
+        return str(x)
