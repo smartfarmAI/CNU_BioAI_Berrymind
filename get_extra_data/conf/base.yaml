@@ -63,4 +63,43 @@ post:
     after_30min_indoor_co2:      {min: 200, max: 650}
     after_30min_indoor_humidity: {min: 40,  max: 100}
     after_30min_indoor_temp:     {min: 10,  max: 35}
-  
+
+# 추가 피처
+x_min_max_cols:
+  - outdoor_temp
+  - wind_direction
+  - wind_speed                  
+  - solar_radiation
+  - indoor_temp
+  - indoor_humidity
+  - indoor_co2
+  - sky_window_left_open_pct
+  - sky_window_right_open_pct
+  - heat_curtain_open_pct       
+  - shading_screen_open_pct
+
+x_delta_cols:
+  - outdoor_temp
+  - wind_direction
+  - wind_speed                  
+  - solar_radiation
+  - indoor_temp
+  - indoor_humidity
+  - indoor_co2
+  - sky_window_left_open_pct
+  - sky_window_right_open_pct
+  - heat_curtain_open_pct       
+  - shading_screen_open_pct
+
+x_slope_cols:
+  - outdoor_temp
+  - wind_direction
+  - wind_speed                  
+  - solar_radiation
+  - indoor_temp
+  - indoor_humidity
+  - indoor_co2
+  - sky_window_left_open_pct
+  - sky_window_right_open_pct
+  - heat_curtain_open_pct       
+  - shading_screen_open_pct

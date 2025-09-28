@@ -396,3 +396,22 @@ def make_X_y_data(
 
     y_df = df.loc[valid_y].reset_index()
     return X_windows, y_df
+
+def last_minus_first(x: pd.Series):
+    x = x.dropna()
+    if len(x) < 2:
+        return np.nan
+    return x.iloc[-1] - x.iloc[0]
+
+def slope_np(x: pd.Series):
+    # x축은 0,1,2,...로 두고 1차 회귀의 기울기
+    y = x.values
+    if len(y) < 2:
+        return np.nan
+    mask = ~np.isnan(y)
+    if mask.sum() < 2:
+        return np.nan
+    idx = np.arange(len(y))[mask]
+    yv  = y[mask]
+    s, _ = np.polyfit(idx, yv, 1)
+    return s

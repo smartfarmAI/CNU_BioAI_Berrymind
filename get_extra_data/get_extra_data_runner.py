@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine, text
 import json, ast
 from pathlib import Path
-from get_X_prod_sql import get_X_sql
+from get_X_dev_sql import get_X_sql #TODO prod로 바꾸기
 from data_prep.registry import REGISTRY
 import data_prep.rules  # 필수: 룰 등록
 import pandas as pd
@@ -61,7 +61,7 @@ def predict_job():
         insert_data["idxs"] = idxs
 
     # 전처리
-    fn = REGISTRY["r2_for_inference"]
+    fn = REGISTRY["r4_min_max_delta_slope_inference"]
     out = fn(test_x, cfg)  # ['set_id','time',<features...>]
 
     for t in TARGETS:
@@ -110,16 +110,16 @@ def predict_job():
             insert_data
         )
     # TODO: 목표제어발행 주석 풀기
-    target_time = (datetime.now() + timedelta(minutes=35)).isoformat(timespec='seconds')
-    targets = {
-                    "farm_id": 1,
-                    "temperature": insert_data["clipped_after_30min_indoor_temp"],
-                    "humidity": insert_data["clipped_after_30min_indoor_humidity"],
-                    "CO2": insert_data["clipped_after_30min_indoor_co2"],
-                    "VPD": insert_data["vpd"],
-                    "targettime": target_time
-                }
-    asyncio.run(client.post_target([targets]))
+    # target_time = (datetime.now() + timedelta(minutes=35)).isoformat(timespec='seconds')
+    # targets = {
+    #                 "farm_id": 1,
+    #                 "temperature": insert_data["clipped_after_30min_indoor_temp"],
+    #                 "humidity": insert_data["clipped_after_30min_indoor_humidity"],
+    #                 "CO2": insert_data["clipped_after_30min_indoor_co2"],
+    #                 "VPD": insert_data["vpd"],
+    #                 "targettime": target_time
+    #             }
+    # asyncio.run(client.post_target([targets]))
 
 def get_image_job():
     # Test get_image for each dataid
