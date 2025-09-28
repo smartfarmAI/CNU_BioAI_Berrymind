@@ -104,7 +104,7 @@ data/
 
 # Models
 models/
-*.pkl
+# *.pkl
 *.joblib
 *.h5
 *.hdf5
