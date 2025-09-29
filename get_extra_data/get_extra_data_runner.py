@@ -156,6 +156,17 @@ def get_forecast_job():
     except Exception as e:
         print(f"Error getting forecast: {e}")
 
+def _safe(s):  # _md_escape 대체용 (이미 있으면 이건 지워도 됨)
+    return s.replace("|", "\\|").replace("`", "\\`") if isinstance(s, str) else s
+
+def _fmt_num(x, nd=3):
+    if x is None:
+        return "—"
+    try:
+        return f"{float(x):.{nd}f}"
+    except Exception:
+        return str(x)
+    
 def _md_escape(s: str) -> str:
     return str(s).replace("|", r"\|").replace("\n", " ").replace("\r", " ")
 
@@ -283,14 +294,3 @@ sched.add_job(predict_job, "interval", minutes=1, next_run_time=datetime.now())
 
 sched.start()
 
-
-def _safe(s):  # _md_escape 대체용 (이미 있으면 이건 지워도 됨)
-    return s.replace("|", "\\|").replace("`", "\\`") if isinstance(s, str) else s
-
-def _fmt_num(x, nd=3):
-    if x is None:
-        return "—"
-    try:
-        return f"{float(x):.{nd}f}"
-    except Exception:
-        return str(x)
