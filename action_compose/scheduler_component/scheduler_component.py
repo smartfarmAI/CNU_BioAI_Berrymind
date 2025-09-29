@@ -4,6 +4,7 @@ import time
 from apscheduler.schedulers.background import BackgroundScheduler
 import hashlib
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 
 @dataclass(frozen=True)
@@ -49,7 +50,8 @@ class PlanScheduler:
     통과 시 최신 시그니처/만료시각 갱신
     """
     def submit_plan(self, plan: Plan, run_at = None):
-        now = datetime.now()
+        KST = ZoneInfo("Asia/Seoul")
+        now = datetime.now(KST)
         job_id_new_flag = True
         if not run_at:
             run_at = now
