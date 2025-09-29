@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine, text
 import json, ast
 from pathlib import Path
-from get_X_dev_sql import get_X_sql #TODO prod로 바꾸기
+from get_X_prod_sql import get_X_sql
 from data_prep.registry import REGISTRY
 import data_prep.rules  # 필수: 룰 등록
 import pandas as pd
@@ -109,17 +109,17 @@ def predict_job():
             """),
             insert_data
         )
-    # TODO: 목표제어발행 주석 풀기
-    # target_time = (datetime.now() + timedelta(minutes=35)).isoformat(timespec='seconds')
-    # targets = {
-    #                 "farm_id": 1,
-    #                 "temperature": insert_data["clipped_after_30min_indoor_temp"],
-    #                 "humidity": insert_data["clipped_after_30min_indoor_humidity"],
-    #                 "CO2": insert_data["clipped_after_30min_indoor_co2"],
-    #                 "VPD": insert_data["vpd"],
-    #                 "targettime": target_time
-    #             }
-    # asyncio.run(client.post_target([targets]))
+    # 목표제어발행
+    target_time = (datetime.now() + timedelta(minutes=35)).isoformat(timespec='seconds')
+    targets = {
+                    "farm_id": 1,
+                    "temperature": insert_data["clipped_after_30min_indoor_temp"],
+                    "humidity": insert_data["clipped_after_30min_indoor_humidity"],
+                    "CO2": insert_data["clipped_after_30min_indoor_co2"],
+                    "VPD": insert_data["vpd"],
+                    "targettime": target_time
+                }
+    asyncio.run(client.post_target([targets]))
 
 def get_image_job():
     # Test get_image for each dataid
@@ -271,13 +271,13 @@ def post_heartbeat_job():
 
 sched = BlockingScheduler()
 
-# 이미지 오전 10시 , 15시 TODO 주석풀기
-# sched.add_job(get_image_job, "cron", hour=10, minute=5)
-# sched.add_job(get_image_job, "cron", hour=15, minute=5)
+# 이미지 오전 10시 , 15시 
+sched.add_job(get_image_job, "cron", hour=10, minute=5)
+sched.add_job(get_image_job, "cron", hour=15, minute=5)
 
-# 기상 3시간 마다 TODO 주석풀기
-# sched.add_job(get_forecast_job, "interval", hours=3, next_run_time=datetime.now())
-# sched.add_job(post_heartbeat_job, "interval", minutes=5, next_run_time=datetime.now())
+# 기상 3시간 마다 
+sched.add_job(get_forecast_job, "interval", hours=3, next_run_time=datetime.now())
+sched.add_job(post_heartbeat_job, "interval", minutes=5, next_run_time=datetime.now())
 
 sched.add_job(predict_job, "interval", minutes=1, next_run_time=datetime.now())
 

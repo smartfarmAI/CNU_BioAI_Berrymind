@@ -12,6 +12,7 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+    restart: unless-stopped
     networks:
       - timescale_db_default
   
@@ -28,6 +29,7 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+    restart: unless-stopped
     networks:
       - timescale_db_default
     depends_on:
@@ -50,6 +52,7 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+    restart: unless-stopped
     networks:
       - timescale_db_default
 
