@@ -7,9 +7,15 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends libgomp1 libstdc++6 tzdata \
+ && rm -rf /var/lib/apt/lists/*
+
 # 있으면 사용
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
+
+RUN python - <<'PY'\nimport importlib; importlib.import_module("lightgbm"); print("lightgbm OK")\nPY
 
 COPY . .
 
