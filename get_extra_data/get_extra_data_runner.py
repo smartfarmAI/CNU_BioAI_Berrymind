@@ -263,7 +263,7 @@ def post_heartbeat_job():
             body_pred = ["_no eligible predictions (<= now-35m)_"]
 
         md = "\n".join(header_logs + body_logs + header_pred + body_pred)
-        print(md)
+        # print(md)
         asyncio.run(client.post_heartbeat(content=md))
     except Exception as e:
         print(f"Error posting heartbeat: {e}", flush=True)
