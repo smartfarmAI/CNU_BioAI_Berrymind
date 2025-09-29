@@ -15,8 +15,6 @@ RUN apt-get update \
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-RUN python - <<'PY'\nimport importlib; importlib.import_module("lightgbm"); print("lightgbm OK")\nPY
-
 COPY . .
 
 CMD ["python", "get_extra_data_runner.py"]
