@@ -15,8 +15,7 @@
         "conditions": {
             "all": [
                 {"name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 25},
-                {"name": "time_band", "operator": "equal_to", "value": 1},
-                {"name": "fcu_circulation_status", "operator": "equal_to", "value": 0}
+                {"name": "time_band", "operator": "equal_to", "value": 1}
             ]
         },
         "actions": [
@@ -38,8 +37,7 @@
         "conditions": {
             "all": [
                 {"name":"indoor_temp","operator":"less_than_or_equal_to","value":25},
-                {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
@@ -59,14 +57,13 @@
         "conditions": {
             "all": [
                 {"name":"indoor_temp","operator":"less_than_or_equal_to","value":26},
-                {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
         "priority": 90
     },
-   {
+    {
         "conditions": {
             "all": [
                 {"name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 30},
@@ -82,8 +79,7 @@
         "conditions": {
             "all": [
                 {"name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 28},
-                {"name": "time_band", "operator": "equal_to", "value": 4},
-                {"name": "fcu_circulation_status", "operator": "equal_to", "value": 0}
+                {"name": "time_band", "operator": "equal_to", "value": 4}
             ]
         },
         "actions": [
@@ -94,7 +90,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":10},
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":6},
                 {"name":"time_band","operator":"equal_to","value":5}
             ]
         },
@@ -104,9 +100,8 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":12},
-                {"name":"time_band","operator":"equal_to","value":5},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":8},
+                {"name":"time_band","operator":"equal_to","value":5}
             ]
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
@@ -115,7 +110,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":10},
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":8},
                 {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
@@ -125,9 +120,8 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":12},
-                {"name":"time_band","operator":"equal_to","value":6},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":10},
+                {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
@@ -136,7 +130,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":10},
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":9},
                 {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
@@ -146,9 +140,8 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":12},
-                {"name":"time_band","operator":"equal_to","value":7},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":11},
+                {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
@@ -157,7 +150,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":10},
+                {"name":"indoor_temp","operator":"less_than_or_equal_to","value":8},
                 {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
@@ -167,12 +160,11 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":15},
-                {"name":"time_band","operator":"equal_to","value":8},
-                {"name":"fcu_circulation_status","operator":"equal_to","value":0}
+                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":13},
+                {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
         "actions": [{"name":"switch_action","params":{"actuator":"FCU_FAN","state":"OFF","pause_sec":1800}}],
         "priority": 90
-    }  
+    }
 ]
