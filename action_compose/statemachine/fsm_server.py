@@ -45,34 +45,11 @@ async def start_job(name: str, req: StartJobReq):
     fsm = get_fsm(name)
     print(f"{name} 요청이 들어왔습니다. req: {req}")
     async with _locks[name]:
-        if fsm.state != "READY":
-            print(f"{name} 기존 요청 처리중으로 거부되었습니다. \nstate : {fsm.state}  want_opid : {fsm.want_opid}\nlast_state_code : {fsm.last_state_code}")
-            return StartJobResp(opid=-1, state=fsm.state)
-            # raise HTTPException(status_code=409, detail=f"busy (state={fsm.state})")
-        # print(f"{name} fsm.start_job을 시작합니다.")
         payload = req.model_dump(exclude_none=True)
         opid = await fsm.start_job(
             payload = payload
         )
-        # print(f"{name} {opid} 시작되었습니다.")
         return StartJobResp(opid=opid, state=fsm.state)
-
-@app.get("/devices/{name}/state", response_model=FSMStateResp)
-async def get_state(name: str):
-    fsm = get_fsm(name)
-    return FSMStateResp(
-        state=fsm.state,
-        want_opid=getattr(fsm, "want_opid", None),
-        deadline_ts=getattr(fsm, "deadline_ts", 0.0),
-        last_state_code=getattr(fsm, "last_state_code", None),
-        last_opid=getattr(fsm, "last_opid", None),
-    )
-
-@app.post("/devices/{name}/reset")
-async def reset(name: str):
-    fsm = get_fsm(name)
-    fsm.reset()
-    return {"ok": True, "state": fsm.state}
 
 @app.get("/health")
 def health():
