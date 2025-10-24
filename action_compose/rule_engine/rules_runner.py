@@ -48,7 +48,12 @@ def run_once():
     if last_daily != today:
         last_daily = today
         sr, _ = calc.calculate_sunrise_sunset(today.strftime("%Y%m%d"))
-        nut_event_t = datetime.strptime(datetime.today().strftime("%Y-%m-%d ") + sr, "%Y-%m-%d %H:%M") + timedelta(hours=1)
+        nut_event_times = [
+            datetime.strptime(datetime.today().strftime("%Y-%m-%d ") + sr, "%Y-%m-%d %H:%M") + timedelta(hours=1),
+            datetime.strptime(datetime.today().strftime("%Y-%m-%d ") + sr, "%Y-%m-%d %H:%M") + timedelta(hours=2),
+            datetime.strptime(datetime.today().strftime("%Y-%m-%d ") + sr, "%Y-%m-%d %H:%M") + timedelta(hours=3)
+        ]
+        # nut_event_t = datetime.strptime(datetime.today().strftime("%Y-%m-%d ") + sr, "%Y-%m-%d %H:%M") + timedelta(hours=1)
         ec = 0.8
         if dat <= 7:
             ec =  0.8
@@ -58,16 +63,17 @@ def run_once():
             ec = 1.2
         else:  # dat >= 61
             ec = 1.4
-        params = {
-            "items": {
-                "NUTRIENT_PUMP": {
-                    "action_name": "nutsupply",
-                    "action_param": {"state":"NUT_WATER","duration_sec":120, "ec":ec, "ph":5.5}
-                }
-            },
-            "run_at": nut_event_t.strftime("%Y-%m-%d %H:%M:%S")
-        }
-        r = requests.post(SUBMIT_URL, json=params, timeout=5)
+        for nut_event_t in nut_event_times:
+            params = {
+                "items": {
+                    "NUTRIENT_PUMP": {
+                        "action_name": "nutsupply",
+                        "action_param": {"state":"NUT_WATER","duration_sec":60, "ec":ec, "ph":5.5}
+                    }
+                },
+                "run_at": nut_event_t.strftime("%Y-%m-%d %H:%M:%S")
+            }
+            r = requests.post(SUBMIT_URL, json=params, timeout=5)
 
 
     decision = decide_rules(res, rules)
