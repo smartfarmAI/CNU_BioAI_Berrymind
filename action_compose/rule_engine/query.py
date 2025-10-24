@@ -32,6 +32,31 @@ def get_query() -> str:
       WHERE p.time <= b.time AND p.time > b.time - interval '30 minutes'
         AND COALESCE(p.indoor_co2,0) <> 0
       ORDER BY p.time DESC LIMIT 1
-    ), b.indoor_co2) ELSE b.indoor_co2 END AS indoor_co2,
-    b.soil_water_content, b.wind_direction , b.fcu_circulation_status
+    ), b.indoor_co2) ELSE b.indoor_co2 END AS indoor_co2, b.wind_direction,
+
+    CASE 
+      WHEN b.soil_water_content = 0 THEN COALESCE((
+        SELECT p.soil_water_content
+        FROM greenhouse2 p
+        WHERE p.time <= b.time AND p.time > b.time - interval '30 minutes'
+          AND p.soil_water_content <> 0
+        ORDER BY p.time DESC
+        LIMIT 1
+      ), b.soil_water_content)
+      WHEN ABS(b.soil_water_content - (
+        SELECT p.soil_water_content
+        FROM greenhouse2 p
+        WHERE p.time < b.time
+        ORDER BY p.time DESC
+        LIMIT 1
+      )) >= 10
+      THEN (
+        SELECT p.soil_water_content
+        FROM greenhouse2 p
+        WHERE p.time < b.time
+        ORDER BY p.time DESC
+        LIMIT 1
+      )
+      ELSE b.soil_water_content
+    END AS soil_water_content
   FROM b;"""
