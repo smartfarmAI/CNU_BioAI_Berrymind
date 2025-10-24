@@ -49,7 +49,7 @@ async def start_job(name: str, req: StartJobReq):
         opid = await fsm.start_job(
             payload = payload
         )
-        return StartJobResp(opid=opid, state=fsm.state)
+        return opid
 
 @app.get("/health")
 def health():

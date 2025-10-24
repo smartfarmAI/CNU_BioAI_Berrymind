@@ -48,7 +48,7 @@ class DeviceFSM:
         print(f"actionio에 요청을 보낼준비 {self.actuator_name} cmd_name : {payload}")
         
         if CMDCODE[payload["cmd_name"]] == STATCODE(self.last_state_code):
-            print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {payload["cmd_name"]}")
+            print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {payload['cmd_name']}")
             return -1
         elif is_open_code(CMDCODE[payload["cmd_name"]]) and self.last_open_pct == 100:
             print(f"{self.actuator_name}이 다 열려있어서 actionio에 요청을 보내지 않습니다.  last_state_code : {self.last_state_code}")
