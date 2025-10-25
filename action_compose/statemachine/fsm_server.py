@@ -40,7 +40,7 @@ class FSMStateResp(BaseModel):
     last_opid: int | None
 
 # ---- 엔드포인트 ----
-@app.post("/devices/{name}/jobs", response_model=StartJobResp)
+@app.post("/devices/{name}/jobs")
 async def start_job(name: str, req: StartJobReq):
     fsm = get_fsm(name)
     print(f"{name} 요청이 들어왔습니다. req: {req}")
