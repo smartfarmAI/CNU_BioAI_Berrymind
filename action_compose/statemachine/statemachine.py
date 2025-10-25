@@ -32,29 +32,13 @@ def is_close_code(code: STATCODE) -> bool:
         return False
 
 class DeviceFSM:
-    states = ["READY", "WORKING", "ERROR"]
 
     def __init__(self, actuator_name: str, host: str, verify_interval: float = 1.0, timeout = 3000):
         self.actuator_name = actuator_name
         self.host = host.rstrip("/")
         self.base_url = f"{self.host}/actuators/{self.actuator_name}"
         self.timeout = timeout # 이 시간동안 안되면 실패로 간주
-        initial_state = "READY"
-        self.machine = Machine(model=self, states=self.states, initial=initial_state, queued=True)
-        self.machine.add_transition("start",  "READY",   "WORKING", after="on_start")
-        self.machine.add_transition("finish", "WORKING", "READY",   after="on_finish")
-        self.machine.add_transition("fail",   "*",       "ERROR",   after="on_fail")
-        self.machine.add_transition("reset",  "ERROR",   "READY")
-
-        self.want_opid: Optional[int] = None
-        self.deadline_ts: float = 0.0
-        self._verify_interval = verify_interval
-        self._task: Optional[asyncio.Task] = None
-
-        # 디버깅용: 마지막 장비 코드/서브상태 저장
-        self.last_state_code: Optional[int] = STATCODE["READY"]
-
-        # 개폐기는 개도율 저장
+        self.last_state_code = 0
         self.last_open_pct = None
 
     def _url(self, path: str) -> str:
@@ -62,11 +46,12 @@ class DeviceFSM:
     
     def _send_command(self, payload: dict[str, Any]) -> int:
         print(f"actionio에 요청을 보낼준비 {self.actuator_name} cmd_name : {payload}")
-        # print(f"actionio에 상태 요청을 해서 상태를 업데이트 합니다. {self.actuator_name}")
-        #TODO
         
-        if CMDCODE[payload["cmd_name"]] == STATCODE(self.last_state_code):
-            print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {payload["cmd_name"]}")
+        if self.last_state_code != 0:
+            print(f"현재 READY 상태가 아니여서 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {payload['cmd_name']}")
+            return -1
+        elif CMDCODE[payload["cmd_name"]] == STATCODE(self.last_state_code):
+            print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {payload['cmd_name']}")
             return -1
         elif is_open_code(CMDCODE[payload["cmd_name"]]) and self.last_open_pct == 100:
             print(f"{self.actuator_name}이 다 열려있어서 actionio에 요청을 보내지 않습니다.  last_state_code : {self.last_state_code}")
@@ -82,7 +67,7 @@ class DeviceFSM:
         )
         print(f"actionio에 요청을 보낸 결과 {self.actuator_name} {r.json()}")
         r.raise_for_status()
-        # TODO self.state에 결과 받아서 와야함
+        
         return int(r.json()["opid"])
     
     def _read_state(self):
@@ -93,95 +78,12 @@ class DeviceFSM:
     
     # --- 외부 진입점 ---
     async def start_job(self, payload: dict[str, Any]) -> int:
-        if self.state != "READY":
-            print(f"상태가 READY가 아닙니다. last_opid : {self.last_opid}")
-            return self.last_opid if self.last_opid else -1
-            # raise RuntimeError(f"busy (state={self.state})")
-        print(f"{self.actuator_name} 요청을 보냅니다. {payload}")
+        st = await asyncio.to_thread(self._read_state)
+        opid = st.get("opid",-1) # TODO 에러 구현
+        code = st.get("state",STATCODE["ERROR"])
+        self.last_state_code = int(code) if code is not None else None
+        open_pct = st.get("open_pct",-1) 
+        self.last_open_pct = int(open_pct)
+
         opid = await asyncio.to_thread(self._send_command, payload)
-        if opid != -1:
-            ttl = self.timeout
-            self.start(opid=opid, deadline_ts=time.time() + ttl)
-            if not self._task or self._task.done():
-                self._task = asyncio.create_task(self._verify_loop())
         return opid
-    
-    # # --- 리셋 ---
-    # async def reset(self):
-    #     print(f"{self.actuator_name} 리셋 합니다.")
-    #     self.state = "WORKING"
-    #     opid = await asyncio.to_thread(self._send_command, "OFF")
-    #     if not self._task or self._task.done():
-    #         self._task = asyncio.create_task(self._verify_loop())
-    #     print(f"{self.actuator_name} 리셋 완료 {opid}")
-    #     return opid
-
-
-    # --- 전이 훅 ---
-    def on_start(self, opid: int, deadline_ts: float):
-        self.want_opid = opid
-        self.deadline_ts = deadline_ts
-        print(f"{self.actuator_name} {opid} 시작됬습니다.")
-
-    def on_finish(self):
-        print(f"{self.actuator_name} {self.want_opid} 끝났습니다.") # TODO: 이름도 같이 나오게
-        self.want_opid = None # opid 초기화
-
-    def on_fail(self):
-        print(f"{self.actuator_name} {self.want_opid} 에러")
-        self.want_opid = None
-
-    # --- 검증 루프 ---
-    async def _verify_loop(self):
-        """
-        WORKING일 때만 주기적으로 read_state().
-        성공 조건(예시): opid 반영 && 더 이상 워킹 코드가 아님 → finish()
-        실패 조건: TTL 초과 → fail()
-        """
-        while True:
-            await asyncio.sleep(self._verify_interval)
-            if self.state == "ERROR":
-                st = await asyncio.to_thread(self._read_state)
-                opid = st.get("opid",-1) # TODO 에러 구현
-                code = st.get("state",STATCODE["ERROR"]) 
-                if code == 0:
-                    self.state = "READY"
-                self.last_state_code = int(code) if code is not None else None
-                continue
-
-            if self.state != "WORKING":
-                continue
-
-            if self.want_opid and time.time() > self.deadline_ts:
-                print("시간조건으로 인해 fail로 넘어갑니다.")
-                self.fail()
-                continue
-
-            st = await asyncio.to_thread(self._read_state)
-            print(f"state 요청으로 인해 받은 값 {self.actuator_name} {st}")
-            opid = st.get("opid",-1) # TODO 에러 구현
-            code = st.get("state",STATCODE["ERROR"]) # TODO 에러구현
-            open_pct = st.get("open_pct",-1)
-
-            self.last_opid = int(opid) if opid is not None else None
-            self.last_state_code = int(code) if code is not None else None
-            self.last_open_pct = int(open_pct)
-
-            # 1) 에러 코드 즉시 감지
-            if self.last_state_code == STATCODE["ERROR"]:
-                print(f"에러 코드 즉시 감지로 인해 fail로 넘어갑니다. {self.last_state_code}")
-                self.fail()
-                continue
-
-            # 2) 우리가 보낸 opid가 장비에 반영됐는지
-            print(f"opid 받은것 : {opid}, want_opid : {self.want_opid} last_state_code : {self.last_state_code}")
-            reflected = (opid == self.want_opid)
-
-            # 3) 반영되었고, 장비가 더 이상 '워킹 코드'가 아니면 완료로 간주
-            #    (장비가 세부코드를 안 주는 환경이면, 아래 조건을 'reflected'만으로도 운용 가능)
-            if self.want_opid and reflected and not is_working_code(self.last_state_code):
-                self.finish()
-                continue
-
-            # 4) 반영만 되었고 아직 워킹 중이면 계속 기다림
-            #    (세부코드를 못 받는다면, finish 조건을 'reflected'로 바꾸면 즉시 종료됨)
