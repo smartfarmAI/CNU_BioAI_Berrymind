@@ -139,6 +139,7 @@
         ],
         "priority": 90
     },
+
     {
         "name": "Fundamental permise : FOG",
         "conditions": {
@@ -150,5 +151,19 @@
             {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
         ],
         "priority": 100
-    }
+    },
+        
+    {
+    "name": "Fundamental premise : FOG ON when humidity ≤ 40%",
+    "conditions": {
+        "all": [
+            {"name":"indoor_humidity","operator":"less_than_or_equal_to","value":40}
+        ]
+    },
+    "actions": [
+        {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":600}}
+    ],
+    "priority": 100
+}
+
 ]

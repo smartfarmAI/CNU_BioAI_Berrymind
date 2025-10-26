@@ -1,9 +1,9 @@
 [
   {
-    "name": "Fundamental premise : INDOOR_HUMIDITY ≥90 → FAN TIMED_ON 5min / Pause 15min",
+    "name": "Fundamental premise : INDOOR_HUMIDITY ≥91 → FAN TIMED_ON 5min / Pause 15min",
     "conditions": {
       "all": [
-        {"name":"indoor_humidity","operator":"greater_than_or_equal_to","value":90}
+        {"name":"indoor_humidity","operator":"greater_than_or_equal_to","value":91}
       ]
     },
     "actions": [
@@ -13,17 +13,17 @@
           "actuator":"FAN",
           "state":"TIMED_ON",
           "duration_sec":300,
-          "pause_sec":900
+          "pause_sec":2100
         }
       }
     ],
     "priority": 100
   },
   {
-    "name": "Fundamental premise : INDOOR_HUMIDITY ≤86 → FAN OFF",
+    "name": "Fundamental premise : INDOOR_HUMIDITY <91 → FAN OFF",
     "conditions": {
       "all": [
-        {"name":"indoor_humidity","operator":"less_than_or_equal_to","value":86}
+        {"name":"indoor_humidity","operator":"less_than","value":91}
       ]
     },
     "actions": [
