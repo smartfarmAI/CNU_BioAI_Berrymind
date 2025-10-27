@@ -49,6 +49,7 @@ class DeviceFSM:
         
         if self.last_state_code != 0:
             print(f"현재 READY 상태가 아니여서 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {payload['cmd_name']}")
+            return -1
         elif CMDCODE[payload["cmd_name"]] == STATCODE(self.last_state_code):
             print(f"요청값과 현재 상태가 같아 actionio에 요청을 보내지 않습니다. {self.actuator_name} last_state_code : {self.last_state_code} cmd_name : {payload['cmd_name']}")
             return -1
