@@ -30,7 +30,7 @@ class StartJobReq(BaseModel):
 
 class StartJobResp(BaseModel):
     opid: int
-    state: str
+    state: int
 
 class FSMStateResp(BaseModel):
     state: str
