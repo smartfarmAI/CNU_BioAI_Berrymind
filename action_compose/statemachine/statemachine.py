@@ -38,6 +38,7 @@ class DeviceFSM:
         self.host = host.rstrip("/")
         self.base_url = f"{self.host}/actuators/{self.actuator_name}"
         self.timeout = timeout # 이 시간동안 안되면 실패로 간주
+        self.state = 0
         self.last_state_code = 0
         self.last_open_pct = None
 
