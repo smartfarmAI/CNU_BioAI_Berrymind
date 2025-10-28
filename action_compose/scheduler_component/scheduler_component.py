@@ -68,9 +68,13 @@ class PlanScheduler:
             pause = int(item.action_param.get("pause_sec", 0))
             duration = int(item.action_param.get("duration_sec", 0))
             window_sec = max(0, pause + duration)
-            if self.last_sig.get(act) == sig and self.debounce.get(act, now) > now:
-                print(f"{item.action_param.get('actuator', '')} pause_sec로 인한 디듀프")
-                continue
+
+            # ✅ run_at이 없는 경우만 디듀프 적용
+            if not job_id_new_flag:
+                if self.last_sig.get(act) == sig and self.debounce.get(act, now) > now:
+                    print(f"{item.action_param.get('actuator', '')} pause_sec로 인한 디듀프")
+                    continue
+            
             self.last_sig[act] = sig
             if window_sec > 0:
                 self.debounce[act] = run_at + timedelta(seconds=window_sec)
