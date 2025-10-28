@@ -77,7 +77,7 @@ class PlanScheduler:
             
             self.last_sig[act] = sig
             if window_sec > 0:
-                self.debounce[act] = run_at + timedelta(seconds=window_sec)
+                self.debounce[act] = now + timedelta(seconds=window_sec)
             # 고정 job_id로 교체 등록
             job_id = f"{act}:apply"
             if job_id_new_flag:
@@ -94,4 +94,4 @@ class PlanScheduler:
         
         # 전역 디바운스 갱신: 이번 제출에서 하나라도 등록되면 활성화
         if scheduled_any and self.debounce_sec > 0:
-            self.global_until = run_at + timedelta(seconds=self.debounce_sec)
+            self.global_until = now + timedelta(seconds=self.debounce_sec)
