@@ -1,7 +1,1 @@
-## 🚀 프로젝트 소개
-
-BioAI 기술을 활용한 혁신적 연구 및 개발을 목표로 하며, 데이터 분석, AI 모델링, 생명과학 응용 분야를 다룹니다.
-
----
-
-실은 전부 아니고 현재는 스마트농업 AI 경진대회 본선에 나가서 만든 레포입니다.
+<img width="1376" height="572" alt="image" src="https://github.com/user-attachments/assets/89135c8a-92e0-4d08-96b7-df0757b36028" />
