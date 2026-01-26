@@ -2,7 +2,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":28},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":28},
                 {"name":"time_band","operator":"equal_to","value":1}
             ]
         },
@@ -14,7 +14,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than","value":28},
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
                 {"name":"time_band","operator":"equal_to","value":1}
             ]
         },
@@ -26,7 +26,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":30},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
@@ -38,7 +38,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than","value":28},
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
                 {"name":"time_band","operator":"equal_to","value":2}
             ]
         },
@@ -50,7 +50,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":30},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
@@ -62,7 +62,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than","value":28},
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
                 {"name":"time_band","operator":"equal_to","value":3}
             ]
         },
@@ -74,7 +74,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":30},
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
@@ -86,7 +86,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"indoor_temp","operator":"less_than","value":28},
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
                 {"name":"time_band","operator":"equal_to","value":4}
             ]
         },
@@ -144,7 +144,7 @@
         "name": "Fundamental permise : FOG",
         "conditions": {
             "all": [
-                {"name":"indoor_humidity","operator":"greater_than_or_equal_to","value":85}
+                {"name":"after_30min_indoor_humidity","operator":"greater_than_or_equal_to","value":85}
             ]
         },
         "actions": [
@@ -157,7 +157,7 @@
     "name": "Fundamental premise : FOG ON when humidity ≤ 40%",
     "conditions": {
         "all": [
-            {"name":"indoor_humidity","operator":"less_than_or_equal_to","value":40}
+            {"name":"after_30min_indoor_humidity","operator":"less_than_or_equal_to","value":40}
         ]
     },
     "actions": [
