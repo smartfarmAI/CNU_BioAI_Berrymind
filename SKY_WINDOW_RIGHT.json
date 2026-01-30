@@ -28,11 +28,11 @@
         "priority": 90
       },
       {
-        "name": "TB2: RIGHT OPEN 20s if temp>=25",
+        "name": "TB2: RIGHT OPEN 20s if temp>=27",
         "conditions": {
           "all": [
             { "name": "time_band", "operator": "equal_to", "value": 2 },
-            { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 25 }
+            { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 27 }
           ]
         },
         "actions": [
@@ -57,7 +57,17 @@
         ],
         "priority": 90
       },
-
+      {
+      "name": "TB3: RIGHT CLOSE 20s if temp<=25",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 3 },
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 25 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_RIGHT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
+      "priority": 90
+    },
     {
       "name": "TB4: RIGHT CLOSE 20s if temp<=27",
       "conditions": {

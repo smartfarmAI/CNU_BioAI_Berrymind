@@ -2,7 +2,7 @@
      {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":8},
+                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":6},
                 {"name":"time_band","operator":"equal_to","value":1}
             ]
         },
@@ -12,7 +12,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":13},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":11},
                 {"name":"time_band","operator":"equal_to","value":1}
             ]
         },
@@ -75,7 +75,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":8},
+                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":6},
                 {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
@@ -85,7 +85,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":10},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":8},
                 {"name":"time_band","operator":"equal_to","value":6}
             ]
         },
@@ -95,7 +95,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":9},
+                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":7},
                 {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
@@ -105,7 +105,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":11},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":9},
                 {"name":"time_band","operator":"equal_to","value":7}
             ]
         },
@@ -115,7 +115,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":8},
+                {"name":"after_30min_indoor_temp","operator":"less_than_or_equal_to","value":7},
                 {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
@@ -125,7 +125,7 @@
     {
         "conditions": {
             "all": [
-                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":13},
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":9},
                 {"name":"time_band","operator":"equal_to","value":8}
             ]
         },
