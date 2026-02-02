@@ -17,7 +17,7 @@
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 1 },
-          { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 26 }
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 26 }
         ]
       },
       "actions": [
@@ -28,11 +28,11 @@
       "priority": 90
     },
     {
-      "name": "TB2: LEFT OPEN 20s if temp>=25",
+      "name": "TB2: LEFT OPEN 20s if temp>=27",
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 2 },
-          { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 25 }
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 27 }
         ]
       },
       "actions": [
@@ -47,7 +47,7 @@
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 3 },
-          { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 27 }
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 27 }
         ]
       },
       "actions": [
@@ -57,13 +57,23 @@
       ],
       "priority": 90
     },
-
+    {
+      "name": "TB3: LEFT CLOSE 20s if temp<=25",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 3 },
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 25 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
+      "priority": 90
+    },
     {
       "name": "TB4: LEFT CLOSE 20s if temp<=27",
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 4 },
-          { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 27 }
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 27 }
         ]
       },
       "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
@@ -74,7 +84,7 @@
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 5 },
-          { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 20 }
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 20 }
         ]
       },
       "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
@@ -85,7 +95,7 @@
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 6 },
-          { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
         ]
       },
       "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
@@ -96,7 +106,7 @@
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 7 },
-          { "name": "indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
         ]
       },
       "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
@@ -107,7 +117,7 @@
       "conditions": {
         "all": [
           { "name": "time_band", "operator": "equal_to", "value": 8 },
-          { "name": "indoor_temp", "operator": "greater_than_or_equal_to", "value": 25 }
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 25 }
         ]
       },
       "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_OPEN", "duration_sec": 10, "pause_sec": 300 } } ],

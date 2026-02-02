@@ -36,7 +36,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":1},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":37},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":32},
                 {"name":"DAT","operator":"greater_than","value":60}
             ]
         },
@@ -85,7 +85,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":2},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":39},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":35},
                 {"name":"DAT","operator":"greater_than","value":60}
             ]
         },
@@ -135,7 +135,7 @@
         "conditions": {
             "all": [
                 {"name":"time_band","operator":"equal_to","value":3},
-                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":37},
+                {"name":"soil_water_content","operator":"less_than_or_equal_to","value":31},
                 {"name":"DAT","operator":"greater_than","value":60}
             ]
         },

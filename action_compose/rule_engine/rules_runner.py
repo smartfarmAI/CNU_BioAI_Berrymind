@@ -68,7 +68,7 @@ def run_once():
                 "items": {
                     "NUTRIENT_PUMP": {
                         "action_name": "nutsupply",
-                        "action_param": {"state":"NUT_WATER","duration_sec":90, "ec":ec, "ph":6.0}
+                        "action_param": {"state":"NUT_WATER","duration_sec":60, "ec":ec, "ph":6.0}
                     }
                 },
                 "run_at": nut_event_t.strftime("%Y-%m-%d %H:%M:%S")
