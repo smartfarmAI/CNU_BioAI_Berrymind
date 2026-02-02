@@ -64,6 +64,14 @@ class EnvVars(BaseVariables):
     @numeric_rule_variable(label="After 30min Indoor Humidity")
     def after_30min_indoor_humidity(self) -> float:
         return float(self.vals.get("after_30min_indoor_humidity", 0.0))
+    
+    @numeric_rule_variable(label="After 30min Indoor Temp")
+    def after_30min_indoor_temp(self) -> float:
+        return float(self.vals.get("after_30min_indoor_temp", 0.0))
+    
+    @numeric_rule_variable(label="After 30min Indoor CO2")
+    def after_30min_indoor_co2(self) -> float:
+        return float(self.vals.get("after_30min_indoor_co2", 0.0))
 
 # 2) ProbeActions
 class ProbeActions(BaseActions):
