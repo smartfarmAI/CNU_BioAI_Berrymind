@@ -62,5 +62,16 @@ SELECT
   (SELECT pr.after_30min_indoor_humidity
    FROM predictions pr
    ORDER BY pr.created_at DESC
-   LIMIT 1) AS after_30min_indoor_humidity
+   LIMIT 1) AS after_30min_indoor_humidity,
+
+   (SELECT pr.after_30min_indoor_temp
+ FROM predictions pr
+ ORDER BY pr.created_at DESC
+ LIMIT 1) AS after_30min_indoor_temp,
+
+(SELECT pr.after_30min_indoor_co2
+ FROM predictions pr
+ ORDER BY pr.created_at DESC
+ LIMIT 1) AS after_30min_indoor_co2
+
 FROM b;"""
