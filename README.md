@@ -19,3 +19,7 @@
 
 을 하나의 파이프라인으로 결합하여,  
 **실제 스마트팜 운영 환경을 반영한 구조적·확장 가능한 설계**를 목표로 합니다.
+
+
+https://github.com/user-attachments/assets/f080bdae-c638-4fdf-967d-e09efdbd1d13
+
