@@ -1,41 +1,47 @@
 # 🌱 BerryMind
 
-> **이상기후 적응형 딸기 AI 스마트농업 시스템**  
-> **Sensor · SAM3 Vision · Logic-based Strategic Control**
+**이상기후 적응형 딸기 AI 스마트농업 시스템**  
+**Sensor · SAM3 Vision · Logic-based Strategic Control**
 
 <img width="1376" height="572" alt="시스템 아키텍처" src="https://github.com/user-attachments/assets/89135c8a-92e0-4d08-96b7-df0757b36028" />
 
-## 🔍 시스템 개요
+## 🔍 개요
 
-**BerryMind**는 이상기후로 인한 **국내 딸기 농가 생산성 위기**를 해결하는 **AI 통합 플랫폼**입니다.
+**BerryMind**는 이상기후로 인한 국내 농가의 작물 생산 위기를 극복하고 지속 가능한 정밀 농업을 실현하는 통합 관리 플랫폼입니다.
 
-**핵심 철학**: 단순 환경 제어 → **생리적 최적화 + 에너지 효율** 전략적 자율 제어
+단순 센서 수치 유지 → **작물 생리 + 에너지 효율**을 고려한 **전략적 자율 제어**
 
-### 🌐 **3대 기술 융합**
+<img width="100%" alt="성과" src="https://github.com/user-attachments/assets/78771a01-b6aa-433d-bf90-77a40f3cbadb" />
 
-| 기술영역 | 핵심기능 |
-|---------|----------|
-| **SAM3 Vision** | 꽃/미숙과/숙과 정밀 분할 + S1~S4 연속 추적 |
-| **환경 예측 Sensing** | 10분 단위 다변량 분석 + 결측 보정 |
-| **Logic Engine** | Time-Band(T1~T8) + 우선순위 중재 |
+---
+
+## 🎯 프로젝트 목표
+
+- **정밀 생육 인지**: SAM3로 딸기 꽃/미숙과/숙과 픽셀 단위 분할 → S1~S4 자동 판정
+- **이상기후 대응**: 한파/폭염/다우점 등 선제적 제어 로직
+- **에너지 최적화**: Time-Band + Priority Rule로 운영비 절감
+- **현장 신뢰성**: 농민 도메인 지식 + AI 판단 결합
+
+---
+
+## 🛠️ 핵심 기술
+
+| 기술 | 기능 |
+|------|------|
+| **SAM3 Vision** | 꽃/미숙과/숙과 정밀 Segmentation → 생육 데이터 수치화 |
+| **환경 Sensing** | 10분 단위 다변량 분석 + 결측치 보정 |
+| **Logic Engine** | Time-Band(T1~T8) + 에너지/안전 우선순위 중재 |
 
 ---
 
 ## 📂 프로젝트 구조
 
 ### 🍓 **SAM3 생육 단계 분석** `./vision_model`
+- **SAM3 Pipeline**: Zero-shot Segmentation으로 생리 지표 추출
+- **Stage Decision**: S1(정식) ~ S4(수확) 자동 판정 + 누적 안정화
 
-```
-📸 이미지 입력 → SAM3 Zero-shot Segmentation → S1(정식)→S2(개화)→S3(착과)→S4(수확)
-```
-- **실시간 객체 탐지**: 꽃/녹색과/숙과 정밀 인식
-- **시간 축 재구성**: 단일 이미지 → 전체 생육주기 자동 판정
+### 🤖 **온실 전략 제어** `./control_logic`
+- **Time-Band Manager**: 위/경도 기반 8개 동적 구간 생성
+- **Priority Engine**: Pause Time + 야간 과습 가드레일 포함
 
-### 🤖 **전략 제어 엔진** `./control_logic`
-
-```
-🌡️ 센서 데이터 → Time-Band(T1~T8) 동적 분할 → 에너지-안전 우선순위 → 구동기 명령
-```
-- **위치 기반 8구간**: 일출/일몰 자동 계산 (위도/경도)
-- **지능형 중재**: Pause Time + 절대 가드레일 (야간 과습 방지)
-```
+**모듈화 설계로 타 작물/온실 확장 가능**
