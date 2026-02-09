@@ -1,0 +1,3 @@
+docker build -t sensor:py312 .
+
+docker run --rm -it -v "$PWD":/app -w /app sensor:py312 bash

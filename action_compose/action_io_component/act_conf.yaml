@@ -1,0 +1,57 @@
+connect:
+  host: 192.168.0.10
+  port: 502
+devices:
+  FCU_FAN:
+    device_id: 4
+    state_start_addr: 203
+    state_cnt: 4   
+    cmd_start_addr: 503
+  FCU_PUMP:
+    device_id: 4
+    state_start_addr: 207   
+    state_cnt: 4   
+    cmd_start_addr: 507
+  CO2:
+    device_id: 4
+    state_start_addr: 211   
+    state_cnt: 4   
+    cmd_start_addr: 511
+  FAN:
+    device_id: 4
+    state_start_addr: 215   
+    state_cnt: 4   
+    cmd_start_addr: 515
+  FOG:
+    device_id: 4
+    state_start_addr: 219   
+    state_cnt: 4   
+    cmd_start_addr: 519
+  SKY_WINDOW_LEFT:
+    device_id: 4
+    state_start_addr: 267   
+    state_cnt: 5   
+    cmd_start_addr: 567
+  SKY_WINDOW_RIGHT:
+    device_id: 4
+    state_start_addr: 272   
+    state_cnt: 5   
+    cmd_start_addr: 572
+  SHADING_SCREEN:
+    device_id: 4
+    state_start_addr: 277   
+    state_cnt: 5   
+    cmd_start_addr: 577
+  HEAT_CURTAIN:
+    device_id: 4
+    state_start_addr: 282   
+    state_cnt: 5   
+    cmd_start_addr: 582
+  NUTRIENT_PUMP:
+    device_id: 5
+    state_start_addr: 401   
+    state_cnt: 6 
+    cmd_start_addr: 504
+
+
+  

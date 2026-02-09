@@ -1,0 +1,111 @@
+[
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":1}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":498}}],
+        "priority": 90
+    },
+    {
+    "name": "TB1: outdoor_temp ≤ -5 → SHADING_SCREEN CLOSE",
+    "conditions": {
+      "all": [
+        {"name": "time_band", "operator": "equal_to", "value": 1},
+        {"name": "outdoor_temp", "operator": "less_than_or_equal_to", "value": -5}
+      ]
+    },
+    "actions": [{"name": "vent_action", "params": {"actuator": "SHADING_SCREEN", "state": "TIMED_CLOSE", "duration_sec": 498}}],
+        "priority": 95
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":2}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":498}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"solar_radiation","operator":"greater_than_or_equal_to","value":900},
+                {"name":"time_band","operator":"equal_to","value":3}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":150,"pause_sec":1800}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"solar_radiation","operator":"less_than","value":900},
+                {"name":"time_band","operator":"equal_to","value":3}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":50}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"solar_radiation","operator":"less_than_or_equal_to","value":900},
+                {"name":"time_band","operator":"equal_to","value":4}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":150,"pause_sec":1800}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":5}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":498}}],
+        "priority": 90
+    },
+   
+    {
+    "name": "TB6: outdoor_temp ≤ 8 → SHADING_SCREEN CLOSE",
+    "conditions": {
+      "all": [
+        {"name": "time_band", "operator": "equal_to", "value": 6},
+        {"name": "outdoor_temp", "operator": "less_than_or_equal_to", "value": 8}
+      ]
+    },
+    "actions": [{"name": "vent_action", "params": {"actuator": "SHADING_SCREEN", "state": "TIMED_CLOSE", "duration_sec": 498}}],
+        "priority": 90
+    },
+
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":7}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":498}}],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":8}
+            ]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_CLOSE","duration_sec":498}}],
+        "priority": 90
+    },
+    {
+        "name": "time_band all : Fundamental permise : SHADING SCREEN OPEN",
+        "conditions": {
+            "all": [{"name":"rain","operator":"equal_to","value":true}]
+        },
+        "actions": [{"name":"vent_action","params":{"actuator":"SHADING_SCREEN","state":"TIMED_OPEN","duration_sec":150,"pause_sec":3600}}],
+        "priority": 100
+    }  
+    
+    
+]

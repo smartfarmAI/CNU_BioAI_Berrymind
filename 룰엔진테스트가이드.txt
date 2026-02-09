@@ -1,0 +1,6 @@
+이 룰 엔진이 잘 동작하는게 목적
+python extract_test_data.py 첨단온실_2구역_new.csv test_sample.csv 2024-05-28 30
+python test_real_data.py > test_result.txt
+
+이렇게 데이터 뽑아서 각 구동기 별로 엑션이 잘 되었는지 보는것
+timeband, 조건값, 구동기 state 뽑아서 보는거 추천

@@ -1,0 +1,169 @@
+[
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":28},
+                {"name":"time_band","operator":"equal_to","value":1}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":1800}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
+                {"name":"time_band","operator":"equal_to","value":1}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"time_band","operator":"equal_to","value":2}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":600}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
+                {"name":"time_band","operator":"equal_to","value":2}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"time_band","operator":"equal_to","value":3}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":600}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
+                {"name":"time_band","operator":"equal_to","value":3}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"greater_than_or_equal_to","value":30},
+                {"name":"time_band","operator":"equal_to","value":4}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":1800}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_temp","operator":"less_than","value":28},
+                {"name":"time_band","operator":"equal_to","value":4}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":5}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":6}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":7}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+    {
+        "conditions": {
+            "all": [
+                {"name":"time_band","operator":"equal_to","value":8}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 90
+    },
+
+    {
+        "name": "Fundamental permise : FOG",
+        "conditions": {
+            "all": [
+                {"name":"after_30min_indoor_humidity","operator":"greater_than_or_equal_to","value":85}
+            ]
+        },
+        "actions": [
+            {"name":"switch_action","params":{"actuator":"FOG","state":"OFF"}}
+        ],
+        "priority": 100
+    },
+        
+    {
+    "name": "Fundamental premise : FOG ON when humidity ≤ 40%",
+    "conditions": {
+        "all": [
+            {"name":"after_30min_indoor_humidity","operator":"less_than_or_equal_to","value":40}
+        ]
+    },
+    "actions": [
+        {"name":"switch_action","params":{"actuator":"FOG","state":"TIMED_ON","duration_sec":60,"pause_sec":600}}
+    ],
+    "priority": 100
+}
+
+]

@@ -1,0 +1,16 @@
+services:
+  file-client:
+    build: .
+    container_name: extra-data-client
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Seoul
+    volumes:
+      # 호스트 → 컨테이너 마운트
+      - ./images:/app/images
+      - ./forecasts:/app/forecasts
+    networks:
+      - timescale_db_default
+networks:
+  timescale_db_default:
+    external: true

@@ -1,0 +1,127 @@
+[
+    {
+      "name": "p100 : rain -> LEFT CLOSE",
+      "conditions": { "all": [ { "name": "rain", "operator": "equal_to", "value": true } ] },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 160, "pause_sec": 300 } } ],
+      "priority": 100
+    },
+    {
+      "name": "p99 : wind>=100 m/s -> LEFT CLOSE",
+      "conditions": { "all": [ { "name": "wind_speed", "operator": "greater_than_or_equal_to", "value": 100 } ] },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 160, "pause_sec": 300 } } ],
+      "priority": 99
+    },
+  
+    {
+      "name": "TB1: LEFT OPEN 30s if temp>=26",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 1 },
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 26 }
+        ]
+      },
+      "actions": [
+        { "name": "vent_action",
+          "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_OPEN", "duration_sec": 30, "pause_sec": 300 }
+        }
+      ],
+      "priority": 90
+    },
+    {
+      "name": "TB2: LEFT OPEN 20s if temp>=27",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 2 },
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 27 }
+        ]
+      },
+      "actions": [
+        { "name": "vent_action",
+          "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_OPEN", "duration_sec": 20, "pause_sec": 300 }
+        }
+      ],
+      "priority": 90
+    },
+    {
+      "name": "TB3: LEFT OPEN 20s if temp>=27",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 3 },
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 27 }
+        ]
+      },
+      "actions": [
+        { "name": "vent_action",
+          "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_OPEN", "duration_sec": 20, "pause_sec": 300 }
+        }
+      ],
+      "priority": 90
+    },
+    {
+      "name": "TB3: LEFT CLOSE 20s if temp<=25",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 3 },
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 25 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
+      "priority": 90
+    },
+    {
+      "name": "TB4: LEFT CLOSE 20s if temp<=27",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 4 },
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 27 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
+      "priority": 90
+    },
+    {
+      "name": "TB5: LEFT CLOSE 20s if temp<=20",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 5 },
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 20 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
+      "priority": 90
+    },
+    {
+      "name": "TB6: LEFT CLOSE 20s if temp<=15",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 6 },
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
+      "priority": 90
+    },
+    {
+      "name": "TB7: LEFT CLOSE 20s if temp<=15",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 7 },
+          { "name": "after_30min_indoor_temp", "operator": "less_than_or_equal_to", "value": 15 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_CLOSE", "duration_sec": 20, "pause_sec": 300 } } ],
+      "priority": 90
+    },
+    {
+      "name": "TB8: LEFT open 10s if temp>=25",
+      "conditions": {
+        "all": [
+          { "name": "time_band", "operator": "equal_to", "value": 8 },
+          { "name": "after_30min_indoor_temp", "operator": "greater_than_or_equal_to", "value": 25 }
+        ]
+      },
+      "actions": [ { "name": "vent_action", "params": { "actuator": "SKY_WINDOW_LEFT", "state": "TIMED_OPEN", "duration_sec": 10, "pause_sec": 300 } } ],
+      "priority": 90
+    }
+  ]
+  

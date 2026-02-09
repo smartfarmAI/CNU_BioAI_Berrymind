@@ -1,0 +1,6 @@
+|   time_band | actuator     |   priority | conditions                                                                     | action                                                              |
+|------------:|:-------------|-----------:|:-------------------------------------------------------------------------------|:--------------------------------------------------------------------|
+|           1 | HEAT_CURTAIN |        100 | time_band = 1 AND outdoor_temp ≥ 0 AND indoor_temp ≥ 12                        | {'actuator': 'HEAT_CURTAIN', 'state': 'OPEN', 'duration_sec': 498}  |
+|           1 | HEAT_CURTAIN |        100 | time_band = 1 AND outdoor_temp ≥ -10 AND outdoor_temp < 0 AND indoor_temp ≥ 13 | {'actuator': 'HEAT_CURTAIN', 'state': 'OPEN', 'duration_sec': 498}  |
+|           1 | HEAT_CURTAIN |         90 | time_band = 1 AND indoor_temp ≥ 15                                             | {'actuator': 'HEAT_CURTAIN', 'state': 'OPEN', 'duration_sec': 498}  |
+|           5 | HEAT_CURTAIN |         90 | time_band = 5 AND indoor_temp ≤ 15                                             | {'actuator': 'HEAT_CURTAIN', 'state': 'CLOSE', 'duration_sec': 498} |

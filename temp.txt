@@ -1,0 +1,2 @@
+    # 1분마다 실행
+    # schedule.every(1).minutes.do(main_loop, sensor=sensor, rules_path=rules_path)

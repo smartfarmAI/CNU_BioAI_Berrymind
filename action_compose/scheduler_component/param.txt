@@ -1,0 +1,56 @@
+{
+  "items": {
+    "FAN": {
+      "action_name": "switch_action",
+      "action_param": {"actuator": "FAN", "state": "ON", "duration_sec": 0, "pause_sec": 0}
+    }
+  },
+  "run_at": "2025-09-17 13:00:00"
+}
+
+{
+  "items": {
+    "CO2": {
+      "action_name": "switch_action",
+      "action_param": {"actuator": "CO2", "state": "ON", "duration_sec": 0, "pause_sec": 0}
+    }
+  },
+  "run_at": "2025-09-07 03:30:00"
+}
+
+{
+  "items": {
+    "NUTRIENT_PUMP": {
+      "action_name": "nutsupply",
+      "action_param": {"state":"NUT_WATER","duration_sec":50, "ec":0.8, "ph":5.5}
+    }
+  },
+  "run_at": "2025-09-07 03:30:00"
+}
+
+
+{
+  "items": {
+    "FCU_FAN": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_FAN","state":"ON"}
+    },
+    "FCU_PUMP": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_PUMP","state":"ON"}
+    }
+  }
+}
+
+{
+  "items": {
+    "FCU_FAN": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_FAN","state":"OFF"}
+    },
+    "FCU_PUMP": {
+      "action_name": "switch_action",
+      "action_param": {"actuator":"FCU_PUMP","state":"OFF"}
+    }
+  }
+}

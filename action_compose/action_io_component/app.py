@@ -1,0 +1,64 @@
+# 실행: uvicorn app:app --reload --port 8000
+from fastapi import FastAPI, HTTPException
+from factory import load_conf, build_client, build_actuator
+from actuator_base import Command, NutSupplyCommand
+from ksconstants import CMDCODE
+from pydantic import BaseModel
+import asyncio
+
+app = FastAPI()
+CONF = load_conf()
+CLIENT = build_client(CONF["connect"]["host"],int(CONF["connect"]["port"]))
+ACTS = {name: build_actuator(name, CLIENT, reg) for name, reg in CONF["devices"].items()}
+
+
+@app.on_event("startup")
+async def startup_event():
+    for name, act in ACTS.items():
+        state = act.read_state()
+        act.now_opid = state.get("opid",20001)
+        if name == "NUTRIENT_PUMP":
+            act.send(NutSupplyCommand(name=CMDCODE(0)))
+        else:
+            act.send(Command(name=CMDCODE(0)))
+    await asyncio.sleep(30)  # 30초 대기
+    print("app startup")
+
+
+@app.get("/actuators/{name}/get_state")
+def get_state(name: str):
+    try:
+        return ACTS[name].read_state()
+    except KeyError:
+        raise HTTPException(404, f"unknown actuator: {name}")
+
+class CommandIn(BaseModel):
+    cmd_name: str
+    duration_sec: int  = 0
+    ec: float | None = None
+    ph: float | None = None
+
+@app.post("/actuators/{name}/send_command")
+def post_command(name: str, body: CommandIn):
+    try:
+        act = ACTS[name]
+    except KeyError:
+        raise HTTPException(404, f"unknown actuator: {name}")
+    print(body)
+    # 장치별 추가 인자 처리
+    if name in {"SKY_WINDOW_LEFT","SKY_WINDOW_RIGHT","SHADING_SCREEN","HEAT_CURTAIN"}:
+        opid = act.send(Command(name=CMDCODE[body.cmd_name], duration_sec=body.duration_sec or 0))
+    elif name == "NUTRIENT_PUMP":
+        opid = act.send(NutSupplyCommand(name=CMDCODE[body.cmd_name], 
+                                duration_sec=body.duration_sec or 0,
+                                ec=body.ec,
+                                ph=body.ph
+                                )
+                        )
+    else:
+        opid = act.send(Command(name=CMDCODE[body.cmd_name], duration_sec=body.duration_sec or 0))
+    return {"opid": opid}
+
+@app.get("/health")
+def health():
+    return {"ok": True}

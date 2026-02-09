@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Fundamental premise : INDOOR_HUMIDITY ≥91 → FAN TIMED_ON 5min / Pause 15min",
+    "conditions": {
+      "all": [
+        {"name":"after_30min_indoor_humidity","operator":"greater_than_or_equal_to","value":91}
+      ]
+    },
+    "actions": [
+      {
+        "name":"switch_action",
+        "params":{
+          "actuator":"FAN",
+          "state":"TIMED_ON",
+          "duration_sec":300,
+          "pause_sec":2100
+        }
+      }
+    ],
+    "priority": 100
+  },
+  {
+    "name": "Fundamental premise : INDOOR_HUMIDITY <91 → FAN OFF",
+    "conditions": {
+      "all": [
+        {"name":"after_30min_indoor_humidity","operator":"less_than","value":91}
+      ]
+    },
+    "actions": [
+      {
+        "name":"switch_action",
+        "params":{
+          "actuator":"FAN",
+          "state":"OFF"
+        }
+      }
+    ],
+    "priority": 99
+  }
+]
