@@ -11,7 +11,11 @@
 
 단순 센서 수치 유지 → **작물 생리 + 에너지 효율**을 고려한 **전략적 자율 제어**
 
-<img width="100%" alt="성과" src="https://github.com/user-attachments/assets/78771a01-b6aa-433d-bf90-77a40f3cbadb" />
+
+
+https://github.com/user-attachments/assets/2ae29878-c8de-40bb-964b-b6cfd1bae287
+
+
 
 ---
 
