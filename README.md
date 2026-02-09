@@ -12,11 +12,6 @@
 단순히 센서 수치를 유지하는 기존 자동화 방식을 넘어, **작물의 생리적 특성과 에너지 비용 효율성을 동시에 고려한 전략적 자율 제어 엔진**을 지향합니다.
 
 
-
-https://github.com/user-attachments/assets/7254e227-6d4c-4f36-88e7-aee57207e45b
-
-
-
 ## 🎯 프로젝트 목표 (Key Objectives)
 
 - **정밀 생육 인지 모델 구축**: SAM3(Segment Anything Model 3)를 활용하여 복잡한 온실 환경에서도 딸기의 개화 및 착과 상태를 픽셀 단위로 정밀하게 분리하고, 이를 시계열로 분석하여 정확한 생육 단계를 판정합니다.
@@ -39,12 +34,16 @@ https://github.com/user-attachments/assets/7254e227-6d4c-4f36-88e7-aee57207e45b
 
 ## 📂 Project Structure
 
-### 🍓 [SAM3 생육 단계 분석 시스템](./vision_model)
-
-- **SAM3 Inference Pipeline**: 최신 SAM3 엔진을 통해 이미지 내 작물의 생리적 지표를 추출합니다.
-- **Stage Decision Logic**: 추출된 비전 데이터를 바탕으로 S1(정식)부터 S4(수확)까지의 생육 단계를 자동 판정하며, 누적 데이터를 통해 판정 결과의 안정성을 확보합니다.
 
 ### 🤖 [온실 전략 제어 시스템](./control_logic)
 
 - **Time-Band Manager**: 위도와 경도 데이터를 기반으로 매일의 일출·일몰 시간을 계산하여 8개의 가변적 제어 구간을 생성합니다.
 - **Priority Rule Engine**: 에너지 최소화, 구동기 수명 보호(Pause Time), 야간 과습 방지 등 다중 제약 조건을 반영한 전략적 의사결정을 수행합니다.
+
+### 🍓 [SAM3 생육 단계 분석 시스템](./vision_model)
+
+- **SAM3 Inference Pipeline**: 최신 SAM3 엔진을 통해 이미지 내 작물의 생리적 지표를 추출합니다.
+- **Stage Decision Logic**: 추출된 비전 데이터를 바탕으로 S1(정식)부터 S4(수확)까지의 생육 단계를 자동 판정하며, 누적 데이터를 통해 판정 결과의 안정성을 확보합니다.
+
+
+https://github.com/user-attachments/assets/7254e227-6d4c-4f36-88e7-aee57207e45b
