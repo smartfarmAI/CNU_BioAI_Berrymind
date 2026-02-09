@@ -1,5 +1,6 @@
-🌱 BerryMind
-이상기후 적응형 딸기 AI 스마트농업 시스템  
+# 🌱 BerryMind
+
+**이상기후 적응형 딸기 AI 스마트농업 시스템**  
 **Sensor · SAM3 Vision · Logic-based Strategic Control**
 
 <img width="1376" height="572" alt="시스템 아키텍처" src="https://github.com/user-attachments/assets/89135c8a-92e0-4d08-96b7-df0757b36028" />
